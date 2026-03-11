@@ -1,0 +1,87 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import CategoryBadge from '../components/ui/CategoryBadge.astro';
+import Divider from '../components/ui/Divider.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  publishDate: Date;
+  category: 'spor-kitapligi' | 'spor-filmografisi' | 'cumhuriyet-donemi-spor' | 'kisisel-blog';
+  categoryLabel: string;
+  meta?: string;
+  tags?: string[];
+}
+
+const { title, description, publishDate, category, categoryLabel, meta, tags = [] } = Astro.props;
+
+const formattedDate = publishDate.toLocaleDateString('tr-TR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={`${title} — Spor Tarihi`} description={description}>
+  <article class="max-w-3xl mx-auto px-4 py-10">
+    <Breadcrumb
+      items={[
+        { label: categoryLabel, href: `/${category}` },
+        { label: title },
+      ]}
+    />
+
+    <!-- Article header -->
+    <header class="mb-10">
+      <CategoryBadge category={category} />
+
+      <h1 class="font-heading text-3xl md:text-4xl font-bold text-vintage-dark mt-4 mb-4 leading-tight">
+        {title}
+      </h1>
+
+      <p class="text-vintage-muted text-lg italic mb-4">{description}</p>
+
+      <div class="flex flex-wrap items-center gap-4 text-sm text-vintage-muted">
+        <time datetime={publishDate.toISOString()}>
+          {formattedDate}
+        </time>
+        {meta && (
+          <>
+            <span class="text-vintage-border">|</span>
+            <span class="italic">{meta}</span>
+          </>
+        )}
+      </div>
+
+      {tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mt-4">
+          {tags.map((tag) => (
+            <span class="text-xs bg-vintage-paper text-vintage-muted px-2 py-1 border border-vintage-border rounded-sm">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <Divider />
+
+    <!-- Article content -->
+    <div class="prose prose-lg max-w-none font-body">
+      <slot />
+    </div>
+
+    <Divider />
+
+    <!-- Back link -->
+    <div class="text-center">
+      <a
+        href={`/${category}`}
+        class="inline-block text-sm text-vintage-red hover:text-vintage-dark transition-colors uppercase tracking-wider"
+      >
+        &larr; {categoryLabel} sayfasına dön
+      </a>
+    </div>
+  </article>
+</BaseLayout>

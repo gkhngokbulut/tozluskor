@@ -1,0 +1,172 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-vintage-cream: #E8DFD0;
+  --color-vintage-paper: #DDD4C4;
+  --color-vintage-brown: #5C4033;
+  --color-vintage-dark: #2C1810;
+  --color-vintage-red: #8B2500;
+  --color-vintage-green: #2E4A3A;
+  --color-vintage-gold: #B8860B;
+  --color-vintage-muted: #8B7D6B;
+  --color-vintage-border: #C4B8A4;
+
+  --font-family-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-family-body: 'Lora', Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-body);
+  background-color: var(--color-vintage-cream);
+  color: var(--color-vintage-brown);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+}
+
+/* Prose overrides for vintage style */
+.prose {
+  --tw-prose-body: var(--color-vintage-brown);
+  --tw-prose-headings: var(--color-vintage-dark);
+  --tw-prose-links: var(--color-vintage-red);
+  --tw-prose-bold: var(--color-vintage-dark);
+  --tw-prose-quotes: var(--color-vintage-dark);
+  --tw-prose-quote-borders: var(--color-vintage-border);
+  --tw-prose-hr: var(--color-vintage-border);
+}
+
+.prose a {
+  text-decoration-color: var(--color-vintage-border);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--color-vintage-red);
+}
+
+.prose blockquote {
+  font-style: italic;
+  border-left-width: 3px;
+}
+
+/* Subtle page texture */
+body {
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(139, 37, 0, 0.02) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(92, 64, 51, 0.02) 0%, transparent 50%);
+}
+
+/* Drop cap for first paragraph in articles */
+.prose > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-family-heading);
+  font-size: 3.5em;
+  line-height: 0.8;
+  padding-right: 0.1em;
+  padding-top: 0.05em;
+  color: var(--color-vintage-red);
+  font-weight: 700;
+}
+
+/* Decorative quote styling */
+.prose blockquote {
+  position: relative;
+  padding-left: 1.5em;
+}
+
+.prose blockquote::before {
+  content: '\201C';
+  font-family: var(--font-family-heading);
+  font-size: 4em;
+  color: var(--color-vintage-border);
+  position: absolute;
+  left: -0.15em;
+  top: -0.2em;
+  line-height: 1;
+}
+
+/* Section heading decorative underline */
+.section-heading {
+  position: relative;
+  display: inline-block;
+}
+
+.section-heading::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, var(--color-vintage-red), transparent);
+  margin-top: 0.5rem;
+}
+
+/* ===== PARALLAX ===== */
+
+/* Parallax layers — GPU-accelerated transforms */
+.parallax-layer {
+  will-change: transform;
+}
+
+/* Content sections with depth effect */
+.content-section {
+  will-change: transform;
+}
+
+/* Parallax band wrapper */
+.parallax-band {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Disable parallax transforms on mobile */
+@media (max-width: 768px) {
+  .parallax-layer,
+  .content-section {
+    will-change: auto;
+    transform: none !important;
+  }
+}
+
+/* Fade-in on scroll */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered card animations */
+.fade-in-section:nth-child(2) { transition-delay: 0.15s; }
+.fade-in-section:nth-child(3) { transition-delay: 0.3s; }
+.fade-in-section:nth-child(4) { transition-delay: 0.45s; }
+
+/* Floating decorative elements */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(45deg); }
+  50% { transform: translateY(-8px) rotate(45deg); }
+}
+
+@keyframes float-slower {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.float-slower {
+  animation: float-slower 8s ease-in-out infinite;
+}

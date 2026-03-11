@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleCard from '../../components/ui/ArticleCard.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('spor-kitapligi', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+---
+
+<BaseLayout title="Spor Kitaplığı — Spor Tarihi" description="Sporla ilgili kitapların analizleri ve incelemeleri.">
+  <div class="max-w-6xl mx-auto px-4 py-10">
+    <Breadcrumb items={[{ label: 'Spor Kitaplığı' }]} />
+
+    <header class="mb-10">
+      <h1 class="font-heading text-4xl font-bold text-vintage-dark mb-3">Spor Kitaplığı</h1>
+      <p class="text-vintage-muted text-lg max-w-2xl">
+        Spor tarihini şekillendiren kitapların incelemeleri, analizleri ve toplumsal perspektiften okumaları.
+      </p>
+    </header>
+
+    {entries.length === 0 ? (
+      <p class="text-vintage-muted text-center py-12">Henüz içerik eklenmemiş.</p>
+    ) : (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {entries.map((entry) => (
+          <ArticleCard
+            title={entry.data.title}
+            description={entry.data.description}
+            publishDate={entry.data.publishDate}
+            slug={entry.id}
+            category="spor-kitapligi"
+            meta={`${entry.data.bookTitle} — ${entry.data.bookAuthor}`}
+          />
+        ))}
+      </div>
+    )}
+  </div>
+</BaseLayout>

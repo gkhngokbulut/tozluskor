@@ -1,0 +1,61 @@
+---
+import CategoryBadge from './CategoryBadge.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  publishDate: Date;
+  slug: string;
+  category: 'spor-kitapligi' | 'spor-filmografisi' | 'cumhuriyet-donemi-spor' | 'kisisel-blog';
+  meta?: string;
+}
+
+const { title, description, publishDate, slug, category, meta } = Astro.props;
+
+const formattedDate = publishDate.toLocaleDateString('tr-TR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const href = `/${category}/${slug}`;
+---
+
+<article class="group relative bg-vintage-paper border border-vintage-border rounded-sm p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+  <!-- Decorative corner accents -->
+  <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-vintage-red/30 rounded-tl-sm"></div>
+  <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-vintage-red/30 rounded-tr-sm"></div>
+  <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-vintage-red/30 rounded-bl-sm"></div>
+  <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-vintage-red/30 rounded-br-sm"></div>
+
+  <div class="mb-3">
+    <CategoryBadge category={category} />
+  </div>
+
+  <a href={href} class="block">
+    <h3 class="font-heading text-xl font-bold text-vintage-dark group-hover:text-vintage-red transition-colors mb-2">
+      {title}
+    </h3>
+  </a>
+
+  {meta && (
+    <p class="text-sm text-vintage-muted italic mb-2 flex items-center gap-2">
+      <span class="text-vintage-border">&mdash;</span>
+      {meta}
+    </p>
+  )}
+
+  <p class="text-vintage-brown/80 text-sm leading-relaxed mb-4 line-clamp-3">
+    {description}
+  </p>
+
+  <!-- Bottom separator and footer -->
+  <div class="border-t border-vintage-border/50 pt-3 flex items-center justify-between">
+    <time class="text-xs text-vintage-muted" datetime={publishDate.toISOString()}>
+      {formattedDate}
+    </time>
+    <a href={href} class="text-xs text-vintage-red hover:text-vintage-dark transition-colors uppercase tracking-wider font-medium">
+      Devamını Oku &rarr;
+    </a>
+  </div>
+</article>

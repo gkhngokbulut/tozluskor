@@ -1,0 +1,27 @@
+---
+import ArticleLayout from '../../layouts/ArticleLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('spor-kitapligi', ({ data }) => !data.draft);
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ArticleLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  publishDate={entry.data.publishDate}
+  category="spor-kitapligi"
+  categoryLabel="Spor Kitaplığı"
+  meta={`${entry.data.bookTitle} — ${entry.data.bookAuthor}`}
+  tags={entry.data.tags}
+>
+  <Content />
+</ArticleLayout>

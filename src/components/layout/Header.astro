@@ -1,0 +1,104 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/', label: 'Ana Sayfa' },
+  { href: '/spor-kitapligi', label: 'Spor Kitaplığı' },
+  { href: '/spor-filmografisi', label: 'Spor Filmografisi' },
+  { href: '/cumhuriyet-donemi-spor', label: 'Cumhuriyet Dönemi Spor' },
+  { href: '/kisisel-blog', label: 'Blog' },
+  { href: '/hakkimizda', label: 'Hakkımızda' },
+];
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="bg-vintage-dark text-vintage-cream">
+  <!-- Top decorative line -->
+  <div class="border-b border-vintage-gold/30">
+    <div class="max-w-6xl mx-auto px-4 py-1 text-center">
+      <span class="text-xs tracking-[0.3em] uppercase text-vintage-muted font-body">
+        Spor &middot; Tarih &middot; Toplum
+      </span>
+    </div>
+  </div>
+
+  <!-- Main header -->
+  <div class="max-w-6xl mx-auto px-4 py-6 text-center border-b-2 border-vintage-gold/20">
+    <a href="/" class="inline-block">
+      <h1 class="font-heading text-4xl md:text-5xl font-bold tracking-tight text-vintage-cream">
+        SPOR TARİHİ
+      </h1>
+      <div class="flex justify-center items-center gap-3 mt-2 mb-1">
+        <div class="w-12 border-t border-vintage-gold/30"></div>
+        <div class="w-1.5 h-1.5 bg-vintage-gold/40 rotate-45"></div>
+        <div class="w-12 border-t border-vintage-gold/30"></div>
+      </div>
+      <p class="text-vintage-muted text-sm tracking-widest uppercase">Bir Toplumsal Okuma</p>
+    </a>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="max-w-6xl mx-auto px-4">
+    <!-- Desktop nav -->
+    <ul class="hidden md:flex justify-center gap-8 py-3">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              'text-sm uppercase tracking-widest transition-colors hover:text-vintage-gold',
+              isActive(link.href) ? 'text-vintage-gold border-b border-vintage-gold pb-1' : 'text-vintage-cream/80',
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Mobile menu button -->
+    <div class="md:hidden flex justify-center py-3">
+      <button
+        id="mobile-menu-btn"
+        class="text-vintage-cream/80 hover:text-vintage-gold transition-colors"
+        aria-label="Menüyü aç"
+        aria-expanded="false"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile nav -->
+    <ul id="mobile-menu" class="md:hidden hidden flex-col items-center gap-4 pb-4">
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              'text-sm uppercase tracking-widest transition-colors hover:text-vintage-gold',
+              isActive(link.href) ? 'text-vintage-gold' : 'text-vintage-cream/80',
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('hidden');
+    menu?.classList.toggle('flex');
+    btn.setAttribute('aria-expanded', String(!isOpen));
+  });
+</script>
