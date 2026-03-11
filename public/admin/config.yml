@@ -1,0 +1,75 @@
+backend:
+  name: git-gateway
+  branch: main
+
+locale: tr
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: spor-kitapligi
+    label: "Spor Kitaplığı"
+    folder: src/content/spor-kitapligi
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    fields:
+      - { label: "Başlık", name: title, widget: string }
+      - { label: "Açıklama", name: description, widget: text }
+      - { label: "Kitap Adı", name: bookTitle, widget: string }
+      - { label: "Kitap Yazarı", name: bookAuthor, widget: string }
+      - { label: "Yayın Tarihi", name: publishDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false }
+      - { label: "Etiketler", name: tags, widget: list, default: [] }
+      - { label: "Taslak", name: draft, widget: boolean, default: false }
+      - { label: "İçerik", name: body, widget: markdown }
+
+  - name: spor-filmografisi
+    label: "Spor Filmografisi"
+    folder: src/content/spor-filmografisi
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    fields:
+      - { label: "Başlık", name: title, widget: string }
+      - { label: "Açıklama", name: description, widget: text }
+      - { label: "Film Adı", name: filmTitle, widget: string }
+      - { label: "Film Yılı", name: filmYear, widget: number, value_type: int }
+      - { label: "Yönetmen", name: director, widget: string }
+      - { label: "Yayın Tarihi", name: publishDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false }
+      - { label: "Etiketler", name: tags, widget: list, default: [] }
+      - { label: "Taslak", name: draft, widget: boolean, default: false }
+      - { label: "İçerik", name: body, widget: markdown }
+
+  - name: cumhuriyet-donemi-spor
+    label: "Cumhuriyet Dönemi Spor"
+    folder: src/content/cumhuriyet-donemi-spor
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    fields:
+      - { label: "Başlık", name: title, widget: string }
+      - { label: "Açıklama", name: description, widget: text }
+      - { label: "Dönem", name: period, widget: string, required: false }
+      - { label: "Yayın Tarihi", name: publishDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false }
+      - { label: "Etiketler", name: tags, widget: list, default: [] }
+      - { label: "Taslak", name: draft, widget: boolean, default: false }
+      - { label: "İçerik", name: body, widget: markdown }
+
+  - name: kisisel-blog
+    label: "Kişisel Blog"
+    folder: src/content/kisisel-blog
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    fields:
+      - { label: "Başlık", name: title, widget: string }
+      - { label: "Açıklama", name: description, widget: text }
+      - { label: "Yayın Tarihi", name: publishDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
+      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false }
+      - { label: "Etiketler", name: tags, widget: list, default: [] }
+      - { label: "Taslak", name: draft, widget: boolean, default: false }
+      - { label: "İçerik", name: body, widget: markdown }
