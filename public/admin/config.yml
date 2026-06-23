@@ -60,7 +60,7 @@ collections:
       - { label: "İçerik", name: body, widget: markdown }
 
   - name: kisisel-blog
-    label: "Kişisel Blog"
+    label: "Yazıyor Yazıyor"
     folder: src/content/kisisel-blog
     create: true
     slug: "{{slug}}"
