@@ -97,7 +97,7 @@ const bloglar = (await getCollection('kisisel-blog', ({ data }) => !data.draft))
   <div class="content-section relative z-10" data-depth="0.04">
     <div class="max-w-6xl mx-auto px-4">
       <div class="fade-in-section">
-        <LatestArticles title="Kişisel Blog" href="/kisisel-blog">
+        <LatestArticles title="Yazıyor Yazıyor" href="/kisisel-blog">
           {bloglar.map((entry) => (
             <ArticleCard
               title={entry.data.title}
