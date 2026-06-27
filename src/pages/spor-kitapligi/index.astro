@@ -31,6 +31,7 @@ const entries = (await getCollection('spor-kitapligi', ({ data }) => !data.draft
             slug={entry.id}
             category="spor-kitapligi"
             meta={`${entry.data.bookTitle} — ${entry.data.bookAuthor}`}
+            coverImage={entry.data.coverImage}
           />
         ))}
       </div>

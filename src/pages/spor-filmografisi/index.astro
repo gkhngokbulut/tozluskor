@@ -31,6 +31,7 @@ const entries = (await getCollection('spor-filmografisi', ({ data }) => !data.dr
             slug={entry.id}
             category="spor-filmografisi"
             meta={`${entry.data.filmTitle} (${entry.data.filmYear}) — ${entry.data.director}`}
+            coverImage={entry.data.coverImage}
           />
         ))}
       </div>
