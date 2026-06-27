@@ -30,6 +30,7 @@ const entries = (await getCollection('kisisel-blog', ({ data }) => !data.draft))
             publishDate={entry.data.publishDate}
             slug={entry.id}
             category="kisisel-blog"
+            coverImage={entry.data.coverImage}
           />
         ))}
       </div>

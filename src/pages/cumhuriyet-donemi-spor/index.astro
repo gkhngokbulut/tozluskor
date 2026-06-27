@@ -31,6 +31,7 @@ const entries = (await getCollection('cumhuriyet-donemi-spor', ({ data }) => !da
             slug={entry.id}
             category="cumhuriyet-donemi-spor"
             meta={entry.data.period}
+            coverImage={entry.data.coverImage}
           />
         ))}
       </div>
