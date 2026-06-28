@@ -371,3 +371,8 @@ html.qr-open { overflow: hidden; }
 
 /* Kart artık tıklanabilir his versin */
 .card { cursor: pointer; }
+
+/* Hızlı Oku modal link sarmalayıcıları */
+.qr-titlelink { text-decoration: none; display: inline-block; }
+.qr-titlelink:hover .qr-title { color: var(--color-vintage-red); transition: color 0.2s ease; }
+.qr-media { display: block; cursor: pointer; }
