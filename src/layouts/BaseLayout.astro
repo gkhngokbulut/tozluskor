@@ -115,7 +115,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
         const fullpage = overlay.querySelector('.qr-fullpage');
         const closeBtn = overlay.querySelector('.qr-close');
         const cache = {};
-        let openTimer, closeTimer, safetyTimer, enteredModal = false, isOpen = false;
+        let openTimer, closeTimer, safetyTimer, enteredModal = false, isOpen = false, currentHref = '';
 
         function load(href) {
           if (cache[href]) { content.innerHTML = cache[href]; return; }
@@ -143,7 +143,7 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
           meta.textContent = bits.join('  ·  ');
           if (d.pvImg) { img.src = d.pvImg; mediaLink.style.display = ''; }
           else { mediaLink.style.display = 'none'; }
-          fullpage.href = href; titleLink.href = href; mediaLink.href = href;
+          fullpage.href = href; titleLink.href = href; mediaLink.href = href; currentHref = href;
           load(href);
           overlay.classList.add('show');
           overlay.setAttribute('aria-hidden', 'false');
@@ -179,6 +179,10 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
         modal.addEventListener('mouseenter', () => { enteredModal = true; clearTimeout(closeTimer); clearTimeout(safetyTimer); });
         modal.addEventListener('mouseleave', () => { closeTimer = setTimeout(close, 260); });
 
+        modal.addEventListener('click', (e) => {
+          if (e.target.closest('.qr-close') || e.target.closest('a')) return;
+          if (currentHref) window.location.href = currentHref;
+        });
         closeBtn.addEventListener('click', (e) => { e.stopPropagation(); close(); });
         overlay.querySelector('.qr-backdrop').addEventListener('click', close);
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
