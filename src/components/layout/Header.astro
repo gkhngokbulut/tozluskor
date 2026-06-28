@@ -17,41 +17,43 @@ function isActive(href: string): boolean {
 ---
 
 <header class="bg-vintage-dark text-vintage-cream">
-  <!-- Top decorative line -->
-  <div class="border-b border-vintage-gold/30">
-    <div class="max-w-6xl mx-auto px-4 py-1 text-center">
-      <span class="text-xs tracking-[0.3em] uppercase text-vintage-muted font-body">
-        Spor &middot; Tarih &middot; Toplum
+  <!-- Üst şerit: kategori etiketi -->
+  <div class="border-b border-vintage-gold/20">
+    <div class="max-w-6xl mx-auto px-6 py-1.5 text-center">
+      <span class="text-[10px] tracking-[0.35em] uppercase text-vintage-muted/70">
+        Spor &middot; Tarih &middot; Toplum &middot; Kültür
       </span>
     </div>
   </div>
 
-  <!-- Main header -->
-  <div class="max-w-6xl mx-auto px-4 py-6 text-center border-b-2 border-vintage-gold/20">
-    <a href="/" class="inline-block">
-      <h1 class="font-heading text-4xl md:text-5xl font-bold tracking-tight text-vintage-cream">
+  <!-- Logo bloğu -->
+  <div class="max-w-6xl mx-auto px-6 py-7 text-center">
+    <a href="/" class="inline-block group">
+      <h1 class="font-heading text-4xl md:text-[3.25rem] font-bold tracking-tight text-vintage-cream leading-none">
         TOZLU SKOR
       </h1>
-      <div class="flex justify-center items-center gap-3 mt-2 mb-1">
-        <div class="w-12 border-t border-vintage-gold/30"></div>
-        <div class="w-1.5 h-1.5 bg-vintage-gold/40 rotate-45"></div>
-        <div class="w-12 border-t border-vintage-gold/30"></div>
+      <div class="flex justify-center items-center gap-4 mt-3 mb-2">
+        <div class="w-16 border-t border-vintage-gold/25"></div>
+        <div class="w-1 h-1 bg-vintage-gold/50 rotate-45 shrink-0"></div>
+        <div class="w-16 border-t border-vintage-gold/25"></div>
       </div>
-      <p class="text-vintage-muted text-sm tracking-widest uppercase">Sporun Toplumsal Hafızası</p>
+      <p class="text-[11px] text-vintage-muted/80 tracking-[0.28em] uppercase">Sporun Toplumsal Hafızası</p>
     </a>
   </div>
 
-  <!-- Navigation -->
-  <nav class="max-w-6xl mx-auto px-4">
-    <!-- Desktop nav -->
-    <ul class="hidden md:flex justify-center gap-8 py-3">
+  <!-- Navigasyon -->
+  <nav class="border-t border-vintage-gold/10 max-w-6xl mx-auto px-6">
+    <!-- Desktop -->
+    <ul class="hidden md:flex justify-center gap-1 py-0">
       {navLinks.map((link) => (
         <li>
           <a
             href={link.href}
             class:list={[
-              'text-sm uppercase tracking-widest transition-colors hover:text-vintage-gold',
-              isActive(link.href) ? 'text-vintage-gold border-b border-vintage-gold pb-1' : 'text-vintage-cream/80',
+              'relative inline-block px-3 py-3 text-[11px] uppercase tracking-[0.18em] transition-colors duration-200',
+              isActive(link.href)
+                ? 'text-vintage-gold after:absolute after:bottom-0 after:left-3 after:right-3 after:h-px after:bg-vintage-gold/60'
+                : 'text-vintage-cream/65 hover:text-vintage-cream',
             ]}
           >
             {link.label}
@@ -60,29 +62,29 @@ function isActive(href: string): boolean {
       ))}
     </ul>
 
-    <!-- Mobile menu button -->
+    <!-- Mobile toggle -->
     <div class="md:hidden flex justify-center py-3">
       <button
         id="mobile-menu-btn"
-        class="text-vintage-cream/80 hover:text-vintage-gold transition-colors"
+        class="text-vintage-cream/70 hover:text-vintage-gold transition-colors"
         aria-label="Menüyü aç"
         aria-expanded="false"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
     </div>
 
-    <!-- Mobile nav -->
-    <ul id="mobile-menu" class="md:hidden hidden flex-col items-center gap-4 pb-4">
+    <!-- Mobile menü -->
+    <ul id="mobile-menu" class="md:hidden hidden flex-col items-center gap-1 pb-4">
       {navLinks.map((link) => (
         <li>
           <a
             href={link.href}
             class:list={[
-              'text-sm uppercase tracking-widest transition-colors hover:text-vintage-gold',
-              isActive(link.href) ? 'text-vintage-gold' : 'text-vintage-cream/80',
+              'block px-4 py-2 text-[11px] uppercase tracking-[0.18em] transition-colors',
+              isActive(link.href) ? 'text-vintage-gold' : 'text-vintage-cream/65 hover:text-vintage-cream',
             ]}
           >
             {link.label}
