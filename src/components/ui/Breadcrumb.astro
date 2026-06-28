@@ -6,23 +6,31 @@ interface BreadcrumbItem {
 
 interface Props {
   items: BreadcrumbItem[];
+  tone?: 'light' | 'dark';
 }
 
-const { items } = Astro.props;
+const { items, tone = 'light' } = Astro.props;
+
+// light tone = açık zeminde koyu metin; dark tone = koyu zeminde açık metin
+const linkClass = tone === 'dark'
+  ? 'text-vintage-cream/50 hover:text-vintage-gold transition-colors'
+  : 'text-vintage-muted hover:text-vintage-red transition-colors';
+const currentClass = tone === 'dark' ? 'text-vintage-cream/85' : 'text-vintage-dark';
+const sepClass = tone === 'dark' ? 'text-vintage-cream/25' : 'text-vintage-border';
 ---
 
-<nav class="text-sm text-vintage-muted mb-6" aria-label="Breadcrumb">
+<nav class="text-xs tracking-wide mb-0" aria-label="Breadcrumb">
   <ol class="flex items-center gap-2 flex-wrap">
     <li>
-      <a href="/" class="hover:text-vintage-red transition-colors">Ana Sayfa</a>
+      <a href="/" class={linkClass}>Ana Sayfa</a>
     </li>
     {items.map((item) => (
       <li class="flex items-center gap-2">
-        <span class="text-vintage-border">/</span>
+        <span class={sepClass}>/</span>
         {item.href ? (
-          <a href={item.href} class="hover:text-vintage-red transition-colors">{item.label}</a>
+          <a href={item.href} class={linkClass}>{item.label}</a>
         ) : (
-          <span class="text-vintage-dark">{item.label}</span>
+          <span class={`${currentClass} line-clamp-1`}>{item.label}</span>
         )}
       </li>
     ))}
