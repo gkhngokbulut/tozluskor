@@ -4,16 +4,17 @@ import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import Divider from '../components/ui/Divider.astro';
 ---
 
-<BaseLayout title="Hakkımızda — Tozlu Skor" description="Tozlu Skor platformu ve yazarı hakkında bilgiler.">
-  <div class="max-w-3xl mx-auto px-4 py-10">
+<BaseLayout title="Hakkımızda — Tozlu Skor" description="Tozlu Skor platformu hakkında.">
+  <div class="max-w-3xl mx-auto px-6 py-12">
     <Breadcrumb items={[{ label: 'Hakkımızda' }]} />
 
-    <header class="mb-10 text-center">
-      <h1 class="font-heading text-4xl font-bold text-vintage-dark mb-4">Hakkımızda</h1>
-      <div class="flex items-center gap-4 justify-center">
-        <div class="flex-1 max-w-24 border-t border-vintage-border"></div>
-        <span class="text-vintage-border">&diams;</span>
-        <div class="flex-1 max-w-24 border-t border-vintage-border"></div>
+    <header class="mb-10 text-center mt-8">
+      <p class="text-[10px] tracking-[0.35em] uppercase text-vintage-gold/60 mb-4">Künye</p>
+      <h1 class="font-heading text-4xl md:text-5xl font-bold text-vintage-dark mb-5">Hakkımızda</h1>
+      <div class="flex items-center gap-3 justify-center">
+        <span class="w-10 h-px bg-vintage-gold/40"></span>
+        <span class="w-1.5 h-1.5 border border-vintage-gold/50 rotate-45 shrink-0"></span>
+        <span class="w-10 h-px bg-vintage-gold/40"></span>
       </div>
     </header>
 
@@ -21,41 +22,32 @@ import Divider from '../components/ui/Divider.astro';
       <p>
         <strong>Tozlu Skor</strong>, sporun sadece bir oyun ya da eğlence aracı olmadığı inancıyla yola çıkan bir
         içerik platformudur. Burada spor; toplumsal dönüşümlerin, sınıfsal çatışmaların, ulusal kimliklerin ve
-        kültürel değişimlerin bir yansıması olarak ele alınır.
+        kültürel değişimlerin bir yansıması olarak ele alınır. Skorların üzerine biriken tozu kaldırarak,
+        arkalarındaki hikâyelerin peşine düşeriz.
       </p>
 
       <h2>Ne Yapıyoruz?</h2>
-
-      <p>
-        Üç ana alan üzerinden içerik üretiyoruz:
-      </p>
-
+      <p>Dört ana alan üzerinden içerik üretiyoruz:</p>
       <ul>
-        <li>
-          <strong>Spor Kitaplığı:</strong> Spor tarihini şekillendiren kitapların derinlemesine analizleri.
-          Akademik eserlerden popüler tarihi anlatılara kadar geniş bir yelpazede kitap incelemeleri yapıyoruz.
-        </li>
-        <li>
-          <strong>Spor Filmografisi:</strong> Spor filmlerini sadece sinemasal değil, toplumsal ve tarihsel bir
-          perspektiften değerlendiriyoruz. Perdedeki sporun arkasındaki hikayeleri arıyoruz.
-        </li>
-        <li>
-          <strong>Yazıyor Yazıyor:</strong> Spor ve toplum kesişiminde kişisel gözlemler, denemeler ve düşünceler.
-        </li>
+        <li><strong>Spor Kitaplığı:</strong> Spor tarihini şekillendiren kitapların derinlemesine analizleri; akademik eserlerden popüler anlatılara geniş bir yelpaze.</li>
+        <li><strong>Spor Filmografisi:</strong> Spor filmlerini yalnızca sinemasal değil, toplumsal ve tarihsel bir perspektiften değerlendiriyoruz.</li>
+        <li><strong>Cumhuriyet Dönemi Spor:</strong> Cumhuriyet'in kuruluşundan bugüne sporun toplumsal ve siyasal tarihine bakıyoruz.</li>
+        <li><strong>Yazıyor Yazıyor:</strong> Spor ve toplum kesişiminde kişisel gözlemler, denemeler ve düşünceler.</li>
       </ul>
 
       <h2>Neden Tozlu Skor?</h2>
-
       <p>
         Spor, insanlık tarihinin en evrensel dillerinden biridir. Bir futbol maçı, bir olimpiyat yarışı ya da bir
-        boks müsabakası; bunların hepsi çağlarının toplumsal dinamiklerini, siyasi gerilimlerini ve kültürel
-        dönüşümlerini yansıtır. Bu platformda, sporun bu derin katmanlarını keşfetmeyi amaçlıyoruz.
+        boks müsabakası; çağlarının toplumsal dinamiklerini, siyasi gerilimlerini ve kültürel dönüşümlerini yansıtır.
+        Bu platformda sporun bu derin katmanlarını keşfetmeyi amaçlıyoruz.
       </p>
 
       <Divider />
 
       <p class="text-center text-vintage-muted italic">
-        Sorularınız ve önerileriniz için bizimle iletişime geçmekten çekinmeyin.
+        Sorularınız ve önerileriniz için
+        <a href="mailto:tozluskor@gmail.com" class="text-vintage-red hover:text-vintage-gold transition-colors not-italic">tozluskor@gmail.com</a>
+        adresinden bize ulaşabilirsiniz.
       </p>
     </div>
   </div>
