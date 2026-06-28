@@ -2,18 +2,23 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-vintage-cream: #E8DFD0;
-  --color-vintage-paper: #DDD4C4;
-  --color-vintage-brown: #5C4033;
-  --color-vintage-dark: #2C1810;
+  /* Surfaces — lighter, cleaner bone/ivory (less heavy tan) */
+  --color-vintage-cream: #F3EFE7;
+  --color-vintage-paper: #E9E3D8;
+  /* Body text — readable warm ink (was muddy brown #5C4033) */
+  --color-vintage-brown: #3C342D;
+  /* Ink / dark surfaces — refined warm charcoal (was red-brown #2C1810) */
+  --color-vintage-dark: #221E1A;
   --color-vintage-red: #8B2500;
   --color-vintage-green: #2E4A3A;
-  --color-vintage-gold: #B8860B;
-  --color-vintage-muted: #8B7D6B;
-  --color-vintage-border: #C4B8A4;
+  /* Accent — refined antique gold (less olive/muddy than #B8860B) */
+  --color-vintage-gold: #C19A3C;
+  --color-vintage-muted: #8A8276;
+  --color-vintage-border: #D9D2C5;
 
   --font-family-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-family-body: 'Lora', Georgia, serif;
+  --font-family-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 html {
@@ -21,9 +26,10 @@ html {
 }
 
 body {
-  font-family: var(--font-family-body);
+  font-family: var(--font-family-sans);
   background-color: var(--color-vintage-cream);
   color: var(--color-vintage-brown);
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -56,12 +62,11 @@ h1, h2, h3, h4, h5, h6 {
   border-left-width: 3px;
 }
 
-/* Subtle page texture */
+/* Subtle page texture — very faint warm tint only */
 body {
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(184, 134, 11, 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(139, 37, 0, 0.02) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(92, 64, 51, 0.02) 0%, transparent 50%);
+    radial-gradient(ellipse at 25% 30%, rgba(193, 154, 60, 0.025) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 75%, rgba(60, 52, 45, 0.015) 0%, transparent 55%);
 }
 
 /* Drop cap for first paragraph in articles */
