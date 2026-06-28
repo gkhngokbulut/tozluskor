@@ -376,3 +376,8 @@ html.qr-open { overflow: hidden; }
 .qr-titlelink { text-decoration: none; display: inline-block; }
 .qr-titlelink:hover .qr-title { color: var(--color-vintage-red); transition: color 0.2s ease; }
 .qr-media { display: block; cursor: pointer; }
+
+/* Hızlı Oku penceresi tıklanınca sayfaya gider */
+.qr-modal { cursor: pointer; }
+.qr-content a, .qr-close, .qr-fullpage, .qr-titlelink, .qr-media { cursor: pointer; }
+.qr-content { cursor: auto; }
