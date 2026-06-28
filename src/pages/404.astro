@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — Tozlu Skor" description="Sayfa bulunamadı.">
+  <div class="bg-vintage-dark text-vintage-cream min-h-[70vh] flex items-center justify-center px-6">
+    <div class="text-center max-w-lg">
+      <!-- Dekoratif skor tablosu -->
+      <div class="inline-block border border-vintage-gold/20 px-10 py-6 mb-10">
+        <p class="text-[10px] tracking-[0.4em] uppercase text-vintage-gold/50 mb-2">Skor Tablosu</p>
+        <div class="flex items-center justify-center gap-8">
+          <div>
+            <p class="font-heading text-6xl md:text-8xl font-bold text-vintage-cream/90">4</p>
+            <p class="text-[10px] text-vintage-muted/60 uppercase tracking-widest mt-1">Biz</p>
+          </div>
+          <div class="text-vintage-gold/30 font-heading text-4xl">—</div>
+          <div>
+            <p class="font-heading text-6xl md:text-8xl font-bold text-vintage-gold">4</p>
+            <p class="text-[10px] text-vintage-muted/60 uppercase tracking-widest mt-1">Sayfa</p>
+          </div>
+        </div>
+      </div>
+
+      <h1 class="font-heading text-2xl md:text-3xl font-bold text-vintage-cream mb-4">
+        Bu skoru bulamadık.
+      </h1>
+
+      <div class="flex justify-center items-center gap-3 mb-6">
+        <span class="w-8 h-px bg-vintage-gold/30"></span>
+        <span class="w-1.5 h-1.5 border border-vintage-gold/40 rotate-45 shrink-0"></span>
+        <span class="w-8 h-px bg-vintage-gold/30"></span>
+      </div>
+
+      <p class="font-body text-vintage-cream/50 text-base leading-relaxed mb-10">
+        Aradığınız sayfa silinmiş, taşınmış ya da hiç var olmamış olabilir.
+        Tozlu skorların peşindeyiz ama bu sayfa kayıtlarda yok.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <a href="/" class="inline-block bg-vintage-gold text-vintage-dark text-[11px] uppercase tracking-[0.2em] px-6 py-3 font-semibold hover:bg-vintage-gold/80 transition-colors">
+          Ana Sayfaya Dön
+        </a>
+        <a href="/ara" class="inline-block border border-vintage-cream/20 text-vintage-cream/65 hover:text-vintage-cream hover:border-vintage-cream/40 text-[11px] uppercase tracking-[0.2em] px-6 py-3 transition-colors">
+          Aramayı Dene
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
