@@ -7,38 +7,26 @@ interface Props {
 const { quote, author } = Astro.props;
 ---
 
-<div class="parallax-band relative py-16 md:py-20 my-0 bg-vintage-dark text-vintage-cream overflow-hidden">
-  <!-- Background layer - slowest -->
-  <div class="parallax-layer absolute inset-0" data-speed="0.1">
-    <div class="absolute inset-0 bg-gradient-to-r from-vintage-dark via-vintage-dark/90 to-vintage-dark"></div>
-    <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.08) 2px, rgba(255,255,255,0.08) 3px);"></div>
-  </div>
+<div class="relative py-12 md:py-16 bg-vintage-dark text-vintage-cream overflow-hidden">
+  <!-- Tek, sade radial vurgu -->
+  <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 50%, rgba(193,154,60,0.06) 0%, transparent 60%);"></div>
 
-  <!-- Decorative layer - mid speed -->
-  <div class="parallax-layer absolute inset-0 pointer-events-none" data-speed="0.25">
-    <div class="absolute top-4 left-[10%] w-2 h-2 border border-vintage-gold/15 rotate-45 float-slow"></div>
-    <div class="absolute bottom-4 right-[10%] w-2 h-2 border border-vintage-gold/15 rotate-45 float-slow" style="animation-delay: -3s;"></div>
-  </div>
-
-  <!-- Content layer - fastest (closest to viewer) -->
-  <div class="parallax-layer relative max-w-3xl mx-auto px-4 text-center" data-speed="0.4">
+  <div class="relative max-w-2xl mx-auto px-6 text-center">
     {quote ? (
       <>
-        <div class="text-vintage-gold/30 text-5xl font-heading mb-4">&ldquo;</div>
-        <p class="text-vintage-cream/70 text-lg md:text-xl italic font-heading leading-relaxed mb-4">
+        <div class="text-vintage-gold/25 text-4xl font-heading mb-3 leading-none">&ldquo;</div>
+        <p class="text-vintage-cream/65 text-base md:text-lg italic font-body leading-relaxed mb-4">
           {quote}
         </p>
         {author && (
-          <p class="text-vintage-gold/50 text-sm tracking-widest uppercase">— {author}</p>
+          <p class="text-vintage-gold/45 text-[11px] tracking-[0.25em] uppercase">— {author}</p>
         )}
       </>
     ) : (
-      <div class="flex items-center justify-center gap-4">
-        <div class="w-16 border-t border-vintage-gold/20"></div>
-        <div class="w-2 h-2 border border-vintage-gold/25 rotate-45 float-slow"></div>
-        <div class="w-16 border-t border-vintage-gold/20"></div>
-        <div class="w-2 h-2 bg-vintage-gold/15 rotate-45 float-slow" style="animation-delay: -2s;"></div>
-        <div class="w-16 border-t border-vintage-gold/20"></div>
+      <div class="flex items-center justify-center gap-3">
+        <div class="w-12 h-px bg-vintage-gold/20"></div>
+        <div class="w-1 h-1 bg-vintage-gold/30 rotate-45 shrink-0"></div>
+        <div class="w-12 h-px bg-vintage-gold/20"></div>
       </div>
     )}
   </div>
