@@ -2,9 +2,9 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  /* Surfaces — lighter, cleaner bone/ivory (less heavy tan) */
-  --color-vintage-cream: #F3EFE7;
-  --color-vintage-paper: #E9E3D8;
+  /* Surfaces — warm bone (less stark, more harmonious) */
+  --color-vintage-cream: #EFE8DA;
+  --color-vintage-paper: #E6DECF;
   /* Body text — readable warm ink (was muddy brown #5C4033) */
   --color-vintage-brown: #3C342D;
   /* Ink / dark surfaces — refined warm charcoal (was red-brown #2C1810) */
@@ -62,11 +62,12 @@ h1, h2, h3, h4, h5, h6 {
   border-left-width: 3px;
 }
 
-/* Subtle page texture — very faint warm tint only */
+/* Subtle page texture — warm tint for depth on light pages */
 body {
   background-image:
-    radial-gradient(ellipse at 25% 30%, rgba(193, 154, 60, 0.025) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 75%, rgba(60, 52, 45, 0.015) 0%, transparent 55%);
+    radial-gradient(ellipse at 25% 15%, rgba(193, 154, 60, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 85%, rgba(60, 52, 45, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(34, 30, 26, 0.015) 0%, transparent 70%);
 }
 
 /* Drop cap for first paragraph in articles */
