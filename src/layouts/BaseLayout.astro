@@ -52,13 +52,47 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
       rel="stylesheet"
     />
     <title>{title}</title>
+    <script is:inline>
+      // Açılış ekranı sadece oturumun ilk yüklemesinde gösterilir
+      if (!sessionStorage.getItem('ts_loaded')) {
+        document.documentElement.classList.add('is-loading');
+      }
+    </script>
   </head>
   <body class="min-h-screen flex flex-col">
+    <!-- Açılış ekranı -->
+    <div class="site-loader" aria-hidden="true">
+      <div class="site-loader__inner">
+        <img src="/logo.png" alt="Tozlu Skor" class="site-loader__logo" />
+        <span class="site-loader__bar"></span>
+      </div>
+    </div>
+
     <Header />
     <main class="flex-1">
       <slot />
     </main>
     <Footer />
+    <script is:inline>
+      (function () {
+        const loader = document.querySelector('.site-loader');
+        if (!loader) return;
+        function dismiss() {
+          sessionStorage.setItem('ts_loaded', '1');
+          loader.classList.add('site-loader--hide');
+          document.documentElement.classList.remove('is-loading');
+          setTimeout(() => loader.remove(), 700);
+        }
+        if (sessionStorage.getItem('ts_loaded')) {
+          loader.remove();
+          document.documentElement.classList.remove('is-loading');
+        } else {
+          window.addEventListener('load', () => setTimeout(dismiss, 600));
+          // Güvenlik: 3sn sonra zorla kapat
+          setTimeout(dismiss, 3000);
+        }
+      })();
+    </script>
     <script is:inline>
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", user => {
