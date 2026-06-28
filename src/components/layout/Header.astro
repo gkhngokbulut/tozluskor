@@ -17,68 +17,64 @@ function isActive(href: string): boolean {
 ---
 
 <header class="bg-vintage-dark text-vintage-cream">
-  <!-- Üst künye şeridi -->
-  <div class="border-b border-vintage-gold/15">
-    <div class="max-w-6xl mx-auto px-6 py-2 flex items-center justify-center">
-      <span class="text-[10px] tracking-[0.4em] uppercase text-vintage-muted/60">
-        Spor &middot; Tarih &middot; Toplum &middot; Kültür
-      </span>
-    </div>
-  </div>
-
   <!-- Logo (masthead) -->
-  <div class="max-w-6xl mx-auto px-6 pt-7 pb-5 text-center">
+  <div class="max-w-6xl mx-auto px-6 pt-8 pb-5 text-center">
     <a href="/" class="inline-block" aria-label="Tozlu Skor — Ana Sayfa">
-      <img
-        src="/logo.png"
-        alt="Tozlu Skor"
-        class="h-36 md:h-48 w-auto mx-auto"
-      />
+      <img src="/logo.png" alt="Tozlu Skor" class="h-36 md:h-48 w-auto mx-auto" />
     </a>
   </div>
 
   <!-- Navigasyon -->
-  <nav class="border-t border-vintage-gold/12 max-w-6xl mx-auto px-6">
-    <ul class="hidden md:flex justify-center gap-1">
-      {navLinks.map((link) => (
+  <nav class="border-t border-vintage-gold/15">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-center">
+      <!-- Desktop menü -->
+      <ul class="hidden md:flex items-center justify-center">
+        {navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'nav-link relative inline-block px-4 py-4 text-[11px] uppercase tracking-[0.2em] transition-colors duration-200',
+                isActive(link.href) ? 'is-active text-vintage-gold' : 'text-vintage-cream/65 hover:text-vintage-cream',
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
         <li>
-          <a
-            href={link.href}
-            class:list={[
-              'relative inline-block px-4 py-3.5 text-[11px] uppercase tracking-[0.18em] transition-colors duration-200',
-              isActive(link.href)
-                ? 'text-vintage-gold after:absolute after:bottom-0 after:left-4 after:right-4 after:h-px after:bg-vintage-gold/70'
-                : 'text-vintage-cream/60 hover:text-vintage-cream',
-            ]}
-          >
-            {link.label}
+          <a href="/ara" aria-label="Ara" class="ml-2 inline-flex items-center justify-center w-9 h-9 text-vintage-cream/60 hover:text-vintage-gold transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <circle cx="11" cy="11" r="7" /><path stroke-linecap="round" d="M21 21l-4.3-4.3" />
+            </svg>
           </a>
         </li>
-      ))}
-    </ul>
+      </ul>
 
-    <!-- Mobil -->
-    <div class="md:hidden flex justify-center py-3">
-      <button
-        id="mobile-menu-btn"
-        class="text-vintage-cream/70 hover:text-vintage-gold transition-colors"
-        aria-label="Menüyü aç"
-        aria-expanded="false"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+      <!-- Mobil toggle + arama -->
+      <div class="md:hidden flex items-center justify-between w-full py-3">
+        <a href="/ara" aria-label="Ara" class="text-vintage-cream/70 hover:text-vintage-gold transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+            <circle cx="11" cy="11" r="7" /><path stroke-linecap="round" d="M21 21l-4.3-4.3" />
+          </svg>
+        </a>
+        <button id="mobile-menu-btn" class="text-vintage-cream/70 hover:text-vintage-gold transition-colors" aria-label="Menüyü aç" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
     </div>
 
-    <ul id="mobile-menu" class="md:hidden hidden flex-col items-center gap-1 pb-4">
+    <!-- Mobil menü -->
+    <ul id="mobile-menu" class="md:hidden hidden flex-col items-center gap-1 pb-4 border-t border-vintage-gold/10 pt-3">
       {navLinks.map((link) => (
         <li>
           <a
             href={link.href}
             class:list={[
-              'block px-4 py-2 text-[11px] uppercase tracking-[0.18em] transition-colors',
-              isActive(link.href) ? 'text-vintage-gold' : 'text-vintage-cream/60 hover:text-vintage-cream',
+              'block px-4 py-2 text-[11px] uppercase tracking-[0.2em] transition-colors',
+              isActive(link.href) ? 'text-vintage-gold' : 'text-vintage-cream/65 hover:text-vintage-cream',
             ]}
           >
             {link.label}
@@ -88,6 +84,24 @@ function isActive(href: string): boolean {
     </ul>
   </nav>
 </header>
+
+<style>
+  /* Hover'da büyüyen altın alt çizgi — daha belirgin, yenilikçi nav */
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.6rem;
+    height: 1px;
+    background: var(--color-vintage-gold);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav-link:hover::after { transform: scaleX(1); }
+  .nav-link.is-active::after { transform: scaleX(1); opacity: 0.7; }
+</style>
 
 <script>
   const btn = document.getElementById('mobile-menu-btn');
