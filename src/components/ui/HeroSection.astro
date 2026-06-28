@@ -1,92 +1,76 @@
 ---
-const categories = [
-  { href: '/spor-kitapligi', label: 'Kitaplık' },
-  { href: '/spor-filmografisi', label: 'Filmografi' },
-  { href: '/cumhuriyet-donemi-spor', label: 'Cumhuriyet Dönemi' },
-  { href: '/kisisel-blog', label: 'Yazıyor Yazıyor' },
-];
 ---
 
 <section class="hero relative overflow-hidden bg-vintage-dark text-vintage-cream">
   <!-- Katmanlı sıcak derinlik -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <div class="absolute inset-0" style="background: radial-gradient(ellipse 90% 70% at 50% 38%, rgba(193,154,60,0.10) 0%, transparent 60%);"></div>
-    <div class="absolute inset-0" style="background: radial-gradient(ellipse 120% 80% at 50% 120%, rgba(34,30,26,0.9) 0%, transparent 55%);"></div>
-    <!-- Toz/grain imzası ("Tozlu") -->
+    <div class="absolute inset-0" style="background: radial-gradient(ellipse 90% 60% at 50% 30%, rgba(193,154,60,0.10) 0%, transparent 60%);"></div>
     <div class="hero-grain absolute inset-0"></div>
-    <!-- İnce üst & alt hairline -->
     <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-vintage-gold/20 to-transparent"></div>
   </div>
 
-  <div class="relative max-w-3xl mx-auto px-6 py-24 md:py-28 text-center">
-
-    <!-- Eyebrow -->
-    <p class="hero-fade text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-vintage-gold/65 mb-8" style="--d:0s">
-      Est. 2026 &nbsp;&middot;&nbsp; Spor Kültürü Dergisi
-    </p>
-
-    <!-- Kapak başlığı -->
-    <h1 class="hero-fade font-heading font-bold leading-[1.04] text-vintage-cream mb-7" style="--d:.08s">
-      <span class="block text-5xl md:text-7xl lg:text-[5.25rem]">Sporun</span>
-      <span class="block text-5xl md:text-7xl lg:text-[5.25rem]">Toplumsal</span>
-      <span class="block italic font-normal text-vintage-gold text-5xl md:text-7xl lg:text-[5.25rem]">Hafızası</span>
+  <!-- Slogan bloğu -->
+  <div class="relative max-w-3xl mx-auto px-6 pt-20 md:pt-24 pb-12 md:pb-14 text-center">
+    <h1 class="hero-fade font-heading font-bold leading-[1.05] text-vintage-cream" style="--d:.05s">
+      <span class="block text-5xl md:text-7xl lg:text-[5rem]">Tozlu Skorların</span>
+      <span class="block italic font-normal text-vintage-gold text-5xl md:text-7xl lg:text-[5rem] mt-1">Peşinde</span>
     </h1>
 
-    <!-- İnce ayraç -->
-    <div class="hero-fade flex justify-center items-center gap-3 mb-7" style="--d:.16s">
+    <div class="hero-fade flex justify-center items-center gap-3 my-7" style="--d:.13s">
       <span class="w-12 h-px bg-vintage-gold/40"></span>
       <span class="w-1.5 h-1.5 border border-vintage-gold/50 rotate-45 shrink-0"></span>
       <span class="w-12 h-px bg-vintage-gold/40"></span>
     </div>
 
-    <!-- Dek -->
-    <p class="hero-fade font-body text-vintage-cream/55 text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-11" style="--d:.24s">
+    <p class="hero-fade font-body text-vintage-cream/55 text-base md:text-lg leading-relaxed max-w-xl mx-auto" style="--d:.21s">
       Kitaplar, filmler ve kişisel gözlemler aracılığıyla sporun tarihsel ve
-      toplumsal boyutlarını; üzerine biriken tozu kaldırarak yeniden okuyoruz.
+      toplumsal hafızasının peşindeyiz; üzerine biriken tozu kaldırarak.
     </p>
+  </div>
 
-    <!-- Kategori girişleri -->
-    <nav class="hero-fade flex flex-wrap justify-center gap-2.5" style="--d:.32s" aria-label="Bölümler">
-      {categories.map((cat) => (
-        <a
-          href={cat.href}
-          class="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-vintage-cream/50 hover:text-vintage-gold border border-vintage-cream/12 hover:border-vintage-gold/40 px-4 py-2.5 transition-all duration-300"
-        >
-          <span class="w-1 h-1 bg-vintage-gold/40 group-hover:bg-vintage-gold rotate-45 transition-colors"></span>
-          {cat.label}
-        </a>
-      ))}
-    </nav>
-
+  <!-- Stadyum görseli (full-bleed band) -->
+  <div class="hero-image-fade relative w-full" style="--d:.3s">
+    <div class="relative max-w-6xl mx-auto md:px-6">
+      <div class="relative overflow-hidden md:border md:border-vintage-gold/15">
+        <img
+          src="/hero-stadium.jpg"
+          alt="Gün batımında tepeden görülen stadyum ve şehir manzarası"
+          class="w-full h-[42vh] md:h-[52vh] object-cover"
+          loading="eager"
+        />
+        <!-- Üstten koyu geçiş (metinle birleşsin) -->
+        <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-vintage-dark to-transparent pointer-events-none"></div>
+        <!-- Hafif sıcak vinyet -->
+        <div class="absolute inset-0 pointer-events-none" style="box-shadow: inset 0 0 120px rgba(34,30,26,0.45);"></div>
+      </div>
+    </div>
   </div>
 
   <!-- Scroll göstergesi -->
-  <div class="relative pb-10 flex flex-col items-center gap-2 text-vintage-cream/25">
+  <div class="relative pt-8 pb-10 flex flex-col items-center gap-2 text-vintage-cream/25">
     <span class="text-[9px] tracking-[0.35em] uppercase">Keşfet</span>
     <span class="scroll-line block w-px h-8 bg-gradient-to-b from-vintage-cream/30 to-transparent"></span>
   </div>
 </section>
 
 <style>
-  /* Toz dokusu — marka adına ("Tozlu") sadık ince grain imzası */
   .hero-grain {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     opacity: 0.05;
     mix-blend-mode: overlay;
   }
 
-  /* Yumuşak giriş animasyonu (kademeli) */
-  .hero-fade {
+  .hero-fade, .hero-image-fade {
     opacity: 0;
     transform: translateY(14px);
     animation: heroFade 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     animation-delay: var(--d, 0s);
   }
+  .hero-image-fade { transform: translateY(24px); }
   @keyframes heroFade {
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Scroll çizgisi nazik nabız */
   .scroll-line {
     animation: scrollPulse 2.4s ease-in-out infinite;
     transform-origin: top;
@@ -97,7 +81,7 @@ const categories = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-fade { animation: none; opacity: 1; transform: none; }
+    .hero-fade, .hero-image-fade { animation: none; opacity: 1; transform: none; }
     .scroll-line { animation: none; }
   }
 </style>
