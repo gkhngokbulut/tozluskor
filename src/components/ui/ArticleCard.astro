@@ -103,18 +103,21 @@ const fallbackLabel: Record<string, string> = {
 </article>
 
 <style>
-  /* ── Hover içerik önizlemesi ── */
+  /* ── Hover içerik önizlemesi (görsel görünür kalır, altta yazı kesiti) ── */
   .card-preview {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(20,16,12,0.97) 55%, rgba(20,16,12,0.85) 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 1.1rem 1.25rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top,
+      rgba(20,16,12,0.96) 0%,
+      rgba(20,16,12,0.88) 45%,
+      rgba(20,16,12,0.45) 80%,
+      rgba(20,16,12,0) 100%);
+    padding: 2.75rem 1.25rem 1.1rem;
     opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    transform: translateY(12px);
+    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1);
     pointer-events: none;
     z-index: 3;
   }
@@ -124,21 +127,22 @@ const fallbackLabel: Record<string, string> = {
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: #C19A3C;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
   .card-preview__text {
     font-family: 'Lora', Georgia, serif;
-    color: rgba(239,232,218,0.85);
-    font-size: 0.82rem;
-    line-height: 1.55;
+    color: rgba(239,232,218,0.92);
+    font-size: 0.8rem;
+    line-height: 1.5;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .featured .card-preview__text { -webkit-line-clamp: 7; font-size: 0.9rem; }
+  .featured .card-preview__text { -webkit-line-clamp: 5; font-size: 0.92rem; line-height: 1.6; }
   .card-preview__cta {
-    margin-top: 0.85rem;
+    display: inline-block;
+    margin-top: 0.7rem;
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 0.6rem;
     letter-spacing: 0.18em;
