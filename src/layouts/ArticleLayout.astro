@@ -24,40 +24,43 @@ const formattedDate = publishDate.toLocaleDateString('tr-TR', {
 ---
 
 <BaseLayout title={`${title} — Tozlu Skor`} description={description}>
-  <article class="max-w-3xl mx-auto px-4 py-10">
-    <Breadcrumb
-      items={[
-        { label: categoryLabel, href: `/${category}` },
-        { label: title },
-      ]}
-    />
+  <article class="max-w-2xl mx-auto px-6 py-12">
 
-    <!-- Article header -->
+    <div class="mb-8">
+      <Breadcrumb
+        items={[
+          { label: categoryLabel, href: `/${category}` },
+          { label: title },
+        ]}
+      />
+    </div>
+
+    <!-- Makale başlığı -->
     <header class="mb-10">
       <CategoryBadge category={category} />
 
-      <h1 class="font-heading text-3xl md:text-4xl font-bold text-vintage-dark mt-4 mb-4 leading-tight">
+      <h1 class="font-heading text-3xl md:text-[2.6rem] font-bold text-vintage-dark mt-5 mb-5 leading-[1.15]">
         {title}
       </h1>
 
-      <p class="text-vintage-muted text-lg italic mb-4">{description}</p>
+      <p class="font-body text-vintage-brown/70 text-lg italic leading-relaxed mb-6">{description}</p>
 
-      <div class="flex flex-wrap items-center gap-4 text-sm text-vintage-muted">
+      <div class="flex flex-wrap items-center gap-3 text-xs text-vintage-muted/80 tracking-wide uppercase">
         <time datetime={publishDate.toISOString()}>
           {formattedDate}
         </time>
         {meta && (
           <>
-            <span class="text-vintage-border">|</span>
-            <span class="italic">{meta}</span>
+            <span class="text-vintage-border">&middot;</span>
+            <span class="normal-case tracking-normal italic text-sm">{meta}</span>
           </>
         )}
       </div>
 
       {tags.length > 0 && (
-        <div class="flex flex-wrap gap-2 mt-4">
+        <div class="flex flex-wrap gap-2 mt-5">
           {tags.map((tag) => (
-            <span class="text-xs bg-vintage-paper text-vintage-muted px-2 py-1 border border-vintage-border rounded-sm">
+            <span class="text-[11px] text-vintage-muted px-2.5 py-1 border border-vintage-border/60">
               #{tag}
             </span>
           ))}
@@ -67,18 +70,18 @@ const formattedDate = publishDate.toLocaleDateString('tr-TR', {
 
     <Divider />
 
-    <!-- Article content -->
+    <!-- Makale içeriği -->
     <div class="prose prose-lg max-w-none font-body">
       <slot />
     </div>
 
     <Divider />
 
-    <!-- Back link -->
+    <!-- Geri linki -->
     <div class="text-center">
       <a
         href={`/${category}`}
-        class="inline-block text-sm text-vintage-red hover:text-vintage-dark transition-colors uppercase tracking-wider"
+        class="inline-block text-[11px] text-vintage-brown/50 hover:text-vintage-red transition-colors uppercase tracking-[0.18em]"
       >
         &larr; {categoryLabel} sayfasına dön
       </a>
