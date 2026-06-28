@@ -9,37 +9,25 @@ const categories = [
 ];
 ---
 
-<footer class="bg-vintage-dark text-vintage-cream/70">
-  <div class="max-w-6xl mx-auto px-4 py-10">
-    <!-- Decorative divider -->
-    <div class="flex items-center gap-3 mb-8">
-      <div class="flex-1 flex items-center gap-2">
-        <div class="w-2 h-2 border border-vintage-gold/20 rotate-45"></div>
-        <div class="flex-1 border-t border-vintage-gold/20"></div>
-      </div>
-      <span class="text-vintage-gold/40 text-lg">&diams;</span>
-      <div class="flex-1 flex items-center gap-2">
-        <div class="flex-1 border-t border-vintage-gold/20"></div>
-        <div class="w-2 h-2 border border-vintage-gold/20 rotate-45"></div>
-      </div>
-    </div>
+<footer class="bg-vintage-dark text-vintage-cream/60">
+  <div class="max-w-6xl mx-auto px-6 pt-12 pb-8">
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-      <!-- Brand -->
-      <div class="text-center md:text-left">
-        <p class="font-heading text-xl text-vintage-cream/90 mb-2">TOZLU SKOR</p>
-        <p class="text-sm text-vintage-muted leading-relaxed">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+      <!-- Marka -->
+      <div>
+        <p class="font-heading text-lg text-vintage-cream/90 mb-3 tracking-tight">TOZLU SKOR</p>
+        <p class="text-sm text-vintage-muted/70 leading-relaxed max-w-xs">
           Spor, tarih ve toplum üzerine okumalar, analizler ve düşünceler.
         </p>
       </div>
 
-      <!-- Categories -->
-      <div class="text-center">
-        <p class="text-xs uppercase tracking-[0.2em] text-vintage-gold/60 mb-3">Kategoriler</p>
-        <ul class="space-y-1.5">
+      <!-- Kategoriler -->
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.25em] text-vintage-gold/50 mb-4">Kategoriler</p>
+        <ul class="space-y-2">
           {categories.map((cat) => (
             <li>
-              <a href={cat.href} class="text-sm text-vintage-cream/50 hover:text-vintage-gold transition-colors">
+              <a href={cat.href} class="text-sm text-vintage-cream/45 hover:text-vintage-cream/80 transition-colors duration-200">
                 {cat.label}
               </a>
             </li>
@@ -47,20 +35,21 @@ const categories = [
         </ul>
       </div>
 
-      <!-- About -->
-      <div class="text-center md:text-right">
-        <p class="text-xs uppercase tracking-[0.2em] text-vintage-gold/60 mb-3">Hakkımızda</p>
-        <a href="/hakkimizda" class="text-sm text-vintage-cream/50 hover:text-vintage-gold transition-colors">
-          Bizi tanıyın &rarr;
+      <!-- Hakkımızda -->
+      <div>
+        <p class="text-[10px] uppercase tracking-[0.25em] text-vintage-gold/50 mb-4">Künye</p>
+        <a href="/hakkimizda" class="text-sm text-vintage-cream/45 hover:text-vintage-cream/80 transition-colors duration-200">
+          Hakkımızda &rarr;
         </a>
       </div>
     </div>
 
-    <!-- Bottom bar -->
-    <div class="border-t border-vintage-gold/10 pt-4 text-center">
-      <p class="text-xs text-vintage-muted/50">
-        &copy; {year} Tozlu Skor. Tüm hakları saklıdır.
+    <!-- Alt çizgi -->
+    <div class="border-t border-vintage-gold/10 pt-5 text-center">
+      <p class="text-[11px] text-vintage-muted/40 tracking-wide">
+        &copy; {year} Tozlu Skor
       </p>
     </div>
+
   </div>
 </footer>
