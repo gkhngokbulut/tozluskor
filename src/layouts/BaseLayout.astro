@@ -74,74 +74,89 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
     </main>
     <Footer />
 
-    <!-- Hover içerik önizleme popover'ı (site geneli) -->
-    <div id="hover-preview" class="hover-preview" aria-hidden="true">
-      <div class="hp-media"><img alt="" /></div>
-      <div class="hp-body">
-        <span class="hp-cat"></span>
-        <h4 class="hp-title"></h4>
-        <p class="hp-excerpt"></p>
-        <div class="hp-foot">
-          <span class="hp-min"></span>
-          <span class="hp-cta">Yazıyı Oku &rarr;</span>
+    <!-- Hızlı Oku penceresi (site geneli) -->
+    <div id="quick-read" class="qr-overlay" aria-hidden="true">
+      <div class="qr-backdrop"></div>
+      <div class="qr-modal" role="dialog" aria-modal="true" aria-label="Hızlı okuma">
+        <button class="qr-close" aria-label="Kapat" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <div class="qr-scroll">
+          <div class="qr-media"><img alt="" /></div>
+          <div class="qr-head">
+            <span class="qr-cat"></span>
+            <h2 class="qr-title"></h2>
+            <p class="qr-meta"></p>
+            <div class="qr-rule"><span class="l"></span><span class="d"></span><span class="l"></span></div>
+          </div>
+          <div class="qr-content prose prose-lg max-w-none font-body"></div>
+          <div class="qr-foot">
+            <a class="qr-fullpage" href="#">Tam sayfada aç &rarr;</a>
+          </div>
         </div>
       </div>
     </div>
     <script is:inline>
       (function () {
-        if (!window.matchMedia || !window.matchMedia('(hover: hover)').matches) return;
-        const pop = document.getElementById('hover-preview');
-        if (!pop) return;
-        const media = pop.querySelector('.hp-media');
-        const img = pop.querySelector('.hp-media img');
-        const cat = pop.querySelector('.hp-cat');
-        const title = pop.querySelector('.hp-title');
-        const exc = pop.querySelector('.hp-excerpt');
-        const min = pop.querySelector('.hp-min');
-        let timer, current;
+        const overlay = document.getElementById('quick-read');
+        if (!overlay) return;
+        const scroll = overlay.querySelector('.qr-scroll');
+        const media = overlay.querySelector('.qr-media');
+        const img = overlay.querySelector('.qr-media img');
+        const cat = overlay.querySelector('.qr-cat');
+        const title = overlay.querySelector('.qr-title');
+        const meta = overlay.querySelector('.qr-meta');
+        const content = overlay.querySelector('.qr-content');
+        const fullpage = overlay.querySelector('.qr-fullpage');
+        const closeBtn = overlay.querySelector('.qr-close');
+        const cache = {};
 
-        function fill(card) {
+        function open(card) {
           const d = card.dataset;
-          title.textContent = d.pvTitle || '';
+          const href = d.pvHref;
+          if (!href) return;
           cat.textContent = d.pvCat || '';
-          let text = d.pvExcerpt || '';
-          exc.textContent = text ? text + '…' : '';
+          title.textContent = d.pvTitle || '';
+          const bits = [];
+          if (d.pvMeta) bits.push(d.pvMeta);
+          if (d.pvMin) bits.push(d.pvMin + ' dk okuma');
+          meta.textContent = bits.join('  ·  ');
           if (d.pvImg) { img.src = d.pvImg; media.style.display = ''; }
           else { media.style.display = 'none'; }
-          min.textContent = d.pvMin ? (d.pvMin + ' dk okuma') : '';
+          fullpage.href = href;
+          content.innerHTML = '<p class="qr-loading">İçerik yükleniyor…</p>';
+          overlay.classList.add('show');
+          overlay.setAttribute('aria-hidden', 'false');
+          document.documentElement.classList.add('qr-open');
+          scroll.scrollTop = 0;
+
+          if (cache[href]) { content.innerHTML = cache[href]; return; }
+          fetch(href)
+            .then((r) => r.text())
+            .then((html) => {
+              const doc = new DOMParser().parseFromString(html, 'text/html');
+              const prose = doc.querySelector('.prose');
+              const out = prose ? prose.innerHTML : '<p>İçerik getirilemedi.</p>';
+              cache[href] = out;
+              content.innerHTML = out;
+            })
+            .catch(() => {
+              content.innerHTML = '<p>İçerik yüklenemedi. <a href="' + href + '">Yazıyı sayfasında açın.</a></p>';
+            });
         }
 
-        function place(card) {
-          const r = card.getBoundingClientRect();
-          const pw = pop.offsetWidth, ph = pop.offsetHeight;
-          const gap = 14;
-          let left = r.right + gap;
-          if (left + pw > window.innerWidth - 12) left = r.left - pw - gap;
-          if (left < 12) left = Math.min(r.left, window.innerWidth - pw - 12);
-          let top = r.top + (r.height - ph) / 2;
-          top = Math.max(12, Math.min(top, window.innerHeight - ph - 12));
-          pop.style.left = left + 'px';
-          pop.style.top = top + 'px';
+        function close() {
+          overlay.classList.remove('show');
+          overlay.setAttribute('aria-hidden', 'true');
+          document.documentElement.classList.remove('qr-open');
         }
 
         document.querySelectorAll('[data-preview]').forEach((card) => {
-          card.addEventListener('mouseenter', () => {
-            current = card;
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-              fill(card);
-              pop.style.visibility = 'hidden';
-              pop.classList.add('show');
-              requestAnimationFrame(() => { place(card); pop.style.visibility = ''; });
-            }, 90);
-          });
-          card.addEventListener('mouseleave', () => {
-            clearTimeout(timer);
-            if (current === card) { pop.classList.remove('show'); current = null; }
-          });
+          card.addEventListener('click', (e) => { e.preventDefault(); open(card); });
         });
-
-        window.addEventListener('scroll', () => { pop.classList.remove('show'); current = null; }, { passive: true });
+        closeBtn.addEventListener('click', close);
+        overlay.querySelector('.qr-backdrop').addEventListener('click', close);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
       })();
     </script>
     <script is:inline>
