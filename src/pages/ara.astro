@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const labels: Record<string, string> = {
+  'spor-kitapligi': 'Spor Kitaplığı',
+  'spor-filmografisi': 'Spor Filmografisi',
+  'cumhuriyet-donemi-spor': 'Cumhuriyet Dönemi Spor',
+  'kisisel-blog': 'Yazıyor Yazıyor',
+};
+
+const collections = ['spor-kitapligi', 'spor-filmografisi', 'cumhuriyet-donemi-spor', 'kisisel-blog'] as const;
+
+let items: any[] = [];
+for (const col of collections) {
+  const entries = await getCollection(col as any, ({ data }: any) => !data.draft);
+  for (const entry of entries) {
+    items.push({
+      title: entry.data.title,
+      description: entry.data.description,
+      tags: entry.data.tags || [],
+      category: col,
+      categoryLabel: labels[col],
+      url: `/${col}/${entry.id}`,
+      date: entry.data.publishDate.toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' }),
+    });
+  }
+}
+---
+
+<BaseLayout title="Ara — Tozlu Skor" description="Yazılarda ve anahtar kelimelerde arama yapın.">
+
+  <!-- Arama başlığı -->
+  <div class="bg-vintage-dark text-vintage-cream">
+    <div class="max-w-3xl mx-auto px-6 py-12 md:py-16 text-center">
+      <p class="text-[10px] tracking-[0.35em] uppercase text-vintage-gold/55 mb-4">Arşivde Ara</p>
+      <h1 class="font-heading text-4xl md:text-5xl font-bold text-vintage-cream leading-tight mb-7">
+        Ne aramıştınız?
+      </h1>
+
+      <div class="relative max-w-xl mx-auto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-vintage-cream/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6">
+          <circle cx="11" cy="11" r="7" /><path stroke-linecap="round" d="M21 21l-4.3-4.3" />
+        </svg>
+        <input
+          id="search-input"
+          type="search"
+          autocomplete="off"
+          placeholder="Başlık, konu veya anahtar kelime…"
+          class="w-full bg-vintage-cream/5 border border-vintage-cream/15 focus:border-vintage-gold/50 text-vintage-cream placeholder:text-vintage-cream/35 text-base pl-12 pr-4 py-3.5 outline-none transition-colors"
+        />
+      </div>
+      <p id="search-count" class="text-vintage-cream/40 text-xs tracking-wide mt-4 h-4"></p>
+    </div>
+  </div>
+
+  <!-- Sonuçlar -->
+  <div class="max-w-4xl mx-auto px-6 py-12">
+    <div id="search-results" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+    <div id="search-empty" class="text-center py-16 hidden">
+      <p class="text-vintage-muted text-lg font-body italic">Aramanızla eşleşen yazı bulunamadı.</p>
+      <p class="text-vintage-muted/70 text-sm mt-2">Farklı bir anahtar kelime deneyin.</p>
+    </div>
+    <div id="search-hint" class="text-center py-16">
+      <p class="text-vintage-muted/70 text-sm font-body italic">Aramak için yukarıya yazmaya başlayın.</p>
+    </div>
+  </div>
+
+  <script type="application/json" id="search-data" set:html={JSON.stringify(items)}></script>
+
+  <script is:inline>
+    (function () {
+      const data = JSON.parse(document.getElementById('search-data').textContent || '[]');
+      const input = document.getElementById('search-input');
+      const resultsEl = document.getElementById('search-results');
+      const countEl = document.getElementById('search-count');
+      const emptyEl = document.getElementById('search-empty');
+      const hintEl = document.getElementById('search-hint');
+
+      const norm = (s) => (s || '')
+        .toLocaleLowerCase('tr')
+        .replace(/ı/g, 'i').replace(/İ/g, 'i')
+        .replace(/ş/g, 's').replace(/ğ/g, 'g')
+        .replace(/ü/g, 'u').replace(/ö/g, 'o').replace(/ç/g, 'c');
+
+      const badgeColor = {
+        'spor-kitapligi': 'color:#8B2500;border-color:rgba(139,37,0,0.3)',
+        'spor-filmografisi': 'color:#2E4A3A;border-color:rgba(46,74,58,0.3)',
+        'cumhuriyet-donemi-spor': 'color:#221E1A;border-color:rgba(34,30,26,0.25)',
+        'kisisel-blog': 'color:#C19A3C;border-color:rgba(193,154,60,0.35)',
+      };
+
+      function render(items) {
+        resultsEl.innerHTML = items.map((it) => `
+          <a href="${it.url}" class="group block bg-vintage-paper border border-vintage-border/60 hover:border-vintage-border hover:shadow-md transition-all duration-300 p-5">
+            <span class="inline-block text-[10px] uppercase tracking-[0.18em] px-2.5 py-1 border mb-3" style="${badgeColor[it.category] || ''}">${it.categoryLabel}</span>
+            <h3 class="font-heading text-lg font-bold text-vintage-dark group-hover:text-vintage-red transition-colors leading-snug mb-2">${it.title}</h3>
+            <p class="text-vintage-brown/75 text-sm leading-relaxed line-clamp-2 mb-3">${it.description}</p>
+            ${it.tags && it.tags.length ? `<div class="flex flex-wrap gap-1.5">${it.tags.slice(0,4).map((t) => `<span class="text-[10px] text-vintage-muted/80 border border-vintage-border/50 px-2 py-0.5">#${t}</span>`).join('')}</div>` : ''}
+          </a>
+        `).join('');
+      }
+
+      function search(q) {
+        const nq = norm(q.trim());
+        if (!nq) {
+          hintEl.classList.remove('hidden');
+          emptyEl.classList.add('hidden');
+          resultsEl.innerHTML = '';
+          countEl.textContent = '';
+          return;
+        }
+        hintEl.classList.add('hidden');
+        const terms = nq.split(/\s+/);
+        const matches = data.filter((it) => {
+          const hay = norm(it.title + ' ' + it.description + ' ' + (it.tags || []).join(' ') + ' ' + it.categoryLabel);
+          return terms.every((t) => hay.includes(t));
+        });
+        if (matches.length === 0) {
+          emptyEl.classList.remove('hidden');
+          resultsEl.innerHTML = '';
+          countEl.textContent = '';
+        } else {
+          emptyEl.classList.add('hidden');
+          render(matches);
+          countEl.textContent = matches.length + ' sonuç bulundu';
+        }
+      }
+
+      input.addEventListener('input', (e) => search(e.target.value));
+
+      // URL'de ?q= varsa otomatik ara
+      const params = new URLSearchParams(location.search);
+      const q0 = params.get('q');
+      if (q0) { input.value = q0; search(q0); }
+      input.focus();
+    })();
+  </script>
+</BaseLayout>
