@@ -22,6 +22,7 @@ const { Content } = await render(entry);
   categoryLabel="Spor Filmografisi"
   meta={`${entry.data.filmTitle} (${entry.data.filmYear}) — ${entry.data.director}`}
   tags={entry.data.tags}
+  coverImage={entry.data.coverImage}
 >
   <Content />
 </ArticleLayout>
