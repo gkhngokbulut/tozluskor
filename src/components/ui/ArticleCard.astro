@@ -10,9 +10,10 @@ interface Props {
   meta?: string;
   coverImage?: string;
   featured?: boolean;
+  excerpt?: string;
 }
 
-const { title, description, publishDate, slug, category, meta, coverImage, featured = false } = Astro.props;
+const { title, description, publishDate, slug, category, meta, coverImage, featured = false, excerpt } = Astro.props;
 
 const formattedDate = publishDate.toLocaleDateString('tr-TR', {
   year: 'numeric', month: 'long', day: 'numeric',
@@ -68,6 +69,14 @@ const fallbackLabel: Record<string, string> = {
         )}
       </div>
     )}
+
+    {excerpt && (
+      <div class="card-preview">
+        <p class="card-preview__label">Önizleme</p>
+        <p class="card-preview__text">{excerpt}…</p>
+        <span class="card-preview__cta">Yazıyı Oku &rarr;</span>
+      </div>
+    )}
   </a>
 
   <!-- İçerik -->
@@ -94,6 +103,53 @@ const fallbackLabel: Record<string, string> = {
 </article>
 
 <style>
+  /* ── Hover içerik önizlemesi ── */
+  .card-preview {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(20,16,12,0.97) 55%, rgba(20,16,12,0.85) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.1rem 1.25rem;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    pointer-events: none;
+    z-index: 3;
+  }
+  .card-preview__label {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #C19A3C;
+    margin-bottom: 0.5rem;
+  }
+  .card-preview__text {
+    font-family: 'Lora', Georgia, serif;
+    color: rgba(239,232,218,0.85);
+    font-size: 0.82rem;
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .featured .card-preview__text { -webkit-line-clamp: 7; font-size: 0.9rem; }
+  .card-preview__cta {
+    margin-top: 0.85rem;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #C19A3C;
+  }
+  /* Sadece hover destekleyen cihazlarda (mobilde kapalı) */
+  @media (hover: hover) {
+    .card:hover .card-preview { opacity: 1; transform: translateY(0); }
+  }
+
   /* ── Hover: kart yükselmesi + görsel büyümesi ── */
   .card {
     transition: box-shadow 0.35s ease, border-color 0.35s ease;
