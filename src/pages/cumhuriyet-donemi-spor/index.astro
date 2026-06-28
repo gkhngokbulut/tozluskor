@@ -8,21 +8,31 @@ const entries = (await getCollection('cumhuriyet-donemi-spor', ({ data }) => !da
   .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
 ---
 
-<BaseLayout title="Cumhuriyet Dönemi Spor — Tozlu Skor" description="Cumhuriyet döneminde sporun toplumsal rolü ve tarihsel gelişimi.">
-  <div class="max-w-6xl mx-auto px-4 py-10">
-    <Breadcrumb items={[{ label: 'Cumhuriyet Dönemi Spor' }]} />
+<BaseLayout title="Cumhuriyet Dönemi Spor — Tozlu Skor" description="Cumhuriyet dönemi spor tarihi ve toplumsal analizi.">
 
-    <header class="mb-10">
-      <h1 class="font-heading text-4xl font-bold text-vintage-dark mb-3">Cumhuriyet Dönemi Spor</h1>
-      <p class="text-vintage-muted text-lg max-w-2xl">
-        Cumhuriyet'in kuruluşundan günümüze sporun toplumsal rolü, ulus inşası sürecindeki yeri ve tarihsel dönüşümü.
+  <div class="bg-vintage-dark text-vintage-cream">
+    <div class="max-w-6xl mx-auto px-6 py-12 md:py-16">
+      <Breadcrumb items={[{ label: 'Cumhuriyet Dönemi Spor' }]} />
+      <p class="text-[10px] tracking-[0.35em] uppercase text-vintage-gold/55 mb-4 mt-4">Arşiv</p>
+      <h1 class="font-heading text-4xl md:text-5xl font-bold text-vintage-cream leading-tight mb-4">
+        Cumhuriyet Dönemi Spor
+      </h1>
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-8 h-px bg-vintage-gold/40"></div>
+        <div class="w-1 h-1 bg-vintage-gold/50 rotate-45 shrink-0"></div>
+        <div class="w-16 h-px bg-vintage-gold/20"></div>
+      </div>
+      <p class="text-vintage-cream/50 text-base max-w-xl font-body leading-relaxed">
+        Cumhuriyet'in kuruluşundan günümüze sporun toplumsal ve siyasal tarihi.
       </p>
-    </header>
+    </div>
+  </div>
 
+  <div class="max-w-6xl mx-auto px-6 py-12">
     {entries.length === 0 ? (
-      <p class="text-vintage-muted text-center py-12">Henüz içerik eklenmemiş.</p>
+      <p class="text-vintage-muted text-center py-16">Henüz içerik eklenmemiş.</p>
     ) : (
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {entries.map((entry) => (
           <ArticleCard
             title={entry.data.title}
