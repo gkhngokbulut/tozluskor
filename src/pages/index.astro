@@ -28,7 +28,7 @@ const bloglar = (await getCollection('kisisel-blog', ({ data }) => !data.draft))
 
   <div class="max-w-6xl mx-auto px-6">
     <div class="fade-in-section">
-      <LatestArticles title="Spor Kitaplığı" href="/spor-kitapligi">
+      <LatestArticles subtitle="Sporu farklı açılardan ele alan kitapların incelemeleri ve okumaları." title="Spor Kitaplığı" href="/spor-kitapligi">
         {kitaplar.map((entry) => (
           <ArticleCard
             title={entry.data.title}
@@ -48,7 +48,7 @@ const bloglar = (await getCollection('kisisel-blog', ({ data }) => !data.draft))
 
   <div class="max-w-6xl mx-auto px-6">
     <div class="fade-in-section">
-      <LatestArticles title="Spor Filmografisi" href="/spor-filmografisi">
+      <LatestArticles subtitle="Sporun beyazperdedeki yansımaları: filmler, yönetmenler ve sahneler." title="Spor Filmografisi" href="/spor-filmografisi">
         {filmler.map((entry) => (
           <ArticleCard
             title={entry.data.title}
@@ -68,7 +68,7 @@ const bloglar = (await getCollection('kisisel-blog', ({ data }) => !data.draft))
 
   <div class="max-w-6xl mx-auto px-6">
     <div class="fade-in-section">
-      <LatestArticles title="Cumhuriyet Dönemi Spor" href="/cumhuriyet-donemi-spor">
+      <LatestArticles subtitle="Cumhuriyet'in kuruluşundan bugüne sporun toplumsal ve siyasal tarihi." title="Cumhuriyet Dönemi Spor" href="/cumhuriyet-donemi-spor">
         {cumhuriyet.map((entry) => (
           <ArticleCard
             title={entry.data.title}
@@ -91,7 +91,7 @@ const bloglar = (await getCollection('kisisel-blog', ({ data }) => !data.draft))
 
   <div class="max-w-6xl mx-auto px-6">
     <div class="fade-in-section">
-      <LatestArticles title="Yazıyor Yazıyor" href="/kisisel-blog">
+      <LatestArticles subtitle="Spor, toplum ve kültür üzerine kişisel gözlemler ve notlar." title="Yazıyor Yazıyor" href="/kisisel-blog">
         {bloglar.map((entry) => (
           <ArticleCard
             title={entry.data.title}
