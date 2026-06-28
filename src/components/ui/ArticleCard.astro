@@ -11,9 +11,15 @@ interface Props {
   coverImage?: string;
   featured?: boolean;
   excerpt?: string;
+  minutes?: number;
 }
 
-const { title, description, publishDate, slug, category, meta, coverImage, featured = false, excerpt } = Astro.props;
+const { title, description, publishDate, slug, category, meta, coverImage, featured = false, excerpt, minutes } = Astro.props;
+
+const categoryLabels: Record<string,string> = {
+  'spor-kitapligi':'Spor Kitaplığı','spor-filmografisi':'Spor Filmografisi',
+  'cumhuriyet-donemi-spor':'Cumhuriyet Dönemi Spor','kisisel-blog':'Yazıyor Yazıyor'
+};
 
 const formattedDate = publishDate.toLocaleDateString('tr-TR', {
   year: 'numeric', month: 'long', day: 'numeric',
@@ -29,7 +35,17 @@ const fallbackLabel: Record<string, string> = {
 };
 ---
 
-<article class:list={['card group bg-vintage-paper border border-vintage-border/60 overflow-hidden transition-all duration-350', featured ? 'featured' : '']}>
+<article
+  class:list={['card group bg-vintage-paper border border-vintage-border/60 overflow-hidden transition-all duration-350', featured ? 'featured' : '']}
+  data-preview
+  data-pv-title={title}
+  data-pv-cat={categoryLabels[category]}
+  data-pv-href={href}
+  data-pv-meta={meta || ''}
+  data-pv-img={coverImage || ''}
+  data-pv-min={minutes ? String(minutes) : ''}
+  data-pv-excerpt={excerpt || description}
+>
 
   <!-- Görsel -->
   <a href={href} class="block visual-wrap" tabindex="-1" aria-hidden="true">
@@ -70,13 +86,6 @@ const fallbackLabel: Record<string, string> = {
       </div>
     )}
 
-    {excerpt && (
-      <div class="card-preview">
-        <p class="card-preview__label">Önizleme</p>
-        <p class="card-preview__text">{excerpt}…</p>
-        <span class="card-preview__cta">Yazıyı Oku &rarr;</span>
-      </div>
-    )}
   </a>
 
   <!-- İçerik -->
@@ -103,57 +112,6 @@ const fallbackLabel: Record<string, string> = {
 </article>
 
 <style>
-  /* ── Hover içerik önizlemesi (görsel görünür kalır, altta yazı kesiti) ── */
-  .card-preview {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to top,
-      rgba(20,16,12,0.96) 0%,
-      rgba(20,16,12,0.88) 45%,
-      rgba(20,16,12,0.45) 80%,
-      rgba(20,16,12,0) 100%);
-    padding: 2.75rem 1.25rem 1.1rem;
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.22,1,0.36,1);
-    pointer-events: none;
-    z-index: 3;
-  }
-  .card-preview__label {
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.5rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: #C19A3C;
-    margin-bottom: 0.4rem;
-  }
-  .card-preview__text {
-    font-family: 'Lora', Georgia, serif;
-    color: rgba(239,232,218,0.92);
-    font-size: 0.8rem;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .featured .card-preview__text { -webkit-line-clamp: 5; font-size: 0.92rem; line-height: 1.6; }
-  .card-preview__cta {
-    display: inline-block;
-    margin-top: 0.7rem;
-    font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: #C19A3C;
-  }
-  /* Sadece hover destekleyen cihazlarda (mobilde kapalı) */
-  @media (hover: hover) {
-    .card:hover .card-preview { opacity: 1; transform: translateY(0); }
-  }
-
   /* ── Hover: kart yükselmesi + görsel büyümesi ── */
   .card {
     transition: box-shadow 0.35s ease, border-color 0.35s ease;
