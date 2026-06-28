@@ -12,9 +12,10 @@ interface Props {
   categoryLabel: string;
   meta?: string;
   tags?: string[];
+  coverImage?: string;
 }
 
-const { title, description, publishDate, category, categoryLabel, meta, tags = [] } = Astro.props;
+const { title, description, publishDate, category, categoryLabel, meta, tags = [], coverImage } = Astro.props;
 
 const formattedDate = publishDate.toLocaleDateString('tr-TR', {
   year: 'numeric',
@@ -34,6 +35,12 @@ const formattedDate = publishDate.toLocaleDateString('tr-TR', {
         ]}
       />
     </div>
+
+    {coverImage && (
+      <div class="mb-8 -mx-6 md:mx-0 overflow-hidden md:border md:border-vintage-border/60">
+        <img src={coverImage} alt={title} class="w-full h-56 md:h-80 object-cover" loading="eager" />
+      </div>
+    )}
 
     <!-- Makale başlığı -->
     <header class="mb-10">
