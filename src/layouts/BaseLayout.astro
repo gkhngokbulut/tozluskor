@@ -82,10 +82,10 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
         </button>
         <div class="qr-scroll">
-          <div class="qr-media"><img alt="" /></div>
+          <a class="qr-media" href="#"><img alt="" /></a>
           <div class="qr-head">
             <span class="qr-cat"></span>
-            <h2 class="qr-title"></h2>
+            <a class="qr-titlelink" href="#"><h2 class="qr-title"></h2></a>
             <p class="qr-meta"></p>
             <div class="qr-rule"><span class="l"></span><span class="d"></span><span class="l"></span></div>
           </div>
@@ -100,9 +100,14 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
       (function () {
         const overlay = document.getElementById('quick-read');
         if (!overlay) return;
+        const hoverable = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+        if (!hoverable) return; // dokunmatik cihazlarda link normal çalışır
+
+        const modal = overlay.querySelector('.qr-modal');
         const scroll = overlay.querySelector('.qr-scroll');
-        const media = overlay.querySelector('.qr-media');
+        const mediaLink = overlay.querySelector('.qr-media');
         const img = overlay.querySelector('.qr-media img');
+        const titleLink = overlay.querySelector('.qr-titlelink');
         const cat = overlay.querySelector('.qr-cat');
         const title = overlay.querySelector('.qr-title');
         const meta = overlay.querySelector('.qr-meta');
@@ -110,6 +115,21 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
         const fullpage = overlay.querySelector('.qr-fullpage');
         const closeBtn = overlay.querySelector('.qr-close');
         const cache = {};
+        let openTimer, closeTimer, safetyTimer, enteredModal = false, isOpen = false;
+
+        function load(href) {
+          if (cache[href]) { content.innerHTML = cache[href]; return; }
+          content.innerHTML = '<p class="qr-loading">İçerik yükleniyor…</p>';
+          fetch(href).then((r) => r.text()).then((html) => {
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const prose = doc.querySelector('.prose');
+            const out = prose ? prose.innerHTML : '<p>İçerik getirilemedi.</p>';
+            cache[href] = out;
+            content.innerHTML = out;
+          }).catch(() => {
+            content.innerHTML = '<p>İçerik yüklenemedi. <a href="' + href + '">Yazıyı sayfasında açın.</a></p>';
+          });
+        }
 
         function open(card) {
           const d = card.dataset;
@@ -121,40 +141,45 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
           if (d.pvMeta) bits.push(d.pvMeta);
           if (d.pvMin) bits.push(d.pvMin + ' dk okuma');
           meta.textContent = bits.join('  ·  ');
-          if (d.pvImg) { img.src = d.pvImg; media.style.display = ''; }
-          else { media.style.display = 'none'; }
-          fullpage.href = href;
-          content.innerHTML = '<p class="qr-loading">İçerik yükleniyor…</p>';
+          if (d.pvImg) { img.src = d.pvImg; mediaLink.style.display = ''; }
+          else { mediaLink.style.display = 'none'; }
+          fullpage.href = href; titleLink.href = href; mediaLink.href = href;
+          load(href);
           overlay.classList.add('show');
           overlay.setAttribute('aria-hidden', 'false');
           document.documentElement.classList.add('qr-open');
           scroll.scrollTop = 0;
-
-          if (cache[href]) { content.innerHTML = cache[href]; return; }
-          fetch(href)
-            .then((r) => r.text())
-            .then((html) => {
-              const doc = new DOMParser().parseFromString(html, 'text/html');
-              const prose = doc.querySelector('.prose');
-              const out = prose ? prose.innerHTML : '<p>İçerik getirilemedi.</p>';
-              cache[href] = out;
-              content.innerHTML = out;
-            })
-            .catch(() => {
-              content.innerHTML = '<p>İçerik yüklenemedi. <a href="' + href + '">Yazıyı sayfasında açın.</a></p>';
-            });
+          isOpen = true; enteredModal = false;
+          clearTimeout(safetyTimer);
+          // Modal'e girilmezse güvenlik kapanışı
+          safetyTimer = setTimeout(() => { if (!enteredModal) close(); }, 1400);
         }
 
         function close() {
+          clearTimeout(safetyTimer); clearTimeout(closeTimer);
           overlay.classList.remove('show');
           overlay.setAttribute('aria-hidden', 'true');
           document.documentElement.classList.remove('qr-open');
+          isOpen = false; enteredModal = false;
         }
 
+        // Kartlar: hover ile aç (gecikmeli), tıklayınca sayfaya git
         document.querySelectorAll('[data-preview]').forEach((card) => {
-          card.addEventListener('click', (e) => { e.preventDefault(); open(card); });
+          card.addEventListener('mouseenter', () => {
+            if (isOpen) return;
+            clearTimeout(openTimer);
+            openTimer = setTimeout(() => open(card), 260);
+          });
+          card.addEventListener('mouseleave', () => clearTimeout(openTimer));
+          // tıklama: açma zamanlayıcısını iptal et, linkin normal çalışmasına izin ver
+          card.addEventListener('click', () => clearTimeout(openTimer));
         });
-        closeBtn.addEventListener('click', close);
+
+        // Modal'e girince kalıcı, çıkınca gecikmeli kapan
+        modal.addEventListener('mouseenter', () => { enteredModal = true; clearTimeout(closeTimer); clearTimeout(safetyTimer); });
+        modal.addEventListener('mouseleave', () => { closeTimer = setTimeout(close, 260); });
+
+        closeBtn.addEventListener('click', (e) => { e.stopPropagation(); close(); });
         overlay.querySelector('.qr-backdrop').addEventListener('click', close);
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
       })();
