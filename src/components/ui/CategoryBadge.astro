@@ -6,15 +6,15 @@ interface Props {
 const { category } = Astro.props;
 
 const config = {
-  'spor-kitapligi': { label: 'Spor Kitaplığı', colorClass: 'bg-vintage-red/10 text-vintage-red border-vintage-red/20' },
-  'spor-filmografisi': { label: 'Spor Filmografisi', colorClass: 'bg-vintage-green/10 text-vintage-green border-vintage-green/20' },
-  'cumhuriyet-donemi-spor': { label: 'Cumhuriyet Dönemi Spor', colorClass: 'bg-vintage-dark/10 text-vintage-dark border-vintage-dark/20' },
-  'kisisel-blog': { label: 'Yazıyor Yazıyor', colorClass: 'bg-vintage-gold/10 text-vintage-gold border-vintage-gold/20' },
+  'spor-kitapligi': { label: 'Spor Kitaplığı', colorClass: 'text-vintage-red border-vintage-red/30' },
+  'spor-filmografisi': { label: 'Spor Filmografisi', colorClass: 'text-vintage-green border-vintage-green/30' },
+  'cumhuriyet-donemi-spor': { label: 'Cumhuriyet Dönemi Spor', colorClass: 'text-vintage-dark border-vintage-dark/25' },
+  'kisisel-blog': { label: 'Yazıyor Yazıyor', colorClass: 'text-vintage-gold border-vintage-gold/35' },
 };
 
 const { label, colorClass } = config[category];
 ---
 
-<span class:list={['inline-block text-xs uppercase tracking-widest px-3 py-1 border rounded-sm font-body', colorClass]}>
+<span class:list={['inline-block text-[10px] uppercase tracking-[0.18em] px-2.5 py-1 border', colorClass]}>
   {label}
 </span>
