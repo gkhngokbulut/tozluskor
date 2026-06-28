@@ -17,45 +17,38 @@ function isActive(href: string): boolean {
 ---
 
 <header class="bg-vintage-dark text-vintage-cream">
-  <!-- Üst şerit -->
-  <div class="border-b border-vintage-gold/20">
-    <div class="max-w-6xl mx-auto px-6 py-1.5 text-center">
-      <span class="text-[10px] tracking-[0.35em] uppercase text-vintage-muted/70">
+  <!-- Üst künye şeridi -->
+  <div class="border-b border-vintage-gold/15">
+    <div class="max-w-6xl mx-auto px-6 py-2 flex items-center justify-center">
+      <span class="text-[10px] tracking-[0.4em] uppercase text-vintage-muted/60">
         Spor &middot; Tarih &middot; Toplum &middot; Kültür
       </span>
     </div>
   </div>
 
-  <!-- Logo -->
-  <div class="max-w-6xl mx-auto px-6 py-5 text-center">
-    <a href="/" class="inline-block">
+  <!-- Logo (masthead) -->
+  <div class="max-w-6xl mx-auto px-6 pt-7 pb-5 text-center">
+    <a href="/" class="inline-block" aria-label="Tozlu Skor — Ana Sayfa">
       <img
         src="/logo.png"
         alt="Tozlu Skor"
         class="h-36 md:h-48 w-auto mx-auto"
       />
-      <div class="flex justify-center items-center gap-4 mt-3 mb-2">
-        <div class="w-16 border-t border-vintage-gold/25"></div>
-        <div class="w-1 h-1 bg-vintage-gold/50 rotate-45 shrink-0"></div>
-        <div class="w-16 border-t border-vintage-gold/25"></div>
-      </div>
-      <p class="text-[11px] text-vintage-muted/80 tracking-[0.28em] uppercase">Sporun Toplumsal Hafızası</p>
     </a>
   </div>
 
   <!-- Navigasyon -->
-  <nav class="border-t border-vintage-gold/10 max-w-6xl mx-auto px-6">
-    <!-- Desktop -->
-    <ul class="hidden md:flex justify-center gap-1 py-0">
+  <nav class="border-t border-vintage-gold/12 max-w-6xl mx-auto px-6">
+    <ul class="hidden md:flex justify-center gap-1">
       {navLinks.map((link) => (
         <li>
           <a
             href={link.href}
             class:list={[
-              'relative inline-block px-3 py-3 text-[11px] uppercase tracking-[0.18em] transition-colors duration-200',
+              'relative inline-block px-4 py-3.5 text-[11px] uppercase tracking-[0.18em] transition-colors duration-200',
               isActive(link.href)
-                ? 'text-vintage-gold after:absolute after:bottom-0 after:left-3 after:right-3 after:h-px after:bg-vintage-gold/60'
-                : 'text-vintage-cream/65 hover:text-vintage-cream',
+                ? 'text-vintage-gold after:absolute after:bottom-0 after:left-4 after:right-4 after:h-px after:bg-vintage-gold/70'
+                : 'text-vintage-cream/60 hover:text-vintage-cream',
             ]}
           >
             {link.label}
@@ -64,7 +57,7 @@ function isActive(href: string): boolean {
       ))}
     </ul>
 
-    <!-- Mobile toggle -->
+    <!-- Mobil -->
     <div class="md:hidden flex justify-center py-3">
       <button
         id="mobile-menu-btn"
@@ -78,7 +71,6 @@ function isActive(href: string): boolean {
       </button>
     </div>
 
-    <!-- Mobile menü -->
     <ul id="mobile-menu" class="md:hidden hidden flex-col items-center gap-1 pb-4">
       {navLinks.map((link) => (
         <li>
@@ -86,7 +78,7 @@ function isActive(href: string): boolean {
             href={link.href}
             class:list={[
               'block px-4 py-2 text-[11px] uppercase tracking-[0.18em] transition-colors',
-              isActive(link.href) ? 'text-vintage-gold' : 'text-vintage-cream/65 hover:text-vintage-cream',
+              isActive(link.href) ? 'text-vintage-gold' : 'text-vintage-cream/60 hover:text-vintage-cream',
             ]}
           >
             {link.label}
