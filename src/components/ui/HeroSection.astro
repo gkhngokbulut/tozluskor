@@ -1,100 +1,64 @@
 ---
-
 ---
 
-<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-  <!-- Parallax background layers -->
+<section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+
+  <!-- Zemin: düz koyu + tek hafif radial vurgu -->
   <div class="absolute inset-0 bg-vintage-dark"></div>
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 60%, rgba(193,154,60,0.07) 0%, transparent 55%);"></div>
+  <!-- Alt geçiş: içerik bölümüne yumuşak bağlantı -->
+  <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-vintage-dark/60"></div>
 
-  <!-- Gradient overlay for depth -->
-  <div class="absolute inset-0 bg-gradient-to-b from-vintage-dark via-vintage-dark/95 to-vintage-dark"></div>
+  <!-- İçerik -->
+  <div class="relative max-w-2xl mx-auto px-6 text-center text-vintage-cream">
 
-  <!-- Slow-moving background layer (depth layer 1) -->
-  <div class="parallax-layer absolute inset-0 pointer-events-none" data-speed="0.15">
-    <div class="absolute top-[20%] left-0 right-0 border-t border-vintage-gold/5"></div>
-    <div class="absolute bottom-[20%] left-0 right-0 border-t border-vintage-gold/5"></div>
-    <!-- Scan-line texture -->
-    <div class="absolute inset-0 opacity-[0.02]" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 3px);"></div>
-    <!-- Radial glow -->
-    <div class="absolute inset-0" style="background: radial-gradient(ellipse at center, rgba(184,134,11,0.08) 0%, transparent 50%);"></div>
-  </div>
+    <!-- Üst etiket -->
+    <p class="text-[10px] tracking-[0.45em] uppercase text-vintage-gold/60 mb-10">Est. 2026</p>
 
-  <!-- Mid-speed decorative elements (depth layer 2) -->
-  <div class="parallax-layer absolute inset-0 pointer-events-none overflow-hidden" data-speed="0.3">
-    <div class="absolute top-[15%] left-[10%] w-3 h-3 border border-vintage-gold/15 rotate-45 float-slow"></div>
-    <div class="absolute top-[25%] right-[15%] w-2 h-2 bg-vintage-gold/10 rotate-45 float-slow" style="animation-delay: -2s;"></div>
-    <div class="absolute bottom-[20%] left-[20%] w-2.5 h-2.5 border border-vintage-gold/10 rotate-45 float-slow" style="animation-delay: -4s;"></div>
-    <div class="absolute bottom-[30%] right-[10%] w-1.5 h-1.5 bg-vintage-gold/8 rotate-45 float-slow" style="animation-delay: -1s;"></div>
-    <div class="absolute top-[40%] left-[5%] w-1 h-1 bg-vintage-cream/5 rotate-45 float-slow" style="animation-delay: -3s;"></div>
-    <div class="absolute top-[60%] right-[8%] w-1.5 h-1.5 border border-vintage-cream/5 rotate-45 float-slow" style="animation-delay: -5s;"></div>
-  </div>
-
-  <!-- Content (depth layer 3 - moves fastest, closest to viewer) -->
-  <div class="parallax-layer relative max-w-3xl mx-auto px-4 text-center text-vintage-cream" data-speed="0.5">
-    <!-- Decorative top frame -->
-    <div class="flex items-center gap-3 mb-10">
-      <div class="flex-1 flex items-center gap-2">
-        <div class="w-2 h-2 border border-vintage-gold/30 rotate-45 float-slow"></div>
-        <div class="flex-1 border-t border-vintage-gold/25"></div>
-      </div>
-      <span class="text-vintage-gold/40 text-3xl float-slower">&diams;</span>
-      <div class="flex-1 flex items-center gap-2">
-        <div class="flex-1 border-t border-vintage-gold/25"></div>
-        <div class="w-2 h-2 border border-vintage-gold/30 rotate-45 float-slow" style="animation-delay: -3s;"></div>
-      </div>
-    </div>
-
-    <p class="text-xs tracking-[0.5em] uppercase text-vintage-gold/70 mb-6">Est. 2026</p>
-
-    <h2 class="font-heading text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-5 text-vintage-cream">
-      Sporun Toplumsal<br />
-      <span class="italic font-normal text-vintage-gold">Hafızası</span>
+    <!-- Ana başlık -->
+    <h2 class="font-heading text-5xl md:text-6xl lg:text-[4.5rem] font-bold leading-[1.08] mb-6 text-vintage-cream">
+      Sporun<br />
+      Toplumsal
+      <span class="italic font-normal text-vintage-gold"> Hafızası</span>
     </h2>
 
-    <!-- Decorative mid-rule -->
-    <div class="flex justify-center gap-3 items-center mb-6">
-      <div class="w-12 border-t border-vintage-gold/30"></div>
-      <div class="w-2 h-2 bg-vintage-gold/20 rotate-45 float-slow"></div>
-      <div class="w-12 border-t border-vintage-gold/30"></div>
+    <!-- Ayırıcı -->
+    <div class="flex justify-center items-center gap-3 mb-7">
+      <div class="w-10 border-t border-vintage-gold/30"></div>
+      <div class="w-1 h-1 bg-vintage-gold/50 rotate-45 shrink-0"></div>
+      <div class="w-10 border-t border-vintage-gold/30"></div>
     </div>
 
-    <p class="text-vintage-cream/50 text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-10 font-body">
+    <!-- Alt açıklama -->
+    <p class="text-vintage-cream/55 text-base md:text-lg leading-relaxed max-w-lg mx-auto mb-10 font-body">
       Kitaplar, filmler ve kişisel gözlemler aracılığıyla sporun tarihsel ve toplumsal boyutlarını keşfediyoruz.
     </p>
 
-    <!-- Category quick links -->
-    <div class="flex flex-wrap justify-center gap-3 md:gap-4 mb-10">
-      <a href="/spor-kitapligi" class="text-xs uppercase tracking-[0.2em] text-vintage-cream/40 hover:text-vintage-gold transition-all duration-300 border border-vintage-cream/10 px-5 py-2.5 hover:border-vintage-gold/30 hover:bg-vintage-gold/5">
+    <!-- Kategori linkleri -->
+    <div class="flex flex-wrap justify-center gap-2 md:gap-3">
+      <a href="/spor-kitapligi"
+        class="text-[10px] uppercase tracking-[0.18em] text-vintage-cream/45 hover:text-vintage-gold border border-vintage-cream/12 hover:border-vintage-gold/35 px-4 py-2 transition-all duration-250">
         Kitaplık
       </a>
-      <a href="/spor-filmografisi" class="text-xs uppercase tracking-[0.2em] text-vintage-cream/40 hover:text-vintage-gold transition-all duration-300 border border-vintage-cream/10 px-5 py-2.5 hover:border-vintage-gold/30 hover:bg-vintage-gold/5">
+      <a href="/spor-filmografisi"
+        class="text-[10px] uppercase tracking-[0.18em] text-vintage-cream/45 hover:text-vintage-gold border border-vintage-cream/12 hover:border-vintage-gold/35 px-4 py-2 transition-all duration-250">
         Filmografi
       </a>
-      <a href="/cumhuriyet-donemi-spor" class="text-xs uppercase tracking-[0.2em] text-vintage-cream/40 hover:text-vintage-gold transition-all duration-300 border border-vintage-cream/10 px-5 py-2.5 hover:border-vintage-gold/30 hover:bg-vintage-gold/5">
-        Cumhuriyet Dönemi Spor
+      <a href="/cumhuriyet-donemi-spor"
+        class="text-[10px] uppercase tracking-[0.18em] text-vintage-cream/45 hover:text-vintage-gold border border-vintage-cream/12 hover:border-vintage-gold/35 px-4 py-2 transition-all duration-250">
+        Cumhuriyet Dönemi
       </a>
-      <a href="/kisisel-blog" class="text-xs uppercase tracking-[0.2em] text-vintage-cream/40 hover:text-vintage-gold transition-all duration-300 border border-vintage-cream/10 px-5 py-2.5 hover:border-vintage-gold/30 hover:bg-vintage-gold/5">
+      <a href="/kisisel-blog"
+        class="text-[10px] uppercase tracking-[0.18em] text-vintage-cream/45 hover:text-vintage-gold border border-vintage-cream/12 hover:border-vintage-gold/35 px-4 py-2 transition-all duration-250">
         Yazıyor Yazıyor
       </a>
     </div>
 
-    <!-- Decorative bottom frame -->
-    <div class="flex items-center gap-3">
-      <div class="flex-1 flex items-center gap-2">
-        <div class="w-2 h-2 border border-vintage-gold/30 rotate-45 float-slow" style="animation-delay: -2s;"></div>
-        <div class="flex-1 border-t border-vintage-gold/25"></div>
-      </div>
-      <span class="text-vintage-gold/40 text-3xl float-slower" style="animation-delay: -4s;">&diams;</span>
-      <div class="flex-1 flex items-center gap-2">
-        <div class="flex-1 border-t border-vintage-gold/25"></div>
-        <div class="w-2 h-2 border border-vintage-gold/30 rotate-45 float-slow" style="animation-delay: -5s;"></div>
-      </div>
+    <!-- Scroll göstergesi -->
+    <div class="mt-14 flex flex-col items-center gap-2 text-vintage-cream/20">
+      <span class="text-[9px] tracking-[0.35em] uppercase">Keşfet</span>
+      <div class="w-px h-7 bg-gradient-to-b from-vintage-cream/20 to-transparent"></div>
     </div>
 
-    <!-- Scroll indicator -->
-    <div class="mt-12 flex flex-col items-center gap-2 text-vintage-cream/20">
-      <span class="text-[10px] tracking-[0.3em] uppercase">Keşfet</span>
-      <div class="w-px h-8 bg-gradient-to-b from-vintage-cream/20 to-transparent"></div>
-    </div>
   </div>
 </section>
