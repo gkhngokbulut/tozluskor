@@ -2,14 +2,14 @@
 ---
 
 <section class="hero relative overflow-hidden bg-vintage-dark text-vintage-cream">
-  <!-- Katmanlı sıcak derinlik -->
+  <!-- Katmanlı arka plan -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <div class="absolute inset-0" style="background: radial-gradient(ellipse 90% 60% at 50% 30%, rgba(193,154,60,0.10) 0%, transparent 60%);"></div>
     <div class="hero-grain absolute inset-0"></div>
     <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-vintage-gold/20 to-transparent"></div>
   </div>
 
-  <!-- Slogan bloğu -->
+  <!-- Slogan -->
   <div class="relative max-w-3xl mx-auto px-6 pt-20 md:pt-24 pb-12 md:pb-14 text-center">
     <h1 class="hero-fade font-heading font-bold leading-[1.05] text-vintage-cream" style="--d:.05s">
       <span class="block text-5xl md:text-7xl lg:text-[5rem]">Tozlu Skorların</span>
@@ -28,19 +28,17 @@
     </p>
   </div>
 
-  <!-- Stadyum görseli (full-bleed band) -->
+  <!-- Stadyum görseli — Ken Burns -->
   <div class="hero-image-fade relative w-full" style="--d:.3s">
     <div class="relative max-w-6xl mx-auto md:px-6">
       <div class="relative overflow-hidden md:border md:border-vintage-gold/15">
         <img
           src="/hero-stadium.jpg"
-          alt="Gün batımında tepeden görülen stadyum ve şehir manzarası"
-          class="w-full h-[42vh] md:h-[52vh] object-cover"
+          alt="Gün batımında tepeden görülen stadyum"
+          class="hero-img w-full h-[42vh] md:h-[52vh] object-cover"
           loading="eager"
         />
-        <!-- Üstten koyu geçiş (metinle birleşsin) -->
         <div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-vintage-dark to-transparent pointer-events-none"></div>
-        <!-- Hafif sıcak vinyet -->
         <div class="absolute inset-0 pointer-events-none" style="box-shadow: inset 0 0 120px rgba(34,30,26,0.45);"></div>
       </div>
     </div>
@@ -60,6 +58,16 @@
     mix-blend-mode: overlay;
   }
 
+  /* Ken Burns — çok yavaş zoom, kamera hissi */
+  .hero-img {
+    animation: kenBurns 18s ease-in-out infinite alternate;
+    transform-origin: center;
+  }
+  @keyframes kenBurns {
+    0%   { transform: scale(1)    translateX(0)    translateY(0); }
+    100% { transform: scale(1.06) translateX(-1%)  translateY(-1%); }
+  }
+
   .hero-fade, .hero-image-fade {
     opacity: 0;
     transform: translateY(14px);
@@ -77,10 +85,11 @@
   }
   @keyframes scrollPulse {
     0%, 100% { opacity: 0.4; transform: scaleY(0.7); }
-    50% { opacity: 1; transform: scaleY(1); }
+    50%       { opacity: 1;   transform: scaleY(1);   }
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero-img    { animation: none; }
     .hero-fade, .hero-image-fade { animation: none; opacity: 1; transform: none; }
     .scroll-line { animation: none; }
   }
