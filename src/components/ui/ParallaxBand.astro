@@ -2,31 +2,43 @@
 interface Props {
   quote?: string;
   author?: string;
+  bgImage?: string;
 }
-
-const { quote, author } = Astro.props;
+const { quote, author, bgImage } = Astro.props;
 ---
 
-<div class="relative py-12 md:py-16 bg-vintage-dark text-vintage-cream overflow-hidden">
-  <!-- Tek, sade radial vurgu -->
-  <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 50%, rgba(193,154,60,0.06) 0%, transparent 60%);"></div>
+<div class="relative py-14 md:py-16 overflow-hidden">
+  {bgImage ? (
+    <>
+      <div class="absolute inset-0">
+        <img src={bgImage} alt="" class="w-full h-full object-cover" loading="lazy" aria-hidden="true" />
+        <div class="absolute inset-0" style="background: rgba(34,30,26,0.72);"></div>
+        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 50%, rgba(193,154,60,0.08) 0%, transparent 60%);"></div>
+      </div>
+    </>
+  ) : (
+    <>
+      <div class="absolute inset-0 bg-vintage-dark pointer-events-none"></div>
+      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 50%, rgba(193,154,60,0.06) 0%, transparent 60%);"></div>
+    </>
+  )}
 
-  <div class="relative max-w-2xl mx-auto px-6 text-center">
+  <!-- Üst / alt hairline -->
+  <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-vintage-gold/20 to-transparent pointer-events-none"></div>
+  <div class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-vintage-gold/20 to-transparent pointer-events-none"></div>
+
+  <div class="relative max-w-2xl mx-auto px-6 text-center text-vintage-cream">
     {quote ? (
       <>
-        <div class="text-vintage-gold/25 text-4xl font-heading mb-3 leading-none">&ldquo;</div>
-        <p class="text-vintage-cream/65 text-base md:text-lg italic font-body leading-relaxed mb-4">
-          {quote}
-        </p>
-        {author && (
-          <p class="text-vintage-gold/45 text-[11px] tracking-[0.25em] uppercase">— {author}</p>
-        )}
+        <div class="text-vintage-gold/30 text-4xl font-heading mb-3 leading-none">&ldquo;</div>
+        <p class="text-vintage-cream/70 text-base md:text-lg italic font-body leading-relaxed mb-4">{quote}</p>
+        {author && <p class="text-vintage-gold/50 text-[11px] tracking-[0.25em] uppercase">— {author}</p>}
       </>
     ) : (
       <div class="flex items-center justify-center gap-3">
-        <div class="w-12 h-px bg-vintage-gold/20"></div>
-        <div class="w-1 h-1 bg-vintage-gold/30 rotate-45 shrink-0"></div>
-        <div class="w-12 h-px bg-vintage-gold/20"></div>
+        <div class="w-12 h-px bg-vintage-gold/25"></div>
+        <div class="w-1.5 h-1.5 border border-vintage-gold/35 rotate-45 shrink-0"></div>
+        <div class="w-12 h-px bg-vintage-gold/25"></div>
       </div>
     )}
   </div>
