@@ -9,105 +9,84 @@ interface Props {
   category: 'spor-kitapligi' | 'spor-filmografisi' | 'cumhuriyet-donemi-spor' | 'kisisel-blog';
   meta?: string;
   coverImage?: string;
+  featured?: boolean;
 }
 
-const { title, description, publishDate, slug, category, meta, coverImage } = Astro.props;
+const { title, description, publishDate, slug, category, meta, coverImage, featured = false } = Astro.props;
 
 const formattedDate = publishDate.toLocaleDateString('tr-TR', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
+  year: 'numeric', month: 'long', day: 'numeric',
 });
 
 const href = `/${category}/${slug}`;
 
 const fallbackLabel: Record<string, string> = {
-  'spor-kitapligi': 'KİTAP ARŞİVİ',
-  'spor-filmografisi': 'FİLM ARŞİVİ',
-  'cumhuriyet-donemi-spor': 'SPOR ARŞİVİ',
-  'kisisel-blog': 'YAZIYOR YAZIYOR',
+  'spor-kitapligi':        'KİTAP ARŞİVİ',
+  'spor-filmografisi':     'FİLM ARŞİVİ',
+  'cumhuriyet-donemi-spor':'SPOR ARŞİVİ',
+  'kisisel-blog':          'YAZIYOR YAZIYOR',
 };
 ---
 
-<article class="group bg-vintage-paper border border-vintage-border/60 overflow-hidden hover:border-vintage-border transition-all duration-300 hover:shadow-md">
+<article class:list={['card group bg-vintage-paper border border-vintage-border/60 overflow-hidden transition-all duration-350', featured ? 'featured' : '']}>
 
-  <!-- Görsel alan -->
-  <a href={href} class="block" tabindex="-1" aria-hidden="true">
+  <!-- Görsel -->
+  <a href={href} class="block visual-wrap" tabindex="-1" aria-hidden="true">
     {coverImage ? (
       <div class="visual-area cover-image-area">
-        <img src={coverImage} alt="" loading="lazy" />
+        <img src={coverImage} alt="" loading="lazy" class="card-img" />
+        <div class="img-overlay"></div>
       </div>
     ) : (
       <div class={`visual-area visual-fallback cat-${category}`}>
         <span class="vfb-label">{fallbackLabel[category]}</span>
-
         {category === 'spor-kitapligi' && (
           <div class="vfb-books">
             <div class="shelf-row">
-              <span class="spine s1"></span>
-              <span class="spine s2"></span>
-              <span class="spine s3"></span>
-              <span class="spine s4"></span>
-              <span class="spine s5"></span>
-              <span class="spine s6"></span>
+              <span class="spine s1"></span><span class="spine s2"></span>
+              <span class="spine s3"></span><span class="spine s4"></span>
+              <span class="spine s5"></span><span class="spine s6"></span>
             </div>
           </div>
         )}
-
         {category === 'spor-filmografisi' && (
           <div class="vfb-film">
-            <div class="film-frame">
-              <div class="film-lens"></div>
-            </div>
+            <div class="film-frame"><div class="film-lens"></div></div>
           </div>
         )}
-
         {category === 'cumhuriyet-donemi-spor' && (
           <div class="vfb-newspaper">
             <span class="np-masthead">CUMHURİYET</span>
             <div class="np-rule"></div>
             <div class="np-cols">
-              <div class="np-col"></div>
-              <div class="np-col"></div>
-              <div class="np-col"></div>
+              <div class="np-col"></div><div class="np-col"></div><div class="np-col"></div>
             </div>
           </div>
         )}
-
         {category === 'kisisel-blog' && (
-          <div class="vfb-blog">
-            <span class="blog-cursor"></span>
-          </div>
+          <div class="vfb-blog"><span class="blog-cursor"></span></div>
         )}
       </div>
     )}
   </a>
 
-  <!-- Kart içeriği -->
+  <!-- İçerik -->
   <div class="p-5">
-    <div class="mb-3">
-      <CategoryBadge category={category} />
-    </div>
-
-    <a href={href} class="block group/title">
-      <h3 class="font-heading text-lg font-bold text-vintage-dark group-hover/title:text-vintage-red transition-colors duration-200 leading-snug mb-2">
+    <div class="mb-3"><CategoryBadge category={category} /></div>
+    <a href={href} class="block">
+      <h3 class:list={['font-heading font-bold text-vintage-dark group-hover:text-vintage-red transition-colors duration-200 leading-snug mb-2', featured ? 'text-2xl md:text-3xl' : 'text-lg']}>
         {title}
       </h3>
     </a>
-
-    {meta && (
-      <p class="text-xs text-vintage-muted/80 italic mb-2 tracking-wide">{meta}</p>
-    )}
-
-    <p class="text-vintage-brown/75 text-sm leading-relaxed mb-4 line-clamp-2">
+    {meta && <p class="text-xs text-vintage-muted/80 italic mb-2 tracking-wide">{meta}</p>}
+    <p class:list={['text-vintage-brown/75 text-sm leading-relaxed mb-4', featured ? 'line-clamp-3' : 'line-clamp-2']}>
       {description}
     </p>
-
     <div class="flex items-center justify-between pt-3 border-t border-vintage-border/40">
       <time class="text-[11px] text-vintage-muted/60 tracking-wide" datetime={publishDate.toISOString()}>
         {formattedDate}
       </time>
-      <a href={href} class="text-[11px] text-vintage-brown/50 hover:text-vintage-red transition-colors duration-200 uppercase tracking-[0.15em]">
+      <a href={href} class="text-[11px] text-vintage-brown/50 hover:text-vintage-red transition-colors uppercase tracking-[0.15em]">
         Devamını Oku &rarr;
       </a>
     </div>
@@ -115,252 +94,91 @@ const fallbackLabel: Record<string, string> = {
 </article>
 
 <style>
-  /* ── Visual area ── */
+  /* ── Hover: kart yükselmesi + görsel büyümesi ── */
+  .card {
+    transition: box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+  .card:hover {
+    box-shadow: 0 8px 32px rgba(34,30,26,0.14);
+    border-color: rgba(193,154,60,0.30);
+  }
+  .card-img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .card:hover .card-img { transform: scale(1.06); }
+
+  /* Görsel üstüne ince karartma overlay (hover'da açılır) */
+  .img-overlay {
+    position: absolute; inset: 0;
+    background: rgba(34,30,26,0.12);
+    transition: opacity 0.4s ease;
+  }
+  .card:hover .img-overlay { opacity: 0; }
+
+  /* ── Featured kart (geniş görsel) ── */
+  .featured .visual-area { height: 240px; }
+  @media (min-width: 768px) { .featured .visual-area { height: 320px; } }
+
+  /* ── Normal görsel alan ── */
+  .visual-wrap { display: block; }
   .visual-area {
-    width: 100%;
-    height: 152px;
-    position: relative;
-    overflow: hidden;
-    display: block;
+    width: 100%; height: 152px; position: relative;
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-
-  .cover-image-area img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-    display: block;
-  }
-
-  .group:hover .cover-image-area img {
-    transform: scale(1.04);
-  }
-
-  .visual-fallback {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: filter 0.3s ease;
-  }
-
-  .group:hover .visual-fallback {
-    filter: brightness(1.08);
-  }
+  .cover-image-area { display: block; }
+  .visual-fallback { transition: filter 0.3s ease; }
+  .card:hover .visual-fallback { filter: brightness(1.08); }
 
   .vfb-label {
-    position: absolute;
-    bottom: 8px;
-    right: 10px;
+    position: absolute; bottom: 8px; right: 10px;
     font-family: 'Inter', system-ui, sans-serif;
-    font-size: 0.5rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #C19A3C;
-    opacity: 0.6;
-    pointer-events: none;
-    z-index: 2;
+    font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: #C19A3C; opacity: 0.6; pointer-events: none; z-index: 2;
   }
 
-  /* ── Spor Kitaplığı — Kitap Rafı ── */
-  .cat-spor-kitapligi {
-    background: linear-gradient(158deg, #1a0f08 0%, #221510 55%, #130b04 100%);
-  }
-  .cat-spor-kitapligi::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 50% 110%, rgba(193,154,60,0.18) 0%, transparent 55%);
-    pointer-events: none;
-  }
-  .cat-spor-kitapligi::after {
-    content: '';
-    position: absolute;
-    bottom: 22px;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: linear-gradient(to right, transparent, rgba(193,154,60,0.45), transparent);
-    pointer-events: none;
-  }
+  /* Kitap rafı */
+  .cat-spor-kitapligi { background: linear-gradient(158deg,#1a0f08 0%,#221510 55%,#130b04 100%); }
+  .cat-spor-kitapligi::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 50% 110%,rgba(193,154,60,.18) 0%,transparent 55%); pointer-events:none; }
+  .cat-spor-kitapligi::after  { content:''; position:absolute; bottom:22px; left:10%; right:10%; height:1px; background:linear-gradient(to right,transparent,rgba(193,154,60,.45),transparent); pointer-events:none; }
+  .vfb-books { position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center; padding-bottom:24px; }
+  .shelf-row { display:flex; align-items:flex-end; gap:3px; }
+  .spine { display:block; border-radius:1px 2px 0 0; }
+  .s1{width:16px;height:68px;background:linear-gradient(to right,#7a3820,#5c2a14);}
+  .s2{width:12px;height:52px;background:linear-gradient(to right,#2e5a4a,#1e3a30);}
+  .s3{width:20px;height:80px;background:linear-gradient(to right,#4a2060,#30124a);}
+  .s4{width:14px;height:60px;background:linear-gradient(to right,#8b3010,#6a2008);}
+  .s5{width:18px;height:72px;background:linear-gradient(to right,#c89410,#a07008);}
+  .s6{width:10px;height:44px;background:linear-gradient(to right,#3a3228,#262018);}
 
-  .vfb-books {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding-bottom: 24px;
-  }
-  .shelf-row {
-    display: flex;
-    align-items: flex-end;
-    gap: 3px;
-  }
-  .spine {
-    display: block;
-    border-radius: 1px 2px 0 0;
-  }
-  .s1 { width: 16px; height: 68px; background: linear-gradient(to right, #7a3820, #5c2a14); }
-  .s2 { width: 12px; height: 52px; background: linear-gradient(to right, #2e5a4a, #1e3a30); }
-  .s3 { width: 20px; height: 80px; background: linear-gradient(to right, #4a2060, #30124a); }
-  .s4 { width: 14px; height: 60px; background: linear-gradient(to right, #8b3010, #6a2008); }
-  .s5 { width: 18px; height: 72px; background: linear-gradient(to right, #c89410, #a07008); }
-  .s6 { width: 10px; height: 44px; background: linear-gradient(to right, #3a3228, #262018); }
+  /* Film */
+  .cat-spor-filmografisi { background:#08080a; }
+  .cat-spor-filmografisi::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(255,210,80,.08) 0%,transparent 70%); pointer-events:none; }
+  .cat-spor-filmografisi::after  { content:''; position:absolute; top:5px; left:5px; right:5px; height:7px; background:repeating-linear-gradient(90deg,rgba(255,255,255,.13) 0px,rgba(255,255,255,.13) 9px,transparent 9px,transparent 16px); pointer-events:none; }
+  .vfb-film { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+  .vfb-film::after { content:''; position:absolute; bottom:5px; left:5px; right:5px; height:7px; background:repeating-linear-gradient(90deg,rgba(255,255,255,.13) 0px,rgba(255,255,255,.13) 9px,transparent 9px,transparent 16px); pointer-events:none; }
+  .film-frame { width:80px; height:62px; border:1.5px solid rgba(193,154,60,.45); display:flex; align-items:center; justify-content:center; background:rgba(12,8,0,.85); }
+  .film-lens  { width:36px; height:36px; border-radius:50%; border:1.5px solid rgba(193,154,60,.45); background:radial-gradient(circle,rgba(193,154,60,.15) 0%,rgba(0,0,0,.6) 100%); position:relative; }
+  .film-lens::before { content:''; position:absolute; inset:7px; border-radius:50%; border:1px solid rgba(193,154,60,.25); }
 
-  /* ── Spor Filmografisi — Film ── */
-  .cat-spor-filmografisi {
-    background: #08080a;
-  }
-  .cat-spor-filmografisi::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255,210,80,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .cat-spor-filmografisi::after {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    height: 7px;
-    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.13) 0px, rgba(255,255,255,0.13) 9px, transparent 9px, transparent 16px);
-    pointer-events: none;
-  }
+  /* Gazete */
+  .cat-cumhuriyet-donemi-spor { background:linear-gradient(165deg,#f0e6d0 0%,#e2d6ba 50%,#d5c9a5 100%); }
+  .cat-cumhuriyet-donemi-spor::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg,transparent 0px,transparent 19px,rgba(0,0,0,.04) 19px,rgba(0,0,0,.04) 20px); pointer-events:none; }
+  .cat-cumhuriyet-donemi-spor::after  { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(34,18,10,.1) 100%); pointer-events:none; }
+  .vfb-newspaper { position:absolute; inset:0; padding:10px 14px 22px; display:flex; flex-direction:column; gap:5px; z-index:1; }
+  .np-masthead { display:block; font-family:'Playfair Display',Georgia,serif; font-size:.75rem; font-weight:700; letter-spacing:.18em; color:#221e1a; padding-bottom:4px; border-bottom:1.5px solid #221e1a; }
+  .np-rule { height:1px; background:rgba(34,30,26,.2); }
+  .np-cols { flex:1; display:flex; gap:8px; min-height:0; }
+  .np-col  { flex:1; background-image:repeating-linear-gradient(0deg,transparent 0px,transparent 7px,rgba(34,30,26,.15) 7px,rgba(34,30,26,.15) 8px); border-right:1px solid rgba(34,30,26,.1); }
+  .np-col:last-child { border-right:none; }
+  .cat-cumhuriyet-donemi-spor .vfb-label { color:#221e1a; opacity:.35; }
 
-  .vfb-film {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .vfb-film::after {
-    content: '';
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-    right: 5px;
-    height: 7px;
-    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.13) 0px, rgba(255,255,255,0.13) 9px, transparent 9px, transparent 16px);
-    pointer-events: none;
-  }
-  .film-frame {
-    width: 80px;
-    height: 62px;
-    border: 1.5px solid rgba(193,154,60,0.45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(12,8,0,0.85);
-  }
-  .film-lens {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(193,154,60,0.45);
-    background: radial-gradient(circle, rgba(193,154,60,0.15) 0%, rgba(0,0,0,0.6) 100%);
-    position: relative;
-  }
-  .film-lens::before {
-    content: '';
-    position: absolute;
-    inset: 7px;
-    border-radius: 50%;
-    border: 1px solid rgba(193,154,60,0.25);
-  }
-
-  /* ── Cumhuriyet Dönemi — Gazete ── */
-  .cat-cumhuriyet-donemi-spor {
-    background: linear-gradient(165deg, #f0e6d0 0%, #e2d6ba 50%, #d5c9a5 100%);
-  }
-  .cat-cumhuriyet-donemi-spor::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(0deg, transparent 0px, transparent 19px, rgba(0,0,0,0.04) 19px, rgba(0,0,0,0.04) 20px);
-    pointer-events: none;
-  }
-  .cat-cumhuriyet-donemi-spor::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(34,18,10,0.1) 100%);
-    pointer-events: none;
-  }
-
-  .vfb-newspaper {
-    position: absolute;
-    inset: 0;
-    padding: 10px 14px 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    z-index: 1;
-  }
-  .np-masthead {
-    display: block;
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    color: #221e1a;
-    padding-bottom: 4px;
-    border-bottom: 1.5px solid #221e1a;
-  }
-  .np-rule { height: 1px; background: rgba(34,30,26,0.2); }
-  .np-cols { flex: 1; display: flex; gap: 8px; min-height: 0; }
-  .np-col {
-    flex: 1;
-    background-image: repeating-linear-gradient(0deg, transparent 0px, transparent 7px, rgba(34,30,26,0.15) 7px, rgba(34,30,26,0.15) 8px);
-    border-right: 1px solid rgba(34,30,26,0.1);
-  }
-  .np-col:last-child { border-right: none; }
-  .cat-cumhuriyet-donemi-spor .vfb-label { color: #221e1a; opacity: 0.35; }
-
-  /* ── Kisisel Blog — Yazı Kağıdı ── */
-  .cat-kisisel-blog {
-    background: linear-gradient(162deg, #221510 0%, #160d07 100%);
-  }
-  .cat-kisisel-blog::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(0deg, transparent 0px, transparent 19px, rgba(193,154,60,0.08) 19px, rgba(193,154,60,0.08) 20px);
-    background-position: 0 8px;
-    pointer-events: none;
-  }
-  .cat-kisisel-blog::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 34px;
-    width: 1px;
-    background: rgba(193,154,60,0.18);
-    pointer-events: none;
-  }
-  .vfb-blog {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-left: 42px;
-  }
-  .blog-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 24px;
-    background: #C19A3C;
-    opacity: 0.65;
-    border-radius: 1px;
-    animation: cursor-blink 1.1s step-end infinite;
-  }
-  @keyframes cursor-blink {
-    0%, 100% { opacity: 0.65; }
-    50% { opacity: 0; }
-  }
+  /* Blog */
+  .cat-kisisel-blog { background:linear-gradient(162deg,#221510 0%,#160d07 100%); }
+  .cat-kisisel-blog::before { content:''; position:absolute; inset:0; background-image:repeating-linear-gradient(0deg,transparent 0px,transparent 19px,rgba(193,154,60,.08) 19px,rgba(193,154,60,.08) 20px); background-position:0 8px; pointer-events:none; }
+  .cat-kisisel-blog::after  { content:''; position:absolute; top:0; bottom:0; left:34px; width:1px; background:rgba(193,154,60,.18); pointer-events:none; }
+  .vfb-blog   { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding-left:42px; }
+  .blog-cursor{ display:inline-block; width:2px; height:24px; background:#C19A3C; opacity:.65; border-radius:1px; animation:cursor-blink 1.1s step-end infinite; }
+  @keyframes cursor-blink { 0%,100%{opacity:.65} 50%{opacity:0} }
 </style>
