@@ -125,7 +125,6 @@ const bloglar = (await getCollection('kisisel-blog', ({ data }) => !data.draft))
 </BaseLayout>
 
 <style>
-  /* Featured + yan kartlar yan yana layout */
   .featured-layout {
     display: grid;
     grid-template-columns: 1fr;
@@ -134,13 +133,29 @@ const bloglar = (await getCollection('kisisel-blog', ({ data }) => !data.draft))
   @media (min-width: 768px) {
     .featured-layout {
       grid-template-columns: 3fr 2fr;
-      align-items: start;
+      align-items: stretch;
     }
   }
+  /* Featured kart tam yüksekliği doldursun */
+  .featured-layout > :global(article.featured) {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
   .side-cards {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1.25rem;
+    height: 100%;
+  }
+  /* Yan kartlar eşit büyür */
+  .side-cards > :global(article) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .side-cards > :global(article .p-5) {
+    flex: 1;
   }
 </style>
 
