@@ -9,71 +9,18 @@ interface Item {
   category: 'spor-kitapligi' | 'spor-filmografisi' | 'cumhuriyet-donemi-spor' | 'kisisel-blog';
   meta?: string;
   coverImage?: string;
+  excerpt?: string;
+  minutes?: number;
 }
 
 interface Props { items: Item[]; }
 const { items } = Astro.props;
-
-const n = items.length;
-const lead = items[0];
-const side = items.slice(1, 4);
 ---
 
-{n === 0 && (
+{items.length === 0 ? (
   <p class="text-vintage-muted text-center py-10 font-body italic">Bu bölümde henüz yazı yok.</p>
-)}
-
-{n === 1 && (
-  <div class="single-wrap">
-    <ArticleCard {...lead} featured />
-  </div>
-)}
-
-{n === 2 && (
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+) : (
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
     {items.map((it) => <ArticleCard {...it} />)}
   </div>
 )}
-
-{n >= 3 && (
-  <div class="fg-featured">
-    <div class="fg-lead">
-      <ArticleCard {...lead} featured />
-    </div>
-    <div class="fg-side">
-      {side.map((it) => <ArticleCard {...it} />)}
-    </div>
-  </div>
-)}
-
-<style>
-  .single-wrap { max-width: 42rem; }
-
-  .fg-featured {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-  }
-  @media (min-width: 768px) {
-    .fg-featured {
-      grid-template-columns: 3fr 2fr;
-      align-items: stretch;
-    }
-    /* Lead kart, sağ kolonun yüksekliğine uzar; görseli boşluğu doldurur */
-    .fg-lead { display: flex; }
-    .fg-lead > :global(article) {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    }
-    .fg-lead :global(.visual-area) {
-      flex: 1 1 auto;
-      min-height: 260px;
-    }
-  }
-  .fg-side {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
-</style>
