@@ -1,45 +1,203 @@
 ---
-interface Props {
-  quote?: string;
-  author?: string;
-  bgImage?: string;
+export interface Props {
+  quote: string;
+  source?: string;
+  fullBleed?: boolean;
+  class?: string;
 }
-const { quote, author, bgImage } = Astro.props;
+
+const { quote, source, fullBleed = true, class: className = '' } = Astro.props;
 ---
 
-<div class="relative py-14 md:py-16 overflow-hidden">
-  {bgImage ? (
-    <>
-      <div class="absolute inset-0">
-        <img src={bgImage} alt="" class="w-full h-full object-cover" loading="lazy" aria-hidden="true" />
-        <div class="absolute inset-0" style="background: rgba(34,30,26,0.72);"></div>
-        <div class="absolute inset-0" style="background: radial-gradient(ellipse at 50% 50%, rgba(193,154,60,0.08) 0%, transparent 60%);"></div>
-      </div>
-    </>
-  ) : (
-    <>
-      <div class="absolute inset-0 bg-vintage-dark pointer-events-none"></div>
-      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 50%, rgba(193,154,60,0.06) 0%, transparent 60%);"></div>
-    </>
-  )}
+<section
+  class:list={['slogan-band', { 'slogan-band--bleed': fullBleed }, className]}
+  aria-label="Alıntı"
+>
+  <div class="slogan-band__wash" aria-hidden="true"></div>
+  <div class="slogan-band__grain" aria-hidden="true"></div>
+  <div class="slogan-band__vignette" aria-hidden="true"></div>
 
-  <!-- Üst / alt hairline -->
-  <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-vintage-gold/20 to-transparent pointer-events-none"></div>
-  <div class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-vintage-gold/20 to-transparent pointer-events-none"></div>
+  <figure class="slogan-band__inner">
+    <span class="slogan-band__mark" aria-hidden="true">&#8221;</span>
+    <blockquote class="slogan-band__quote">{quote}</blockquote>
+    {source && <figcaption class="slogan-band__source">{source}</figcaption>}
+  </figure>
+</section>
 
-  <div class="relative max-w-2xl mx-auto px-6 text-center text-vintage-cream">
-    {quote ? (
-      <>
-        <div class="text-vintage-gold/30 text-4xl font-heading mb-3 leading-none">&ldquo;</div>
-        <p class="text-vintage-cream/70 text-base md:text-lg italic font-body leading-relaxed mb-4">{quote}</p>
-        {author && <p class="text-vintage-gold/50 text-[11px] tracking-[0.25em] uppercase">— {author}</p>}
-      </>
-    ) : (
-      <div class="flex items-center justify-center gap-3">
-        <div class="w-12 h-px bg-vintage-gold/25"></div>
-        <div class="w-1.5 h-1.5 border border-vintage-gold/35 rotate-45 shrink-0"></div>
-        <div class="w-12 h-px bg-vintage-gold/25"></div>
-      </div>
-    )}
-  </div>
-</div>
+<style>
+  .slogan-band {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-block: clamp(3.5rem, 9vw, 7rem);
+    padding-inline: 1.5rem;
+    overflow: hidden;
+  }
+
+  /* Full-bleed: break out of a centered container to viewport width so the
+     dark wash reads as a cinematic chapter break, not a floating box. */
+  .slogan-band--bleed {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
+
+  /* Dark wash — feathered top & bottom so it melts into the cream body
+     instead of ending in a hard rectangular edge. */
+  .slogan-band__wash {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    background: radial-gradient(120% 85% at 50% 50%, #35200f 0%, #2c1810 46%, #241009 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
+  }
+
+  /* Subtle film grain for archive texture */
+  .slogan-band__grain {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    opacity: 0.06;
+    mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
+  }
+
+  /* Vignette to draw the eye to the centered quote */
+  .slogan-band__vignette {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(78% 130% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.4) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 15%, #000 85%, transparent 100%);
+  }
+
+  .slogan-band__inner {
+    position: relative;
+    margin: 0;
+    max-width: 44rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+    will-change: opacity, transform;
+  }
+
+  .slogan-band.is-revealed .slogan-band__inner {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .slogan-band__mark {
+    font-family: var(--font-family-heading);
+    font-size: clamp(2.75rem, 6vw, 4.5rem);
+    line-height: 0;
+    height: 0.42em;
+    display: block;
+    color: rgba(201, 162, 75, 0.28);
+    user-select: none;
+  }
+
+  .slogan-band__quote {
+    margin: 0;
+    font-family: var(--font-family-heading);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(1.35rem, 1rem + 1.9vw, 2.4rem);
+    line-height: 1.4;
+    letter-spacing: 0.005em;
+    color: #ece3d2;
+    text-wrap: balance;
+  }
+
+  .slogan-band__source {
+    font-family: var(--font-family-body);
+    font-size: clamp(0.68rem, 0.6rem + 0.3vw, 0.8rem);
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: #c9a24b;
+    opacity: 0.92;
+  }
+
+  .slogan-band__source::before {
+    content: "— ";
+    color: rgba(201, 162, 75, 0.6);
+  }
+
+  /* Whisper-light parallax on the atmospheric layers (desktop only) */
+  @media (min-width: 769px) {
+    .slogan-band__wash,
+    .slogan-band__grain {
+      transform: translateY(var(--band-shift, 0));
+      will-change: transform;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slogan-band__inner {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .slogan-band__wash,
+    .slogan-band__grain {
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Reveal-on-scroll + a single shared, rAF-throttled parallax pass.
+  // No libraries, no per-frame layout thrash beyond a cheap rect read.
+  (function () {
+    const bands = document.querySelectorAll<HTMLElement>('.slogan-band');
+    if (!bands.length) return;
+
+    const reveal = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            reveal.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.25 }
+    );
+    bands.forEach((band) => reveal.observe(band));
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wide = window.matchMedia('(min-width: 769px)').matches;
+    if (reduce || !wide) return;
+
+    let ticking = false;
+    function update() {
+      const vh = window.innerHeight;
+      bands.forEach((band) => {
+        const r = band.getBoundingClientRect();
+        if (r.bottom < 0 || r.top > vh) return;
+        const progress = (r.top + r.height / 2 - vh / 2) / vh;
+        const shift = Math.max(-14, Math.min(14, progress * -18));
+        band.style.setProperty('--band-shift', shift.toFixed(1) + 'px');
+      });
+      ticking = false;
+    }
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  })();
+</script>
