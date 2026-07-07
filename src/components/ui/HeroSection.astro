@@ -6,6 +6,13 @@
   <!-- Arka plan görseli (full-bleed) -->
   <div class="hero-bg absolute inset-0" aria-hidden="true"></div>
 
+  <!-- Atkı mikro-etkileşim katmanı:
+       Dış katman base ile BİREBİR aynı cover+position+zoom'u paylaşır (senkron kalır),
+       iç katman yalnızca atkıyı hafifçe rüzgarda savurur. -->
+  <div class="hero-scarf-layer absolute inset-0" aria-hidden="true">
+    <div class="hero-scarf absolute inset-0"></div>
+  </div>
+
   <!-- Çok katmanlı sinematografik overlay -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <!-- Sepya + gün batımı sıcaklığı -->
@@ -82,6 +89,37 @@
     .hero-bg { background-position: 70% 40%; }
   }
 
+  /* --- Atkı katmanı --- */
+  /* Dış katman: base ile AYNI zoom -> her viewport ve her karede hizada kalır */
+  .hero-scarf-layer {
+    transform: scale(1.03);
+    animation: heroZoom 22s ease-in-out infinite alternate;
+    will-change: transform;
+    pointer-events: none;
+  }
+  /* İç katman: sadece atkı (alpha maskesi görselin içinde) + hafif rüzgar dalgası */
+  .hero-scarf {
+    background-image: url('/hero-scarf.png');
+    background-size: cover;
+    background-position: center 35%;
+    background-repeat: no-repeat;
+    filter: saturate(1.05) contrast(1.02); /* base ile aynı ton */
+    transform-origin: 62% 31%;             /* pivot: atkının boyna yakın üst noktası */
+    animation: scarfWave 6.5s ease-in-out infinite;
+    will-change: transform;
+  }
+  @media (max-width: 768px) {
+    .hero-scarf { background-position: 70% 40%; }
+  }
+  /* Amplitüd bilinçli olarak çok düşük: tip ~5-7px sağa süzülür ve döner */
+  @keyframes scarfWave {
+    0%   { transform: skewX(0deg)    translateX(0); }
+    22%  { transform: skewX(1.3deg)  translateX(0.6px); }
+    46%  { transform: skewX(0.5deg)  translateX(0.2px); }
+    70%  { transform: skewX(1.7deg)  translateX(1.2px); }
+    100% { transform: skewX(0deg)    translateX(0); }
+  }
+
   .hero-grain {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     opacity: 0.06;
@@ -107,6 +145,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     .hero-bg { animation: none; transform: none; }
+    .hero-scarf-layer { animation: none; transform: none; }
+    .hero-scarf { animation: none; transform: none; }
     .hero-fade { animation: none; opacity: 1; transform: none; }
     .scroll-line { animation: none; }
   }
