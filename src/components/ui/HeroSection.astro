@@ -104,20 +104,20 @@
     background-position: center 35%;
     background-repeat: no-repeat;
     filter: saturate(1.05) contrast(1.02); /* base ile aynı ton */
-    transform-origin: 62% 31%;             /* pivot: atkının boyna yakın üst noktası */
+    transform-origin: 77% 49%;             /* pivot: atkının gövdeye bağlandığı boyun ucu */
     animation: scarfWave 6.5s ease-in-out infinite;
     will-change: transform;
   }
   @media (max-width: 768px) {
     .hero-scarf { background-position: 70% 40%; }
   }
-  /* Amplitüd bilinçli olarak çok düşük: tip ~5-7px sağa süzülür ve döner */
+  /* Amplitüd bilinçli olarak çok düşük: savrulan uç ve püsküller hafifçe esinti alır */
   @keyframes scarfWave {
-    0%   { transform: skewX(0deg)    translateX(0); }
-    22%  { transform: skewX(1.3deg)  translateX(0.6px); }
-    46%  { transform: skewX(0.5deg)  translateX(0.2px); }
-    70%  { transform: skewX(1.7deg)  translateX(1.2px); }
-    100% { transform: skewX(0deg)    translateX(0); }
+    0%   { transform: skewX(0deg)   skewY(0deg)   translateY(0); }
+    25%  { transform: skewX(1.2deg) skewY(0.5deg) translateY(-0.5px); }
+    50%  { transform: skewX(0.4deg) skewY(0.2deg) translateY(0.3px); }
+    72%  { transform: skewX(1.8deg) skewY(0.7deg) translateY(-0.8px); }
+    100% { transform: skewX(0deg)   skewY(0deg)   translateY(0); }
   }
 
   .hero-grain {
