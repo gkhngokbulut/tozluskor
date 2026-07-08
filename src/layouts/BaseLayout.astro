@@ -58,8 +58,10 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
         document.documentElement.classList.add('is-loading');
       }
     </script>
+    <!-- İçerik Koruma -->
+    <script src="/content-protection.js" defer></script>
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="content-protected min-h-screen flex flex-col">
     <!-- Açılış ekranı -->
     <div class="site-loader" aria-hidden="true">
       <div class="site-loader__inner">
