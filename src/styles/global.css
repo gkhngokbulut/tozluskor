@@ -468,3 +468,74 @@ html.qr-open { overflow: hidden; }
 .home-shell .text-vintage-muted {
   color: rgba(193,154,60,0.5);
 }
+
+/* ══════════════════════════════════════════════════
+   İÇERİK KORUMA — Frontend Caydırıcı Katman
+   ══════════════════════════════════════════════════ */
+
+.content-protected {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+/* İstisnalar: etkileşimli öğelerde seçim serbest */
+.content-protected input,
+.content-protected textarea,
+.content-protected select,
+.content-protected button,
+.content-protected [contenteditable="true"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+/* Görsellerin sürüklenmesini / bağımsız indirilmesini zorlaştır */
+.content-protected img {
+  pointer-events: none;
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+/* Print koruması */
+@media print {
+  body.content-protected { visibility: hidden !important; }
+  body.content-protected::after {
+    visibility: visible;
+    display: block;
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family-body);
+    font-size: 1.1rem;
+    color: #3C342D;
+    text-align: center;
+    padding: 2rem;
+    content: "Bu sitedeki içerikler telif hakkı kapsamında korunmaktadır. İzinsiz çoğaltılamaz.";
+  }
+}
+
+/* Koruma toast bildirimi */
+.cp-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: rgba(27,18,11,0.92);
+  color: rgba(239,232,218,0.85);
+  font-family: var(--font-family-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid rgba(193,154,60,0.25);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.cp-toast.cp-toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
