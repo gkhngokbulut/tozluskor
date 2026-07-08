@@ -30,6 +30,12 @@ const fallbackLabel: Record<string, string> = {
   'cumhuriyet-donemi-spor': 'TARİHİ BELGE',
   'kisisel-blog': 'YAZI ARŞİVİ',
 };
+const categoryNotes: Record<string, string> = {
+  'spor-kitapligi': 'Sporu anlatan kitapların analiz ve okumaları.',
+  'spor-filmografisi': 'Sporun beyazperdedeki yansımaları: film, dizi ve belgesel analizleri.',
+  'cumhuriyet-donemi-spor': 'Erken Cumhuriyet döneminde sporun toplumsal ve siyasal etkisi üzerine incelemeler.',
+  'kisisel-blog': 'Spor, toplum ve kültür üzerine gözlemler.',
+};
 ---
 
 <article
@@ -64,8 +70,9 @@ const fallbackLabel: Record<string, string> = {
     <span class="media-fade"></span>
   </a>
 
-  <div class="card-body relative flex flex-col flex-1 p-5">
-    <div class="mb-3"><CategoryBadge category={category} /></div>
+  <div class="card-body flex flex-col flex-1 p-5">
+    <div class="mb-1"><CategoryBadge category={category} /></div>
+    <p class="text-[10px] text-vintage-muted/70 italic leading-snug mb-3 line-clamp-1">{categoryNotes[category]}</p>
 
     <a href={href} class="block">
       <h3 class="font-heading text-lg md:text-xl font-bold text-vintage-dark group-hover:text-vintage-red transition-colors duration-200 leading-snug mb-2">{title}</h3>
@@ -73,41 +80,42 @@ const fallbackLabel: Record<string, string> = {
 
     {meta && <p class="text-xs text-vintage-muted/85 italic mb-2 tracking-wide">{meta}</p>}
 
-    <p class="text-vintage-brown/80 text-sm leading-relaxed mb-4 line-clamp-2 pr-10">{description}</p>
+    <p class="text-vintage-brown/80 text-sm leading-relaxed mb-4 line-clamp-2">{description}</p>
 
-    <div class="mt-auto flex items-center justify-between pt-3 border-t border-vintage-border/50">
+    <div class="card-footer mt-auto flex items-center justify-between pt-3 border-t border-vintage-border/50">
       <time class="text-[11px] text-vintage-muted/70 tracking-wide" datetime={publishDate.toISOString()}>{formattedDate}</time>
-      <span class="text-[11px] text-vintage-brown/55 group-hover:text-vintage-red transition-colors uppercase tracking-[0.15em]">Devamını Oku &rarr;</span>
+      <div class="flex items-center gap-2.5">
+        <span class="text-[11px] text-vintage-brown/55 group-hover:text-vintage-red transition-colors uppercase tracking-[0.15em]">Devamını Oku &rarr;</span>
+        <span class="cat-icon" aria-hidden="true">
+          {category === 'spor-kitapligi' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 5.5A1.5 1.5 0 015.5 4H10a2 2 0 012 2v13a2 2 0 00-2-1.6H5.5A1.5 1.5 0 014 16z"/>
+              <path d="M20 5.5A1.5 1.5 0 0018.5 4H14a2 2 0 00-2 2v13a2 2 0 012-1.6h4.5A1.5 1.5 0 0020 16z"/>
+            </svg>
+          )}
+          {category === 'spor-filmografisi' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="16" rx="1.5"/>
+              <path d="M7 4v16M17 4v16M3 9h4M3 14h4M17 9h4M17 14h4"/>
+            </svg>
+          )}
+          {category === 'cumhuriyet-donemi-spor' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 4h7l4 4v11a1 1 0 01-1 1H7a1 1 0 01-1-1V5a1 1 0 011-1z"/>
+              <path d="M14 4v4h4"/>
+              <path d="M9 13h6M9 16h4"/>
+              <path d="M16.6 3.4a1.6 1.6 0 00-1.6 1.6v5.4a.85.85 0 001.7 0V5.4"/>
+            </svg>
+          )}
+          {category === 'kisisel-blog' && (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 19l2.5-.6L18 7.9a1.6 1.6 0 000-2.3l-.6-.6a1.6 1.6 0 00-2.3 0L4.6 15.5 4 18z"/>
+              <path d="M13.5 6.5l3.9 3.9M5 21h14"/>
+            </svg>
+          )}
+        </span>
+      </div>
     </div>
-
-    <span class="cat-icon" aria-hidden="true">
-      {category === 'spor-kitapligi' && (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 5.5A1.5 1.5 0 015.5 4H10a2 2 0 012 2v13a2 2 0 00-2-1.6H5.5A1.5 1.5 0 014 16z"/>
-          <path d="M20 5.5A1.5 1.5 0 0018.5 4H14a2 2 0 00-2 2v13a2 2 0 012-1.6h4.5A1.5 1.5 0 0020 16z"/>
-        </svg>
-      )}
-      {category === 'spor-filmografisi' && (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="4" width="18" height="16" rx="1.5"/>
-          <path d="M7 4v16M17 4v16M3 9h4M3 14h4M17 9h4M17 14h4"/>
-        </svg>
-      )}
-      {category === 'cumhuriyet-donemi-spor' && (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M7 4h7l4 4v11a1 1 0 01-1 1H7a1 1 0 01-1-1V5a1 1 0 011-1z"/>
-          <path d="M14 4v4h4"/>
-          <path d="M9 13h6M9 16h4"/>
-          <path d="M16.6 3.4a1.6 1.6 0 00-1.6 1.6v5.4a.85.85 0 001.7 0V5.4"/>
-        </svg>
-      )}
-      {category === 'kisisel-blog' && (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 19l2.5-.6L18 7.9a1.6 1.6 0 000-2.3l-.6-.6a1.6 1.6 0 00-2.3 0L4.6 15.5 4 18z"/>
-          <path d="M13.5 6.5l3.9 3.9M5 21h14"/>
-        </svg>
-      )}
-    </span>
   </div>
 </article>
 
@@ -133,13 +141,12 @@ const fallbackLabel: Record<string, string> = {
   .media-fade { position: absolute; inset: 0; pointer-events: none; box-shadow: inset 0 0 60px rgba(20,16,12,0.22); }
 
   .cat-icon {
-    position: absolute; right: 0.9rem; bottom: 0.95rem;
-    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-    color: var(--color-vintage-gold); opacity: 0.5;
+    width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;
+    color: var(--color-vintage-gold); opacity: 0.4; flex-shrink: 0;
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
   .cat-icon svg { width: 100%; height: 100%; }
-  .card:hover .cat-icon { opacity: 0.95; transform: translateY(-1px); }
+  .card:hover .cat-icon { opacity: 0.85; transform: translateY(-1px); }
 
   .cat-card { border-top-width: 2px; }
   .cat-spor-kitapligi    { border-top-color: rgba(139,37,0,0.45); }
