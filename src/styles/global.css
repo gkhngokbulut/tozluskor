@@ -5,16 +5,20 @@
   /* Surfaces — warm bone (less stark, more harmonious) */
   --color-vintage-cream: #EFE8DA;
   --color-vintage-paper: #E6DECF;
-  /* Body text — readable warm ink (was muddy brown #5C4033) */
+  /* Parchment — aged archive card surface */
+  --color-vintage-parchment: #e7dcc8;
+  /* Body text — readable warm ink */
   --color-vintage-brown: #3C342D;
-  /* Ink / dark surfaces — refined warm charcoal (was red-brown #2C1810) */
-  --color-vintage-dark: #221E1A;
+  /* Ink / dark surfaces — warm coffee (unified with hero sunset) */
+  --color-vintage-dark: #1B120B;
   --color-vintage-red: #8B2500;
   --color-vintage-green: #2E4A3A;
-  /* Accent — refined antique gold (less olive/muddy than #B8860B) */
+  /* Accent — refined antique gold */
   --color-vintage-gold: #C19A3C;
   --color-vintage-muted: #8A8276;
   --color-vintage-border: #D9D2C5;
+  /* Dark-surface border (cards on dark ground) */
+  --color-vintage-border-dark: rgba(193,154,60,0.18);
 
   --font-family-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-family-body: 'Lora', Georgia, serif;
@@ -381,3 +385,86 @@ html.qr-open { overflow: hidden; }
 .qr-modal { cursor: pointer; }
 .qr-content a, .qr-close, .qr-fullpage, .qr-titlelink, .qr-media { cursor: pointer; }
 .qr-content { cursor: auto; }
+
+/* ══════════════════════════════════════════════════
+   HOME SHELL — koyu kahve zemin, SADECE ana sayfa.
+   Diğer sayfalarda (makale, kategori, arama) body
+   krem kalır; bu wrapper ile scope'lanır.
+   ══════════════════════════════════════════════════ */
+
+.home-shell {
+  background:
+    /* çok hafif sıcak vignette */
+    radial-gradient(ellipse 110% 70% at 50% 20%, transparent 50%, rgba(10,6,3,0.35) 100%),
+    /* sürekli dikey gradient: hero kahvesinden footer kahvesine */
+    linear-gradient(180deg,
+      #1d1209 0%,
+      #1a1008 15%,
+      #1a1008 50%,
+      #170e07 80%,
+      #140c06 100%);
+  color: var(--color-vintage-cream);
+}
+
+/* Grain overlay — performanslı SVG data-URI, ana sayfa koyu zeminde */
+.home-shell::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Shell içindeki tüm içerik grain'in üstünde kalsın */
+.home-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Home shell içindeki bölüm başlıkları & metinler */
+.home-shell .section-heading::after {
+  background: linear-gradient(to right, var(--color-vintage-gold), transparent);
+}
+
+/* Home shell kart özel stilleri — koyu zemin üzerinde floating archive card */
+.home-shell .card {
+  background: linear-gradient(175deg, #ede4d2 0%, #e2d8c4 60%, #d8cdb8 100%);
+  border-color: rgba(160,140,110,0.35);
+  border-radius: 2px;
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.45) inset,     /* üst kağıt highlight */
+    0 8px 24px rgba(0,0,0,0.40),                  /* ana gölge */
+    0 2px 6px rgba(0,0,0,0.25);                   /* yakın gölge */
+  transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+}
+.home-shell .card:hover {
+  box-shadow:
+    0 1px 0 0 rgba(255,255,255,0.50) inset,
+    0 14px 40px rgba(0,0,0,0.50),
+    0 4px 10px rgba(0,0,0,0.30);
+  border-color: rgba(193,154,60,0.35);
+  transform: translateY(-2px);
+}
+
+/* Kart media alanı koyu kahve */
+.home-shell .card-media {
+  background: #140c06;
+}
+
+/* Kart vignette/fade koyu kahve uyumlu */
+.home-shell .media-fade {
+  box-shadow: inset 0 0 50px rgba(14,8,4,0.25);
+}
+
+/* Kart alt border koyu kahve zemine uyumlu */
+.home-shell .card .border-t {
+  border-color: rgba(160,140,110,0.30);
+}
+
+/* Koyu zemin üzerindeki boş alan mesajları */
+.home-shell .text-vintage-muted {
+  color: rgba(193,154,60,0.5);
+}
