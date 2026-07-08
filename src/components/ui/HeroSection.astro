@@ -3,15 +3,8 @@
 
 <section class="hero relative overflow-hidden">
 
-  <!-- Arka plan görseli (full-bleed) -->
+  <!-- Arka plan görseli (full-bleed, statik) -->
   <div class="hero-bg absolute inset-0" aria-hidden="true"></div>
-
-  <!-- Atkı mikro-etkileşim katmanı:
-       Dış katman base ile BİREBİR aynı cover+position+zoom'u paylaşır (senkron kalır),
-       iç katman yalnızca atkıyı hafifçe rüzgarda savurur. -->
-  <div class="hero-scarf-layer absolute inset-0" aria-hidden="true">
-    <div class="hero-scarf absolute inset-0"></div>
-  </div>
 
   <!-- Çok katmanlı sinematografik overlay -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -74,50 +67,12 @@
     background-size: cover;
     background-position: center 35%;
     background-repeat: no-repeat;
-    /* Hafif sepya/sıcaklık */
     filter: saturate(1.05) contrast(1.02);
-    transform: scale(1.03);
-    animation: heroZoom 22s ease-in-out infinite alternate;
-  }
-  @keyframes heroZoom {
-    0%   { transform: scale(1.03) translateY(0); }
-    100% { transform: scale(1.1) translateY(-1%); }
   }
 
   /* Mobilde odak: figür/sahne kaybolmasın */
   @media (max-width: 768px) {
     .hero-bg { background-position: 70% 40%; }
-  }
-
-  /* --- Atkı katmanı --- */
-  /* Dış katman: base ile AYNI zoom -> her viewport ve her karede hizada kalır */
-  .hero-scarf-layer {
-    transform: scale(1.03);
-    animation: heroZoom 22s ease-in-out infinite alternate;
-    will-change: transform;
-    pointer-events: none;
-  }
-  /* İç katman: sadece atkı (alpha maskesi görselin içinde) + hafif rüzgar dalgası */
-  .hero-scarf {
-    background-image: url('/hero-scarf.png');
-    background-size: cover;
-    background-position: center 35%;
-    background-repeat: no-repeat;
-    filter: saturate(1.05) contrast(1.02); /* base ile aynı ton */
-    transform-origin: 77% 49%;             /* pivot: atkının gövdeye bağlandığı boyun ucu */
-    animation: scarfWave 6.5s ease-in-out infinite;
-    will-change: transform;
-  }
-  @media (max-width: 768px) {
-    .hero-scarf { background-position: 70% 40%; }
-  }
-  /* Amplitüd bilinçli olarak çok düşük: savrulan uç ve püsküller hafifçe esinti alır */
-  @keyframes scarfWave {
-    0%   { transform: skewX(0deg)   skewY(0deg)   translateY(0); }
-    25%  { transform: skewX(1.2deg) skewY(0.5deg) translateY(-0.5px); }
-    50%  { transform: skewX(0.4deg) skewY(0.2deg) translateY(0.3px); }
-    72%  { transform: skewX(1.8deg) skewY(0.7deg) translateY(-0.8px); }
-    100% { transform: skewX(0deg)   skewY(0deg)   translateY(0); }
   }
 
   .hero-grain {
@@ -144,9 +99,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-bg { animation: none; transform: none; }
-    .hero-scarf-layer { animation: none; transform: none; }
-    .hero-scarf { animation: none; transform: none; }
     .hero-fade { animation: none; opacity: 1; transform: none; }
     .scroll-line { animation: none; }
   }
