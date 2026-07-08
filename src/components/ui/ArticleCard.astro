@@ -33,7 +33,7 @@ const fallbackLabel: Record<string, string> = {
 ---
 
 <article
-  class={`card group cat-card cat-${category} bg-vintage-paper border overflow-hidden h-full flex flex-col`}
+  class={`card group cat-card cat-${category} bg-vintage-parchment border overflow-hidden h-full flex flex-col`}
   data-preview
   data-pv-title={title}
   data-pv-cat={categoryLabels[category]}
@@ -113,9 +113,10 @@ const fallbackLabel: Record<string, string> = {
 
 <style>
   .card {
-    border-color: rgba(196, 184, 164, 0.6);
+    border-color: rgba(160, 140, 110, 0.35);
+    border-radius: 2px;
     cursor: pointer;
-    transition: box-shadow 0.35s ease, border-color 0.35s ease;
+    transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
   }
   .card:hover {
     box-shadow: 0 12px 36px rgba(34, 30, 26, 0.16);
@@ -141,10 +142,10 @@ const fallbackLabel: Record<string, string> = {
   .card:hover .cat-icon { opacity: 0.95; transform: translateY(-1px); }
 
   .cat-card { border-top-width: 2px; }
-  .cat-spor-kitapligi    { border-top-color: rgba(139,37,0,0.5); }
-  .cat-spor-filmografisi { border-top-color: rgba(46,74,58,0.5); }
-  .cat-cumhuriyet-donemi-spor { border-top-color: rgba(34,30,26,0.45); }
-  .cat-kisisel-blog      { border-top-color: rgba(193,154,60,0.6); }
+  .cat-spor-kitapligi    { border-top-color: rgba(139,37,0,0.45); }
+  .cat-spor-filmografisi { border-top-color: rgba(46,74,58,0.45); }
+  .cat-cumhuriyet-donemi-spor { border-top-color: rgba(60,52,45,0.50); }
+  .cat-kisisel-blog      { border-top-color: rgba(193,154,60,0.50); }
 
   .fb-label {
     position: absolute; bottom: 8px; left: 12px;
