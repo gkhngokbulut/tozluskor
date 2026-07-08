@@ -460,7 +460,7 @@ html.qr-open { overflow: hidden; }
 }
 
 /* Kart alt border koyu kahve zemine uyumlu */
-.home-shell .card .border-t {
+.home-shell .card .card-footer {
   border-color: rgba(160,140,110,0.30);
 }
 
