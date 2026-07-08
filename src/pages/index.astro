@@ -50,38 +50,40 @@ const blogItems = bloglar.map((e) => ({
 <BaseLayout title="Tozlu Skor — Tozlu Skorların Peşinde">
   <HeroSection />
 
-  <div class="max-w-6xl mx-auto px-6">
+  <div class="home-shell">
+    <div class="max-w-6xl mx-auto px-6">
 
-    <div class="fade-in-section">
-      <LatestArticles subtitle="Sporu farklı açılardan ele alan kitapların incelemeleri ve okumaları." title="Spor Kitaplığı" href="/spor-kitapligi">
-        <ArticleGrid items={kitapItems} />
-      </LatestArticles>
+      <div class="fade-in-section">
+        <LatestArticles subtitle="Sporu farklı açılardan ele alan kitapların incelemeleri ve okumaları." title="Spor Kitaplığı" href="/spor-kitapligi">
+          <ArticleGrid items={kitapItems} />
+        </LatestArticles>
+      </div>
+
+      <ParallaxBand quote="Futbol Asla Sadece Futbol Değildir!" source="Simon Kuper" />
+
+      <div class="fade-in-section">
+        <LatestArticles subtitle="Sporun beyazperdedeki yansımaları: filmler, yönetmenler ve sahneler." title="Spor Filmografisi" href="/spor-filmografisi">
+          <ArticleGrid items={filmItems} />
+        </LatestArticles>
+      </div>
+
+      <ParallaxBand quote="Hayat futbola fena halde benzer..." source="Dar Alanda Kısa Paslaşmalar (2000)" />
+
+      <div class="fade-in-section">
+        <LatestArticles subtitle="Cumhuriyet'in kuruluşundan bugüne sporun toplumsal ve siyasal tarihi." title="Cumhuriyet Dönemi Spor" href="/cumhuriyet-donemi-spor">
+          <ArticleGrid items={cumhuriyetItems} />
+        </LatestArticles>
+      </div>
+
+      <ParallaxBand quote="Ben sporcunun zeki, çevik ve aynı zamanda ahlaklısını severim." source="Mustafa Kemal Atatürk" />
+
+      <div class="fade-in-section">
+        <LatestArticles subtitle="Spor, toplum ve kültür üzerine kişisel gözlemler ve notlar." title="Yazıyor Yazıyor" href="/kisisel-blog">
+          <ArticleGrid items={blogItems} />
+        </LatestArticles>
+      </div>
+
     </div>
-
-    <ParallaxBand quote="Futbol Asla Sadece Futbol Değildir!" source="Simon Kuper" />
-
-    <div class="fade-in-section">
-      <LatestArticles subtitle="Sporun beyazperdedeki yansımaları: filmler, yönetmenler ve sahneler." title="Spor Filmografisi" href="/spor-filmografisi">
-        <ArticleGrid items={filmItems} />
-      </LatestArticles>
-    </div>
-
-    <ParallaxBand  quote="Hayat futbola fena halde benzer..." source="Dar Alanda Kısa Paslaşmalar (2000)" />
-
-    <div class="fade-in-section">
-      <LatestArticles subtitle="Cumhuriyet'in kuruluşundan bugüne sporun toplumsal ve siyasal tarihi." title="Cumhuriyet Dönemi Spor" href="/cumhuriyet-donemi-spor">
-        <ArticleGrid items={cumhuriyetItems} />
-      </LatestArticles>
-    </div>
-
-   <ParallaxBand quote="Ben sporcunun zeki, çevik ve aynı zamanda ahlaklısını severim." source="Mustafa Kemal Atatürk" />
-
-    <div class="fade-in-section">
-      <LatestArticles subtitle="Spor, toplum ve kültür üzerine kişisel gözlemler ve notlar." title="Yazıyor Yazıyor" href="/kisisel-blog">
-        <ArticleGrid items={blogItems} />
-      </LatestArticles>
-    </div>
-
   </div>
 </BaseLayout>
 
