@@ -1,0 +1,80 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  baseUrl: string; // e.g. "/spor-kitapligi"
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+const prevUrl = currentPage === 2 ? `${baseUrl}/` : `${baseUrl}/sayfa/${currentPage - 1}/`;
+const nextUrl = `${baseUrl}/sayfa/${currentPage + 1}/`;
+const hasPrev = currentPage > 1;
+const hasNext = currentPage < totalPages;
+---
+
+{totalPages > 1 && (
+  <nav class="pagination" aria-label="Sayfa gezintisi">
+    {hasPrev ? (
+      <a href={prevUrl} class="pagination__btn" aria-label="Önceki sayfa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </a>
+    ) : (
+      <span class="pagination__btn pagination__btn--disabled" aria-disabled="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </span>
+    )}
+
+    <span class="pagination__info">
+      Sayfa {currentPage} / {totalPages}
+    </span>
+
+    {hasNext ? (
+      <a href={nextUrl} class="pagination__btn" aria-label="Sonraki sayfa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </a>
+    ) : (
+      <span class="pagination__btn pagination__btn--disabled" aria-disabled="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+      </span>
+    )}
+  </nav>
+)}
+
+<style>
+  .pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 2.5rem;
+  }
+  .pagination__btn {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--color-vintage-border);
+    color: var(--color-vintage-brown);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+  .pagination__btn:hover {
+    border-color: var(--color-vintage-gold);
+    color: var(--color-vintage-gold);
+    background: rgba(193,154,60,0.06);
+  }
+  .pagination__btn svg { width: 16px; height: 16px; }
+  .pagination__btn--disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+  }
+  .pagination__info {
+    font-family: var(--font-family-sans);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-vintage-muted);
+  }
+  @media (max-width: 640px) {
+    .pagination { justify-content: center; }
+  }
+</style>
