@@ -30,12 +30,6 @@ const fallbackLabel: Record<string, string> = {
   'cumhuriyet-donemi-spor': 'TARİHİ BELGE',
   'kisisel-blog': 'YAZI ARŞİVİ',
 };
-const categoryNotes: Record<string, string> = {
-  'spor-kitapligi': 'Sporu anlatan kitapların analiz ve okumaları.',
-  'spor-filmografisi': 'Sporun beyazperdedeki yansımaları: film, dizi ve belgesel analizleri.',
-  'cumhuriyet-donemi-spor': 'Erken Cumhuriyet döneminde sporun toplumsal ve siyasal etkisi üzerine incelemeler.',
-  'kisisel-blog': 'Spor, toplum ve kültür üzerine gözlemler.',
-};
 ---
 
 <article
@@ -72,7 +66,6 @@ const categoryNotes: Record<string, string> = {
 
   <div class="card-body flex flex-col flex-1 p-5">
     <div class="mb-1"><CategoryBadge category={category} /></div>
-    <p class="text-[10px] text-vintage-muted/70 italic leading-snug mb-3 line-clamp-1">{categoryNotes[category]}</p>
 
     <a href={href} class="block">
       <h3 class="font-heading text-lg md:text-xl font-bold text-vintage-dark group-hover:text-vintage-red transition-colors duration-200 leading-snug mb-2">{title}</h3>
