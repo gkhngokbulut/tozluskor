@@ -5,7 +5,7 @@ import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import Pagination from '../../components/ui/Pagination.astro';
 import { getCollection } from 'astro:content';
 
-const PER_PAGE = 8;
+const PER_PAGE = 4;
 const readMinutes = (body) => Math.max(1, Math.round((body || '').split(/\s+/).length / 200));
 const makeExcerpt = (body) =>
   (body || '').replace(/^---[\s\S]*?---/, '').replace(/[#>*_`~\[\]()]/g, '').replace(/\s+/g, ' ').trim().slice(0, 240);
@@ -32,7 +32,7 @@ const entries = allEntries.slice(0, PER_PAGE);
         <div class="w-16 h-px bg-vintage-gold/20"></div>
       </div>
       <p class="text-vintage-cream/50 text-base max-w-2xl font-body leading-relaxed">
-        Skor Tabelasının Ötesi: Spor, Toplum ve Kültür Üzerine Denemeler/Gözlemler.
+        Tabelanın Ötesi: Spor ve Kültür Üzerine Denemeler/Gözlemler.
       </p>
     </div>
   </div>
