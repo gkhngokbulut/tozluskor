@@ -470,6 +470,24 @@ html.qr-open { overflow: hidden; }
 }
 
 /* ── Slogan fade-in mikro animasyon ── */
+
+/* ── Makale gövde metni: iki yana yaslı ── */
+.article-body {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+.article-body figure {
+  text-align: center;
+  margin: 2rem 0;
+}
+.article-body figcaption {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--color-vintage-muted);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
 .slogan-fade {
   opacity: 0;
   transition: opacity 0.7s ease-in-out;
