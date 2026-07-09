@@ -54,7 +54,7 @@ const blogItems = bloglar.map((e) => ({
     <div class="max-w-6xl mx-auto px-6">
 
       <div class="fade-in-section">
-        <LatestArticles subtitle="Sporu farklı açılardan ele alan kitapların incelemeleri ve okumaları." title="Spor Kitaplığı" href="/spor-kitapligi">
+        <LatestArticles subtitle="Sporu Anlatan Kitap Okumaları." title="Spor Kitaplığı" href="/spor-kitapligi">
           <ArticleGrid items={kitapItems} />
         </LatestArticles>
       </div>
@@ -62,7 +62,7 @@ const blogItems = bloglar.map((e) => ({
       <ParallaxBand quote="Futbol Asla Sadece Futbol Değildir!" source="Simon Kuper" />
 
       <div class="fade-in-section">
-        <LatestArticles subtitle="Sporun beyazperdedeki yansımaları: filmler, yönetmenler ve sahneler." title="Spor Filmografisi" href="/spor-filmografisi">
+        <LatestArticles subtitle="Sporun Beyazperdedeki Yansımaları." title="Spor Filmografisi" href="/spor-filmografisi">
           <ArticleGrid items={filmItems} />
         </LatestArticles>
       </div>
@@ -70,7 +70,7 @@ const blogItems = bloglar.map((e) => ({
       <ParallaxBand quote="Hayat futbola fena halde benzer..." source="Dar Alanda Kısa Paslaşmalar (2000)" />
 
       <div class="fade-in-section">
-        <LatestArticles subtitle="Cumhuriyet'in kuruluşundan bugüne sporun toplumsal ve siyasal tarihi." title="Cumhuriyet Dönemi Spor" href="/cumhuriyet-donemi-spor">
+        <LatestArticles subtitle="Sporun Erken Cumhuriyet Döneminde Rolü." title="Cumhuriyet Dönemi Spor" href="/cumhuriyet-donemi-spor">
           <ArticleGrid items={cumhuriyetItems} />
         </LatestArticles>
       </div>
@@ -78,7 +78,7 @@ const blogItems = bloglar.map((e) => ({
       <ParallaxBand quote="Ben sporcunun zeki, çevik ve aynı zamanda ahlaklısını severim." source="Mustafa Kemal Atatürk" />
 
       <div class="fade-in-section">
-        <LatestArticles subtitle="Spor, toplum ve kültür üzerine kişisel gözlemler ve notlar." title="Yazıyor Yazıyor" href="/kisisel-blog">
+        <LatestArticles subtitle="Spor ve Kültür Üzerine Gözlemler." title="Yazıyor Yazıyor" href="/kisisel-blog">
           <ArticleGrid items={blogItems} />
         </LatestArticles>
       </div>
@@ -97,7 +97,7 @@ const blogItems = bloglar.map((e) => ({
       },
       { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
     );
-    document.querySelectorAll('.fade-in-section').forEach((el) => observer.observe(el));
+    document.querySelectorAll('.fade-in-section, .slogan-fade').forEach((el) => observer.observe(el));
   }
   initFadeIn();
 </script>
