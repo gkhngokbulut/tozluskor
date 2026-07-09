@@ -22,28 +22,35 @@ const formattedDate = publishDate.toLocaleDateString('tr-TR', {
   month: 'long',
   day: 'numeric',
 });
+
+/* Tag slug helper */
+function tagSlug(tag: string): string {
+  return tag
+    .toLowerCase()
+    .replace(/ğ/g,'g').replace(/ü/g,'u').replace(/ş/g,'s')
+    .replace(/ı/g,'i').replace(/ö/g,'o').replace(/ç/g,'c')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+/* Max 4 tags */
+const visibleTags = tags.slice(0, 4);
 ---
 
 <BaseLayout title={`${title} — Tozlu Skor`} description={description}>
   <article class="max-w-2xl mx-auto px-6 py-12">
 
+    <!-- Breadcrumb: son halka (yazı başlığı) kaldırıldı -->
     <div class="mb-8">
       <Breadcrumb
         items={[
           { label: categoryLabel, href: `/${category}` },
-          { label: title },
         ]}
       />
     </div>
 
-    {coverImage && (
-      <div class="mb-8 -mx-6 md:mx-0 overflow-hidden md:border md:border-vintage-border/60">
-        <img src={coverImage} alt={title} class="w-full h-56 md:h-80 object-cover" loading="eager" />
-      </div>
-    )}
-
     <!-- Makale başlığı -->
-    <header class="mb-10">
+    <header class="mb-8">
       <CategoryBadge category={category} />
 
       <h1 class="font-heading text-3xl md:text-[2.6rem] font-bold text-vintage-dark mt-5 mb-5 leading-[1.15]">
@@ -64,21 +71,31 @@ const formattedDate = publishDate.toLocaleDateString('tr-TR', {
         )}
       </div>
 
-      {tags.length > 0 && (
+      {visibleTags.length > 0 && (
         <div class="flex flex-wrap gap-2 mt-5">
-          {tags.map((tag) => (
-            <span class="text-[11px] text-vintage-muted px-2.5 py-1 border border-vintage-border/60">
+          {visibleTags.map((tag) => (
+            <a
+              href={`/etiket/${tagSlug(tag)}/`}
+              class="text-[11px] text-vintage-muted hover:text-vintage-red px-2.5 py-1 border border-vintage-border/60 hover:border-vintage-red/40 transition-colors"
+            >
               #{tag}
-            </span>
+            </a>
           ))}
         </div>
       )}
     </header>
 
+    <!-- Ana öne çıkan görsel (başlığın altında) -->
+    {coverImage && (
+      <figure class="mb-10 -mx-6 md:mx-0 overflow-hidden md:border md:border-vintage-border/60">
+        <img src={coverImage} alt={title} class="w-full h-56 md:h-80 object-cover" loading="eager" />
+      </figure>
+    )}
+
     <Divider />
 
-    <!-- Makale içeriği -->
-    <div class="prose prose-lg max-w-none font-body">
+    <!-- Makale içeriği (iki yana yaslı) -->
+    <div class="prose prose-lg max-w-none font-body article-body">
       <slot />
     </div>
 
