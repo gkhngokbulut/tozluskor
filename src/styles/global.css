@@ -469,6 +469,18 @@ html.qr-open { overflow: hidden; }
   color: rgba(193,154,60,0.5);
 }
 
+/* ── Slogan fade-in mikro animasyon ── */
+.slogan-fade {
+  opacity: 0;
+  transition: opacity 0.7s ease-in-out;
+}
+.slogan-fade.is-visible {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .slogan-fade { opacity: 1; transition: none; }
+}
+
 /* ══════════════════════════════════════════════════
    İÇERİK KORUMA — Frontend Caydırıcı Katman
    ══════════════════════════════════════════════════ */
