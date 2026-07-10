@@ -3,26 +3,31 @@
 
 <section class="hero relative overflow-hidden">
 
-  <!-- Arka plan görseli (full-bleed, statik) -->
-  <div class="hero-bg absolute inset-0" aria-hidden="true"></div>
+  <!-- Arka plan görseli: Ken Burns animasyonu yalnızca bu katmanda çalışır -->
+  <div class="hero-bg absolute" aria-hidden="true"></div>
 
   <!-- Çok katmanlı sinematografik overlay -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <!-- Sepya + gün batımı sıcaklığı -->
     <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(34,24,14,0.55) 0%, rgba(40,28,16,0.35) 35%, rgba(28,22,16,0.55) 70%, rgba(20,16,12,0.9) 100%);"></div>
+
     <!-- Hardal/altın sinematografik filtre -->
     <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 70% at 50% 38%, rgba(193,154,60,0.18) 0%, transparent 55%); mix-blend-mode: overlay;"></div>
-    <!-- Kurşuni derinlik (kenarlar) -->
+
+    <!-- Kurşuni derinlik / kenar vignette -->
     <div class="absolute inset-0" style="background: radial-gradient(ellipse 120% 100% at 50% 50%, transparent 45%, rgba(20,16,12,0.6) 100%);"></div>
+
     <!-- Eski gazete kağıdı / toz dokusu -->
     <div class="hero-grain absolute inset-0"></div>
+
     <!-- Üst hairline -->
     <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-vintage-gold/25 to-transparent"></div>
-    <!-- Alta doğru eriyen koyu geçiş (sonraki bölüme yumuşak bağlanır) -->
+
+    <!-- Alta doğru eriyen koyu geçiş -->
     <div class="absolute bottom-0 inset-x-0 h-40" style="background: linear-gradient(to bottom, transparent, #1d1209);"></div>
   </div>
 
-  <!-- İçerik -->
+  <!-- İçerik: tamamen sabit, animasyondan etkilenmez -->
   <div class="relative z-10 min-h-[78vh] md:min-h-[86vh] flex items-center justify-center px-6 py-20">
     <div class="max-w-3xl mx-auto text-center">
 
@@ -31,7 +36,7 @@
         <span class="block italic font-normal text-vintage-gold text-[2.75rem] sm:text-6xl lg:text-[5rem] mt-1">Peşinde</span>
       </h1>
 
-      <!-- Slogan (H2) -->
+      <!-- Slogan -->
       <p class="hero-fade mt-7 mb-6" style="--d:.15s">
         <span class="inline-block font-heading text-xl sm:text-2xl md:text-3xl text-vintage-cream/90 italic tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
           Bazı zaferler tabelada yazmaz!
@@ -45,7 +50,7 @@
         <span class="w-12 h-px bg-vintage-gold/50"></span>
       </div>
 
-      <!-- Açıklama (P) -->
+      <!-- Açıklama -->
       <p class="hero-fade font-body text-vintage-cream/80 text-base md:text-lg leading-relaxed max-w-2xl mx-auto drop-shadow-[0_1px_10px_rgba(0,0,0,0.6)]" style="--d:.31s">
         Tarihin derinliklerinde, sahaların tozunu yutmuş hikayeleri; kitaplar,
         filmler, arşiv belgeleri aracılığıyla gün ışığına çıkarıyoruz.
@@ -63,23 +68,38 @@
 
 <style>
   .hero-bg {
+    inset: -5%;
     background-image: url('/hero-bg.jpg');
     background-size: cover;
     background-position: center 35%;
     background-repeat: no-repeat;
     filter: saturate(1.05) contrast(1.02);
-    transform: scale(1) translate3d(0,0,0);
-    animation: heroKenBurns 28s ease-in-out infinite alternate;
+
+    transform: translate3d(0, 0, 0) scale(1.03);
+    transform-origin: center center;
+
+    animation: heroKenBurns 18s ease-in-out infinite alternate;
     will-change: transform;
-  }
-  @keyframes heroKenBurns {
-    0%   { transform: scale(1)    translate3d(0,0,0); }
-    100% { transform: scale(1.06) translate3d(0,0,0); }
+    backface-visibility: hidden;
   }
 
-  /* Mobilde odak: figür/sahne kaybolmasın */
+  @keyframes heroKenBurns {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1.03);
+    }
+
+    100% {
+      transform: translate3d(0, 0, 0) scale(1.13);
+    }
+  }
+
+  /* Mobilde odak: figür / sahne kaybolmasın */
   @media (max-width: 768px) {
-    .hero-bg { background-position: 70% 40%; }
+    .hero-bg {
+      inset: -7%;
+      background-position: 70% 40%;
+      animation-duration: 20s;
+    }
   }
 
   .hero-grain {
@@ -94,20 +114,46 @@
     animation: heroFade 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     animation-delay: var(--d, 0s);
   }
-  @keyframes heroFade { to { opacity: 1; transform: translateY(0); } }
+
+  @keyframes heroFade {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
   .scroll-line {
     animation: scrollPulse 2.4s ease-in-out infinite;
     transform-origin: top;
   }
+
   @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; transform: scaleY(0.7); }
-    50%      { opacity: 1;   transform: scaleY(1);   }
+    0%, 100% {
+      opacity: 0.4;
+      transform: scaleY(0.7);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scaleY(1);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-bg { animation: none; transform: none; will-change: auto; }
-    .hero-fade { animation: none; opacity: 1; transform: none; }
-    .scroll-line { animation: none; }
+    .hero-bg {
+      animation: none;
+      transform: translate3d(0, 0, 0) scale(1.03);
+      will-change: auto;
+    }
+
+    .hero-fade {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .scroll-line {
+      animation: none;
+    }
   }
 </style>
