@@ -19,7 +19,7 @@ const makeExcerpt = (body: string, len = 240) =>
 const readMinutes = (body: string) => Math.max(1, Math.round((body || '').split(/\s+/).length / 200));
 
 const sortRecent = (arr: any[]) =>
-  arr.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()).slice(0, 4);
+  arr.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime()).slice(0, 2);
 
 const kitaplar = sortRecent(await getCollection('spor-kitapligi', ({ data }) => !data.draft));
 const filmler = sortRecent(await getCollection('spor-filmografisi', ({ data }) => !data.draft));
