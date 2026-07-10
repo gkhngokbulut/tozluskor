@@ -27,7 +27,7 @@
     <div class="absolute bottom-0 inset-x-0 h-40" style="background: linear-gradient(to bottom, transparent, #1d1209);"></div>
   </div>
 
-  <!-- İçerik: tamamen sabit, animasyondan etkilenmez -->
+  <!-- İçerik: tamamen sabit, arka plan animasyonundan etkilenmez -->
   <div class="relative z-10 min-h-[78vh] md:min-h-[86vh] flex items-center justify-center px-6 py-20">
     <div class="max-w-3xl mx-auto text-center">
 
@@ -68,37 +68,41 @@
 
 <style>
   .hero-bg {
-    inset: -5%;
+    inset: -8%;
     background-image: url('/hero-bg.jpg');
     background-size: cover;
     background-position: center 35%;
     background-repeat: no-repeat;
-    filter: saturate(1.05) contrast(1.02);
+    filter: saturate(1.06) contrast(1.03);
 
-    transform: translate3d(0, 0, 0) scale(1.03);
+    transform: translate3d(-1.5%, 0, 0) scale(1.04);
     transform-origin: center center;
 
-    animation: heroKenBurns 18s ease-in-out infinite alternate;
+    animation: heroKenBurns 22s cubic-bezier(0.45, 0, 0.55, 1) infinite;
     will-change: transform;
     backface-visibility: hidden;
   }
 
   @keyframes heroKenBurns {
     0% {
-      transform: translate3d(0, 0, 0) scale(1.03);
+      transform: translate3d(-1.5%, 0, 0) scale(1.04);
+    }
+
+    50% {
+      transform: translate3d(1.5%, -1%, 0) scale(1.16);
     }
 
     100% {
-      transform: translate3d(0, 0, 0) scale(1.13);
+      transform: translate3d(-1.5%, 0, 0) scale(1.04);
     }
   }
 
   /* Mobilde odak: figür / sahne kaybolmasın */
   @media (max-width: 768px) {
     .hero-bg {
-      inset: -7%;
+      inset: -10%;
       background-position: 70% 40%;
-      animation-duration: 20s;
+      animation-duration: 24s;
     }
   }
 
@@ -142,7 +146,7 @@
   @media (prefers-reduced-motion: reduce) {
     .hero-bg {
       animation: none;
-      transform: translate3d(0, 0, 0) scale(1.03);
+      transform: translate3d(0, 0, 0) scale(1.04);
       will-change: auto;
     }
 
