@@ -68,6 +68,13 @@
     background-position: center 35%;
     background-repeat: no-repeat;
     filter: saturate(1.05) contrast(1.02);
+    transform: scale(1) translate3d(0,0,0);
+    animation: heroKenBurns 28s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  @keyframes heroKenBurns {
+    0%   { transform: scale(1)    translate3d(0,0,0); }
+    100% { transform: scale(1.06) translate3d(0,0,0); }
   }
 
   /* Mobilde odak: figür/sahne kaybolmasın */
@@ -99,6 +106,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero-bg { animation: none; transform: none; will-change: auto; }
     .hero-fade { animation: none; opacity: 1; transform: none; }
     .scroll-line { animation: none; }
   }
