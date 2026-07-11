@@ -3,6 +3,8 @@ import BaseLayout from './BaseLayout.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
 import CategoryBadge from '../components/ui/CategoryBadge.astro';
 import Divider from '../components/ui/Divider.astro';
+import ArticleSchema from '../components/seo/ArticleSchema.astro';
+import BreadcrumbSchema from '../components/seo/BreadcrumbSchema.astro';
 
 interface Props {
   title: string;
@@ -111,4 +113,19 @@ const visibleTags = tags.slice(0, 4);
       </a>
     </div>
   </article>
+
+  <!-- JSON-LD Structured Data -->
+  <ArticleSchema
+    title={title}
+    description={description}
+    publishDate={publishDate}
+    coverImage={coverImage}
+    category={category}
+    categoryLabel={categoryLabel}
+  />
+  <BreadcrumbSchema items={[
+    { name: 'Ana Sayfa', url: 'https://tozluskor.vercel.app/' },
+    { name: categoryLabel, url: `https://tozluskor.vercel.app/${category}/` },
+    { name: title, url: `https://tozluskor.vercel.app${Astro.url.pathname}` },
+  ]} />
 </BaseLayout>
