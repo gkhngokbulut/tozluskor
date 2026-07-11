@@ -7,16 +7,19 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  ogType?: string;
 }
 
 const {
   title,
   description = 'Spor tarihi, kitap analizleri, film incelemeleri ve toplumsal perspektifler.',
   ogImage = '/og-default.jpg',
+  ogType = 'website',
 } = Astro.props;
 
 const siteUrl = 'https://tozluskor.vercel.app';
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const isHome = Astro.url.pathname === '/';
 ---
 
 <!doctype html>
@@ -31,7 +34,10 @@ const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Open Graph / Sosyal medya -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+
+    <!-- Hero görsel preload — yalnızca ana sayfada -->
+    {isHome && <link rel="preload" href="/hero-bg.jpg" as="image" />}
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
