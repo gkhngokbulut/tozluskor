@@ -1,0 +1,48 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  publishDate: Date;
+  updatedDate?: Date;
+  coverImage?: string;
+  category: string;
+  categoryLabel: string;
+}
+
+const SITE = 'https://tozluskor.vercel.app';
+
+const { title, description, publishDate, updatedDate, coverImage, category, categoryLabel } = Astro.props;
+
+const url = `${SITE}/${category}/${Astro.url.pathname.split('/').filter(Boolean).pop()}/`;
+const imageUrl = coverImage ? `${SITE}${coverImage}` : `${SITE}/logo.png`;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "image": imageUrl,
+  "datePublished": publishDate.toISOString(),
+  "dateModified": (updatedDate || publishDate).toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": "Gökhan Gökbulut",
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tozlu Skor",
+    "url": SITE,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${SITE}/logo.png`,
+    },
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": url,
+  },
+  "url": url,
+  "articleSection": categoryLabel,
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
