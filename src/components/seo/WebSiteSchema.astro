@@ -1,0 +1,23 @@
+---
+const SITE = 'https://tozluskor.vercel.app';
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Tozlu Skor",
+    "url": `${SITE}/`,
+    "description": "Spor tarihi, spor kültürü, kitap, film ve arşiv odaklı dijital yayın ve hafıza platformu.",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Tozlu Skor",
+    "url": `${SITE}/`,
+    "logo": `${SITE}/logo.png`,
+  },
+];
+---
+{schema.map((s) => (
+  <script type="application/ld+json" set:html={JSON.stringify(s)} />
+))}
