@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroSection from '../components/ui/HeroSection.astro';
 import LatestArticles from '../components/ui/LatestArticles.astro';
 import ArticleGrid from '../components/ui/ArticleGrid.astro';
+import WebSiteSchema from '../components/seo/WebSiteSchema.astro';
 import ParallaxBand from '../components/ui/ParallaxBand.astro';
 import { getCollection } from 'astro:content';
 
@@ -48,6 +49,7 @@ const blogItems = bloglar.map((e) => ({
 ---
 
 <BaseLayout title="Tozlu Skor — Tozlu Skorların Peşinde">
+  <WebSiteSchema />
   <HeroSection />
 
   <div class="home-shell">
