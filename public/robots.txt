@@ -9,3 +9,5 @@ Allow: /
 
 User-agent: anthropic-ai
 Allow: /
+
+Sitemap: https://tozluskor.vercel.app/sitemap.xml
