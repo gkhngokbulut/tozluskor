@@ -37,7 +37,7 @@ function tagSlug(tag: string): string {
 const visibleTags = tags.slice(0, 4);
 ---
 
-<BaseLayout title={`${title} — Tozlu Skor`} description={description}>
+<BaseLayout title={`${title} — Tozlu Skor`} description={description} ogType="article">
   <article class="max-w-2xl mx-auto px-6 py-12">
 
     <!-- Breadcrumb: son halka (yazı başlığı) kaldırıldı -->
@@ -88,7 +88,7 @@ const visibleTags = tags.slice(0, 4);
     <!-- Ana öne çıkan görsel (başlığın altında) -->
     {coverImage && (
       <figure class="mb-10 -mx-6 md:mx-0 overflow-hidden md:border md:border-vintage-border/60">
-        <img src={coverImage} alt={title} class="w-full h-56 md:h-80 object-cover" loading="eager" />
+        <img src={coverImage} alt={title} class="w-full h-56 md:h-80 object-cover" width="1200" height="630" loading="eager" />
       </figure>
     )}
 
