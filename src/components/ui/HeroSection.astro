@@ -78,11 +78,19 @@
     transform: translate3d(-1.5%, 0, 0) scale(1.04);
     transform-origin: center center;
 
-    animation: heroKenBurns 58s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    /*
+      Hız güncellemesi:
+      Önceki desktop süre: 58s
+      Yeni desktop süre: 90s
+      Amaç: Hareketi daha ağır, sinematik ve zar zor algılanır hale getirmek.
+    */
+    animation: heroKenBurns 90s ease-in-out infinite;
+
     will-change: transform;
     backface-visibility: hidden;
   }
 
+  /* Desktop / geniş ekran: mevcut transform oranları korunur */
   @keyframes heroKenBurns {
     0% {
       transform: translate3d(-1.5%, 0, 0) scale(1.04);
@@ -97,12 +105,81 @@
     }
   }
 
-  /* Mobilde odak: figür / sahne kaybolmasın */
+  /*
+    Tablet optimizasyonu:
+    Hareket daha da yavaşlatıldı.
+    Katman / z-index yapısına dokunulmadı.
+  */
+  @media (max-width: 1024px) {
+    .hero-bg {
+      inset: -8.5%;
+      animation-duration: 105s;
+      transform: translate3d(-1.5%, 0, 0) scale(1.04);
+      will-change: transform;
+    }
+  }
+
+  /*
+    Mobil optimizasyonu:
+    Önceki mobil süre: 64s
+    Yeni mobil süre: 118s
+    Dar ekranda taşmayı ve fazla büyümeyi engellemek için
+    mobilde scale aralığı hafif daraltıldı.
+  */
   @media (max-width: 768px) {
     .hero-bg {
-      inset: -10%;
+      inset: -9%;
       background-position: 70% 40%;
-      animation-duration: 64s;
+      animation-name: heroKenBurnsMobile;
+      animation-duration: 118s;
+      animation-timing-function: ease-in-out;
+      transform: translate3d(-1%, 0, 0) scale(1.035);
+      will-change: transform;
+    }
+  }
+
+  @keyframes heroKenBurnsMobile {
+    0% {
+      transform: translate3d(-1%, 0, 0) scale(1.035);
+    }
+
+    50% {
+      transform: translate3d(1%, -0.6%, 0) scale(1.11);
+    }
+
+    100% {
+      transform: translate3d(-1%, 0, 0) scale(1.035);
+    }
+  }
+
+  /*
+    Küçük mobil optimizasyonu:
+    Daha sakin hareket, daha düşük scale limiti.
+    Amaç: mobilde kasma, taşma ve agresif zoom hissini azaltmak.
+  */
+  @media (max-width: 480px) {
+    .hero-bg {
+      inset: -9.5%;
+      background-position: 72% 42%;
+      animation-name: heroKenBurnsMobileSmall;
+      animation-duration: 132s;
+      animation-timing-function: ease-in-out;
+      transform: translate3d(-0.75%, 0, 0) scale(1.03);
+      will-change: transform;
+    }
+  }
+
+  @keyframes heroKenBurnsMobileSmall {
+    0% {
+      transform: translate3d(-0.75%, 0, 0) scale(1.03);
+    }
+
+    50% {
+      transform: translate3d(0.75%, -0.4%, 0) scale(1.085);
+    }
+
+    100% {
+      transform: translate3d(-0.75%, 0, 0) scale(1.03);
     }
   }
 
