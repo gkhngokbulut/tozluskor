@@ -3,31 +3,26 @@
 
 <section class="hero relative overflow-hidden">
 
-  <!-- Arka plan görseli: Ken Burns animasyonu yalnızca bu katmanda çalışır -->
-  <div class="hero-bg absolute" aria-hidden="true"></div>
+  <!-- Arka plan görseli (full-bleed, statik) -->
+  <div class="hero-bg absolute inset-0" aria-hidden="true"></div>
 
   <!-- Çok katmanlı sinematografik overlay -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <!-- Sepya + gün batımı sıcaklığı -->
     <div class="absolute inset-0" style="background: linear-gradient(180deg, rgba(34,24,14,0.55) 0%, rgba(40,28,16,0.35) 35%, rgba(28,22,16,0.55) 70%, rgba(20,16,12,0.9) 100%);"></div>
-
     <!-- Hardal/altın sinematografik filtre -->
     <div class="absolute inset-0" style="background: radial-gradient(ellipse 80% 70% at 50% 38%, rgba(193,154,60,0.18) 0%, transparent 55%); mix-blend-mode: overlay;"></div>
-
-    <!-- Kurşuni derinlik / kenar vignette -->
+    <!-- Kurşuni derinlik (kenarlar) -->
     <div class="absolute inset-0" style="background: radial-gradient(ellipse 120% 100% at 50% 50%, transparent 45%, rgba(20,16,12,0.6) 100%);"></div>
-
     <!-- Eski gazete kağıdı / toz dokusu -->
     <div class="hero-grain absolute inset-0"></div>
-
     <!-- Üst hairline -->
     <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-vintage-gold/25 to-transparent"></div>
-
-    <!-- Alta doğru eriyen koyu geçiş -->
+    <!-- Alta doğru eriyen koyu geçiş (sonraki bölüme yumuşak bağlanır) -->
     <div class="absolute bottom-0 inset-x-0 h-40" style="background: linear-gradient(to bottom, transparent, #1d1209);"></div>
   </div>
 
-  <!-- İçerik: tamamen sabit, arka plan animasyonundan etkilenmez -->
+  <!-- İçerik -->
   <div class="relative z-10 min-h-[78vh] md:min-h-[86vh] flex items-center justify-center px-6 py-20">
     <div class="max-w-3xl mx-auto text-center">
 
@@ -36,7 +31,7 @@
         <span class="block italic font-normal text-vintage-gold text-[2.75rem] sm:text-6xl lg:text-[5rem] mt-1">Peşinde</span>
       </h1>
 
-      <!-- Slogan -->
+      <!-- Slogan (H2) -->
       <p class="hero-fade mt-7 mb-6" style="--d:.15s">
         <span class="inline-block font-heading text-xl sm:text-2xl md:text-3xl text-vintage-cream/90 italic tracking-wide drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]">
           Bazı zaferler tabelada yazmaz!
@@ -50,7 +45,7 @@
         <span class="w-12 h-px bg-vintage-gold/50"></span>
       </div>
 
-      <!-- Açıklama -->
+      <!-- Açıklama (P) -->
       <p class="hero-fade font-body text-vintage-cream/80 text-base md:text-lg leading-relaxed max-w-2xl mx-auto drop-shadow-[0_1px_10px_rgba(0,0,0,0.6)]" style="--d:.31s">
         Tarihin derinliklerinde, sahaların tozunu yutmuş hikayeleri; kitaplar,
         filmler, arşiv belgeleri aracılığıyla gün ışığına çıkarıyoruz.
@@ -68,125 +63,44 @@
 
 <style>
   .hero-bg {
-    inset: -8%;
     background-image: url('/hero-bg.jpg');
     background-size: cover;
     background-position: center 35%;
     background-repeat: no-repeat;
-    filter: saturate(1.06) contrast(1.03);
-
-    transform: translate3d(-1.2%, 0, 0) scale(1.045);
-    transform-origin: center center;
-
-    /*
-      Akışkanlık güncellemesi:
-      ease-in-out kaldırıldı; çünkü döngüde yavaşlama/duraklama hissi oluşturuyordu.
-      Yeni yapı linear + çok noktalı sürekli hareket.
-      Amaç: dur-kalk hissi olmayan, doğal ve kesintisiz sinematik akış.
-    */
-    animation: heroKenBurns 110s linear infinite;
-
+    filter: saturate(1.05) contrast(1.02);
+    transform: scale(1.04) translate3d(0, 0, 0);
+    animation: heroKenBurns 115s linear infinite;
     will-change: transform;
     backface-visibility: hidden;
   }
-
   @keyframes heroKenBurns {
-    0% {
-      transform: translate3d(-1.2%, 0, 0) scale(1.045);
-    }
-
-    25% {
-      transform: translate3d(-0.2%, -0.4%, 0) scale(1.075);
-    }
-
-    50% {
-      transform: translate3d(1.2%, -0.8%, 0) scale(1.105);
-    }
-
-    75% {
-      transform: translate3d(0.2%, -0.3%, 0) scale(1.075);
-    }
-
-    100% {
-      transform: translate3d(-1.2%, 0, 0) scale(1.045);
-    }
+    0%   { transform: scale(1.04) translate3d(0, 0, 0);          }
+    25%  { transform: scale(1.08) translate3d(-0.4%, -0.3%, 0);  }
+    50%  { transform: scale(1.11) translate3d(0.3%, -0.6%, 0);   }
+    75%  { transform: scale(1.07) translate3d(-0.2%, 0.2%, 0);   }
+    100% { transform: scale(1.04) translate3d(0, 0, 0);          }
   }
 
+  /* Mobilde odak: figür/sahne kaybolmasın */
   @media (max-width: 1024px) {
-    .hero-bg {
-      inset: -8.5%;
-      animation-duration: 120s;
-      transform: translate3d(-1%, 0, 0) scale(1.04);
-      will-change: transform;
-    }
+    .hero-bg { animation-duration: 125s; }
   }
-
   @media (max-width: 768px) {
     .hero-bg {
-      inset: -9%;
       background-position: 70% 40%;
-      animation-name: heroKenBurnsMobile;
-      animation-duration: 130s;
-      animation-timing-function: linear;
-      transform: translate3d(-0.9%, 0, 0) scale(1.035);
-      will-change: transform;
+      animation-duration: 135s;
+      transform: scale(1.03) translate3d(0, 0, 0);
+    }
+    @keyframes heroKenBurns {
+      0%   { transform: scale(1.03) translate3d(0, 0, 0);          }
+      25%  { transform: scale(1.06) translate3d(-0.3%, -0.2%, 0);  }
+      50%  { transform: scale(1.08) translate3d(0.2%, -0.4%, 0);   }
+      75%  { transform: scale(1.05) translate3d(-0.15%, 0.15%, 0); }
+      100% { transform: scale(1.03) translate3d(0, 0, 0);          }
     }
   }
-
-  @keyframes heroKenBurnsMobile {
-    0% {
-      transform: translate3d(-0.9%, 0, 0) scale(1.035);
-    }
-
-    25% {
-      transform: translate3d(-0.25%, -0.25%, 0) scale(1.055);
-    }
-
-    50% {
-      transform: translate3d(0.9%, -0.5%, 0) scale(1.08);
-    }
-
-    75% {
-      transform: translate3d(0.15%, -0.2%, 0) scale(1.055);
-    }
-
-    100% {
-      transform: translate3d(-0.9%, 0, 0) scale(1.035);
-    }
-  }
-
   @media (max-width: 480px) {
-    .hero-bg {
-      inset: -9.5%;
-      background-position: 72% 42%;
-      animation-name: heroKenBurnsMobileSmall;
-      animation-duration: 145s;
-      animation-timing-function: linear;
-      transform: translate3d(-0.65%, 0, 0) scale(1.03);
-      will-change: transform;
-    }
-  }
-
-  @keyframes heroKenBurnsMobileSmall {
-    0% {
-      transform: translate3d(-0.65%, 0, 0) scale(1.03);
-    }
-
-    25% {
-      transform: translate3d(-0.15%, -0.15%, 0) scale(1.045);
-    }
-
-    50% {
-      transform: translate3d(0.65%, -0.35%, 0) scale(1.065);
-    }
-
-    75% {
-      transform: translate3d(0.1%, -0.15%, 0) scale(1.045);
-    }
-
-    100% {
-      transform: translate3d(-0.65%, 0, 0) scale(1.03);
-    }
+    .hero-bg { animation-duration: 150s; }
   }
 
   .hero-grain {
@@ -201,46 +115,20 @@
     animation: heroFade 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     animation-delay: var(--d, 0s);
   }
-
-  @keyframes heroFade {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+  @keyframes heroFade { to { opacity: 1; transform: translateY(0); } }
 
   .scroll-line {
     animation: scrollPulse 2.4s ease-in-out infinite;
     transform-origin: top;
   }
-
   @keyframes scrollPulse {
-    0%, 100% {
-      opacity: 0.4;
-      transform: scaleY(0.7);
-    }
-
-    50% {
-      opacity: 1;
-      transform: scaleY(1);
-    }
+    0%, 100% { opacity: 0.4; transform: scaleY(0.7); }
+    50%      { opacity: 1;   transform: scaleY(1);   }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-bg {
-      animation: none;
-      transform: translate3d(0, 0, 0) scale(1.04);
-      will-change: auto;
-    }
-
-    .hero-fade {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
-
-    .scroll-line {
-      animation: none;
-    }
+    .hero-bg { animation: none; transform: none; will-change: auto; }
+    .hero-fade { animation: none; opacity: 1; transform: none; }
+    .scroll-line { animation: none; }
   }
 </style>
