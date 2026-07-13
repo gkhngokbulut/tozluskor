@@ -62,45 +62,51 @@
 </section>
 
 <style>
+  /* Ken Burns — sinematik arka plan mikro hareketi */
   .hero-bg {
     background-image: url('/hero-bg.jpg');
     background-size: cover;
     background-position: center 35%;
     background-repeat: no-repeat;
     filter: saturate(1.05) contrast(1.02);
+    /* Başlangıç transform: scale offset ile kenar boşluğu önlenir */
     transform: scale(1.04) translate3d(0, 0, 0);
-    animation: heroKenBurns 115s linear infinite;
+    /* Süre: 140s — zar zor algılanabilir; ease-in-out yumuşak ivme */
+    animation: heroKenBurns 140s ease-in-out infinite;
     will-change: transform;
     backface-visibility: hidden;
   }
   @keyframes heroKenBurns {
     0%   { transform: scale(1.04) translate3d(0, 0, 0);          }
-    25%  { transform: scale(1.08) translate3d(-0.4%, -0.3%, 0);  }
-    50%  { transform: scale(1.11) translate3d(0.3%, -0.6%, 0);   }
-    75%  { transform: scale(1.07) translate3d(-0.2%, 0.2%, 0);   }
-    100% { transform: scale(1.04) translate3d(0, 0, 0);          }
+    25%  { transform: scale(1.08) translate3d(-0.35%, -0.25%, 0); }
+    50%  { transform: scale(1.10) translate3d(0.25%, -0.5%, 0);   }
+    75%  { transform: scale(1.07) translate3d(-0.15%, 0.15%, 0);  }
+    100% { transform: scale(1.04) translate3d(0, 0, 0);           }
   }
 
-  /* Mobilde odak: figür/sahne kaybolmasın */
+  /* ── Responsive: tablet ── */
   @media (max-width: 1024px) {
-    .hero-bg { animation-duration: 125s; }
+    .hero-bg { animation-duration: 155s; }
   }
+  /* ── Responsive: mobil ── */
   @media (max-width: 768px) {
     .hero-bg {
       background-position: 70% 40%;
-      animation-duration: 135s;
+      animation-duration: 170s;
+      /* Mobilde scale limiti düşük: taşma önlenir */
       transform: scale(1.03) translate3d(0, 0, 0);
     }
     @keyframes heroKenBurns {
       0%   { transform: scale(1.03) translate3d(0, 0, 0);          }
-      25%  { transform: scale(1.06) translate3d(-0.3%, -0.2%, 0);  }
-      50%  { transform: scale(1.08) translate3d(0.2%, -0.4%, 0);   }
-      75%  { transform: scale(1.05) translate3d(-0.15%, 0.15%, 0); }
-      100% { transform: scale(1.03) translate3d(0, 0, 0);          }
+      25%  { transform: scale(1.05) translate3d(-0.25%, -0.15%, 0); }
+      50%  { transform: scale(1.07) translate3d(0.15%, -0.3%, 0);   }
+      75%  { transform: scale(1.04) translate3d(-0.1%, 0.1%, 0);    }
+      100% { transform: scale(1.03) translate3d(0, 0, 0);           }
     }
   }
+  /* ── Responsive: küçük mobil ── */
   @media (max-width: 480px) {
-    .hero-bg { animation-duration: 150s; }
+    .hero-bg { animation-duration: 190s; }
   }
 
   .hero-grain {
