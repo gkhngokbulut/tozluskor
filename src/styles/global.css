@@ -514,12 +514,8 @@ html.qr-open { overflow: hidden; }
 .content-protected textarea,
 .content-protected select,
 .content-protected button,
+.content-protected a,
 .content-protected [contenteditable="true"] {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
 /* Görsellerin sürüklenmesini / bağımsız indirilmesini zorlaştır */
 .content-protected img {
   pointer-events: none;
