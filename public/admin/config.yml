@@ -1,8 +1,7 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: gkhngokbulut/tozluskor
   branch: main
-  identity_url: https://tozluskor.netlify.app/.netlify/identity
-  gateway_url: https://tozluskor.netlify.app/.netlify/git/github
 
 locale: tr
 
