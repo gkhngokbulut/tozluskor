@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: gkhngokbulut/tozluskor
   branch: main
 
 locale: tr
@@ -7,69 +8,89 @@ locale: tr
 media_folder: public/images
 public_folder: /images
 
+slug:
+  encoding: "ascii"
+  clean_accents: true
+
 collections:
   - name: spor-kitapligi
     label: "Spor Kitaplığı"
+    label_singular: "Kitap Yazısı"
     folder: src/content/spor-kitapligi
     create: true
     slug: "{{slug}}"
     extension: md
+    sortable_fields: ["publishDate", "title"]
+    summary: "{{title}} — {{publishDate}}"
     fields:
-      - { label: "Başlık", name: title, widget: string }
-      - { label: "Açıklama", name: description, widget: text }
+      - { label: "Başlık", name: title, widget: string, hint: "Yazının ana başlığı" }
+      - { label: "SEO Açıklama", name: description, widget: text, hint: "150-160 karakter, arama sonuçlarında görünür" }
       - { label: "Kitap Adı", name: bookTitle, widget: string }
       - { label: "Kitap Yazarı", name: bookAuthor, widget: string }
       - { label: "Yayın Tarihi", name: publishDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false }
-      - { label: "Etiketler", name: tags, widget: list, default: [] }
-      - { label: "Taslak", name: draft, widget: boolean, default: false }
+      - { label: "Güncelleme Tarihi", name: updatedDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false, hint: "Önerilen: 1200x630px" }
+      - { label: "Etiketler", name: tags, widget: list, default: [], max: 4, hint: "En fazla 4 etiket" }
+      - { label: "Taslak", name: draft, widget: boolean, default: false, hint: "İşaretlenirse yayınlanmaz" }
       - { label: "İçerik", name: body, widget: markdown }
 
   - name: spor-filmografisi
     label: "Spor Filmografisi"
+    label_singular: "Film Yazısı"
     folder: src/content/spor-filmografisi
     create: true
     slug: "{{slug}}"
     extension: md
+    sortable_fields: ["publishDate", "title"]
+    summary: "{{title}} — {{filmTitle}} ({{filmYear}})"
     fields:
-      - { label: "Başlık", name: title, widget: string }
-      - { label: "Açıklama", name: description, widget: text }
+      - { label: "Başlık", name: title, widget: string, hint: "Yazının ana başlığı" }
+      - { label: "SEO Açıklama", name: description, widget: text, hint: "150-160 karakter, arama sonuçlarında görünür" }
       - { label: "Film Adı", name: filmTitle, widget: string }
       - { label: "Film Yılı", name: filmYear, widget: number, value_type: int }
       - { label: "Yönetmen", name: director, widget: string }
       - { label: "Yayın Tarihi", name: publishDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false }
-      - { label: "Etiketler", name: tags, widget: list, default: [] }
-      - { label: "Taslak", name: draft, widget: boolean, default: false }
+      - { label: "Güncelleme Tarihi", name: updatedDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false, hint: "Önerilen: 1200x630px" }
+      - { label: "Etiketler", name: tags, widget: list, default: [], max: 4, hint: "En fazla 4 etiket" }
+      - { label: "Taslak", name: draft, widget: boolean, default: false, hint: "İşaretlenirse yayınlanmaz" }
       - { label: "İçerik", name: body, widget: markdown }
 
   - name: cumhuriyet-donemi-spor
     label: "Cumhuriyet Dönemi Spor"
+    label_singular: "Tarih Yazısı"
     folder: src/content/cumhuriyet-donemi-spor
     create: true
     slug: "{{slug}}"
     extension: md
+    sortable_fields: ["publishDate", "title"]
+    summary: "{{title}} — {{publishDate}}"
     fields:
-      - { label: "Başlık", name: title, widget: string }
-      - { label: "Açıklama", name: description, widget: text }
-      - { label: "Dönem", name: period, widget: string, required: false }
+      - { label: "Başlık", name: title, widget: string, hint: "Yazının ana başlığı" }
+      - { label: "SEO Açıklama", name: description, widget: text, hint: "150-160 karakter, arama sonuçlarında görünür" }
+      - { label: "Dönem", name: period, widget: string, required: false, hint: "Örn: Erken Cumhuriyet (1923–1938)" }
       - { label: "Yayın Tarihi", name: publishDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false }
-      - { label: "Etiketler", name: tags, widget: list, default: [] }
-      - { label: "Taslak", name: draft, widget: boolean, default: false }
+      - { label: "Güncelleme Tarihi", name: updatedDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false, hint: "Önerilen: 1200x630px" }
+      - { label: "Etiketler", name: tags, widget: list, default: [], max: 4, hint: "En fazla 4 etiket" }
+      - { label: "Taslak", name: draft, widget: boolean, default: false, hint: "İşaretlenirse yayınlanmaz" }
       - { label: "İçerik", name: body, widget: markdown }
 
   - name: kisisel-blog
     label: "Yazıyor Yazıyor"
+    label_singular: "Blog Yazısı"
     folder: src/content/kisisel-blog
     create: true
     slug: "{{slug}}"
     extension: md
+    sortable_fields: ["publishDate", "title"]
+    summary: "{{title}} — {{publishDate}}"
     fields:
-      - { label: "Başlık", name: title, widget: string }
-      - { label: "Açıklama", name: description, widget: text }
+      - { label: "Başlık", name: title, widget: string, hint: "Yazının ana başlığı" }
+      - { label: "SEO Açıklama", name: description, widget: text, hint: "150-160 karakter, arama sonuçlarında görünür" }
       - { label: "Yayın Tarihi", name: publishDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false }
-      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false }
-      - { label: "Etiketler", name: tags, widget: list, default: [] }
-      - { label: "Taslak", name: draft, widget: boolean, default: false }
+      - { label: "Güncelleme Tarihi", name: updatedDate, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, required: false }
+      - { label: "Kapak Görseli", name: coverImage, widget: image, required: false, hint: "Önerilen: 1200x630px" }
+      - { label: "Etiketler", name: tags, widget: list, default: [], max: 4, hint: "En fazla 4 etiket" }
+      - { label: "Taslak", name: draft, widget: boolean, default: false, hint: "İşaretlenirse yayınlanmaz" }
       - { label: "İçerik", name: body, widget: markdown }
