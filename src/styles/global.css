@@ -435,9 +435,9 @@ html.qr-open { overflow: hidden; }
   border-color: rgba(160,140,110,0.35);
   border-radius: 2px;
   box-shadow:
-    0 1px 0 0 rgba(255,255,255,0.45) inset,     /* üst kağıt highlight */
-    0 8px 24px rgba(0,0,0,0.40),                  /* ana gölge */
-    0 2px 6px rgba(0,0,0,0.25);                   /* yakın gölge */
+    0 1px 0 0 rgba(255,255,255,0.45) inset,
+    0 8px 24px rgba(0,0,0,0.40),
+    0 2px 6px rgba(0,0,0,0.25);
   transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
 }
 .home-shell .card:hover {
@@ -509,13 +509,22 @@ html.qr-open { overflow: hidden; }
   -ms-user-select: none;
   user-select: none;
 }
-/* İstisnalar: etkileşimli öğelerde seçim serbest */
+
+/* İstisnalar: etkileşimli öğelerde seçim ve tıklama serbest */
+.content-protected a,
+.content-protected a *,
 .content-protected input,
 .content-protected textarea,
 .content-protected select,
 .content-protected button,
-.content-protected a,
 .content-protected [contenteditable="true"] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  pointer-events: auto;
+}
+
 /* Görsellerin sürüklenmesini / bağımsız indirilmesini zorlaştır */
 .content-protected img {
   pointer-events: none;
@@ -531,7 +540,6 @@ html.qr-open { overflow: hidden; }
     display: block;
     position: fixed;
     inset: 0;
-    display: flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-family-body);
