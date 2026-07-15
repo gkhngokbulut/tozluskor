@@ -2,6 +2,9 @@ backend:
   name: github
   repo: gkhngokbulut/tozluskor
   branch: main
+  site_domain: tozluskor.vercel.app
+  base_url: https://tozluskor.vercel.app
+  auth_endpoint: oauth
 
 locale: tr
 
