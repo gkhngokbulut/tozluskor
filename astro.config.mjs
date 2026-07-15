@@ -1,11 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
-import vercel from '@astrojs/vercel';
 import decapCmsOauth from 'astro-decap-cms-oauth';
+import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  output: 'server',
+  output: 'static',
   adapter: vercel(),
   vite: {
     plugins: [tailwindcss()],
