@@ -12,9 +12,11 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/vercel": "latest",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.1",
     "astro": "^6.0.2",
+    "astro-decap-cms-oauth": "latest",
     "tailwindcss": "^4.2.1"
   }
 }
